@@ -7,11 +7,11 @@ import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class InfoAnimalShelterHandler extends AbstractHandler {
+public class VolunteerHandler extends AbstractHandler {
 
     private final TextCommand textCommand;
 
-    public InfoAnimalShelterHandler(@Qualifier("infoAnimalShelterCommand") TextCommand textCommand) {
+    public VolunteerHandler(@Qualifier("volunteerCommand") TextCommand textCommand) {
         this.textCommand = textCommand;
     }
 
