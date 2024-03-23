@@ -8,11 +8,11 @@ import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class StartHandler extends AbstractHandler {
+public class PetReportHandler extends AbstractHandler {
     private final TextCommand textCommand;
 
     @Autowired
-    public StartHandler(@Qualifier("startCommand") TextCommand textCommand) {
+    public PetReportHandler(@Qualifier("petReportCommand") TextCommand textCommand) {
         this.textCommand = textCommand;
     }
 
