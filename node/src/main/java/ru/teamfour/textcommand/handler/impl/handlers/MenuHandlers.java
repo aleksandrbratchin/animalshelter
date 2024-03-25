@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.handler.impl;
+package ru.teamfour.textcommand.handler.impl.handlers;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

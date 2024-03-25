@@ -1,5 +1,6 @@
-package ru.teamfour.textcommand.handler.impl;
+package ru.teamfour.textcommand.handler.impl.concreteHandler;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -7,11 +8,11 @@ import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class ShelterInformationHandler extends AbstractHandler {
-
+public class PetReportHandler extends AbstractHandler {
     private final TextCommand textCommand;
 
-    public ShelterInformationHandler(@Qualifier("shelterInformationCommand") TextCommand textCommand) {
+    @Autowired
+    public PetReportHandler(@Qualifier("petReportCommand") TextCommand textCommand) {
         this.textCommand = textCommand;
     }
 

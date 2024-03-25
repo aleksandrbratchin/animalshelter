@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.handler.impl;
+package ru.teamfour.textcommand.handler.impl.concreteHandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,11 +8,11 @@ import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class PetReportHandler extends AbstractHandler {
+public class StartHandler extends AbstractHandler {
     private final TextCommand textCommand;
 
     @Autowired
-    public PetReportHandler(@Qualifier("petReportCommand") TextCommand textCommand) {
+    public StartHandler(@Qualifier("startCommand") TextCommand textCommand) {
         this.textCommand = textCommand;
     }
 

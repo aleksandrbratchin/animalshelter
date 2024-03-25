@@ -12,18 +12,9 @@ import java.util.List;
 
 @Component
 public class ShelterInformationMenu extends ButtonAbstractMenu {
-    //todo функционал заглушка
-    @Value("${buttonName.shelterInformation}")
-    private String shelterInformationButton;
 
-    @Value("${buttonName.petReport}")
-    private String petReportButton;
-
-    @Value("${buttonName.adoption}")
-    private String adoptionButton;
-
-    @Value("${buttonName.volunteer}")
-    private String volunteerButton;
+    @Value("${buttonName.shelterAddress}")
+    private String address;
 
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
@@ -33,20 +24,15 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
 
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row1 = new KeyboardRow();
-        row1.add(shelterInformationButton);
-        row1.add(adoptionButton);
+        row1.add(address);
         keyboard.add(row1);
-        KeyboardRow row2 = new KeyboardRow();
-        row2.add(petReportButton);
-        row2.add(volunteerButton);
-        keyboard.add(row2);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
     }
 
     @Override
     public boolean isMenu(State state) {
-        return state == State.SHELTER;
+        return state == State.INFO_SHELTER;
     }
 
 }
