@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Validated
 public class MessageUtils {
 
-    public SendMessage generateSendMessageWithText(Update update, @NotBlank String text) {
+    public SendMessage generateSendMessageWithText(Update update, @NotBlank String text){
         var message = update.getMessage();
         var response = new SendMessage();
         response.setChatId(message.getChatId().toString());
@@ -20,7 +20,7 @@ public class MessageUtils {
         return response;
     }
 
-    public SendMessage generateSendMessageWithText(@NotNull @Positive Long chatId, @NotBlank String text) {
+    public SendMessage generateSendMessageWithText(@NotNull @Positive Long chatId, @NotBlank String text){
         var response = new SendMessage();
         response.setChatId(chatId);
         response.setText(text);
