@@ -1,6 +1,7 @@
 package ru.teamfour.dispatcher.service.impl;
 
 import lombok.Data;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -14,6 +15,7 @@ public class UpdateProducerImpl implements UpdateProducer {
 
     @Override
     public void produce(String rabbitQueue, Update update) {
+        System.out.println(update.getMessage().getText() + 10);
         rabbitTemplate.convertAndSend(rabbitQueue, update);
     }
 

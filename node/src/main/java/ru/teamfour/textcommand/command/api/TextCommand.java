@@ -12,16 +12,14 @@ public interface TextCommand {
      * @param message - сообщение
      */
     boolean isCommand(String message);
-
     /***
      * Что команда делает
      */
     SendMessage execute(Update update);
-
     /***
      * Какие команды ожидаются после этой
      * Нужно чтобы менять состояние пользователя
      */
-    State nextState();
+    StateCommand nextState();
 }
 

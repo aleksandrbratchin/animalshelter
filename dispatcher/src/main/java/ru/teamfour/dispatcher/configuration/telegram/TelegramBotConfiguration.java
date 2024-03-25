@@ -11,7 +11,7 @@ import ru.teamfour.dispatcher.controllers.TelegramBot;
 public class TelegramBotConfiguration {
 
     @Bean
-    public TelegramBotsApi telegramBotsApi(TelegramBot telegramBot) throws TelegramApiException {
+    public TelegramBotsApi telegramBotsApi(TelegramBot telegramBot) throws TelegramApiException{
         var api = new TelegramBotsApi(DefaultBotSession.class);
         api.registerBot(telegramBot);
         return api;

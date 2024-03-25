@@ -5,6 +5,5 @@ import ru.teamfour.textcommand.command.api.TextCommand;
 
 public interface Handler {
     TextCommand handleRequest(Update update);
-
     void setNext(Handler nextHandler);
 }
