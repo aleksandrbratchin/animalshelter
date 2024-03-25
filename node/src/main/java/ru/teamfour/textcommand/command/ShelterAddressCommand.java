@@ -8,9 +8,8 @@ import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
 @Component
-public class StartCommand extends AbstractTextCommand {
-
-    @Value("${buttonName.mainMenu}")
+public class ShelterAddressCommand extends AbstractTextCommand {
+    @Value("${buttonName.shelterAddress}")
     private String buttonName;
 
     @Override
@@ -23,12 +22,11 @@ public class StartCommand extends AbstractTextCommand {
 
     @Override
     public State nextState() {
-        return State.MAIN_MENU;
+        return State.INFO_SHELTER;
     }
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals("/start") || message.equals(buttonName);
+        return message.equals(buttonName);
     }
-
 }
