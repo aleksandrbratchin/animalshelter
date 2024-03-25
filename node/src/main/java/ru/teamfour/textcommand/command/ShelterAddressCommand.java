@@ -8,9 +8,8 @@ import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
 @Component
-public class ShelterInformationCommand extends AbstractTextCommand {
-
-    @Value("${buttonName.shelterInformation}")
+public class ShelterAddressCommand extends AbstractTextCommand {
+    @Value("${buttonName.shelterAddress}")
     private String buttonName;
 
     @Override
