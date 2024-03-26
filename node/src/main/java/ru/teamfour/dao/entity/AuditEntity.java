@@ -17,11 +17,11 @@ import java.util.UUID;
 public abstract class AuditEntity extends ParentEntity {
 
     @LastModifiedDate
-    private LocalDateTime date_update;
+    protected LocalDateTime date_update;
 
     @Column(updatable = false)
     @CreatedDate
-    private LocalDateTime date_create;
+    protected LocalDateTime date_create;
 
     public AuditEntity(UUID id) {
         super(id);

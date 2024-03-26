@@ -5,10 +5,11 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.teamfour.dao.entity.user.Client;
+import ru.teamfour.dao.entity.user.RoleUser;
+import ru.teamfour.dao.entity.user.Users;
 import ru.teamfour.service.api.ConsumerService;
 import ru.teamfour.service.api.ProducerService;
-import ru.teamfour.service.impl.user.ClientService;
+import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.api.State;
 import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.Handler;
@@ -23,26 +24,32 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     private final ProducerService producerService;
     private final HandlersFactory handlersFactory;
-    private final ClientService clientService;
+    private final UserService userService;
 
-    public ConsumerServiceImpl(ProducerService producerService, HandlersFactory handlersFactory, ClientService clientService) {
+    public ConsumerServiceImpl(ProducerService producerService, HandlersFactory handlersFactory, UserService userService) {
         this.producerService = producerService;
         this.handlersFactory = handlersFactory;
-        this.clientService = clientService;
+        this.userService = userService;
     }
 
     @Override
     @RabbitListener(queues = "${rabbitQueue.messages.update.TEXT}")
     public void consumerTextMessageUpdates(Update update) {
         var message = update.getMessage().getText();
+        var chatId = update.getMessage().getChat().getId();
 
+        Users users = userService.findByChatId(chatId); //todo почему orElse некорректно отрабатывает?
+        if(users == null){
+            userService.save(
+                    Users.builder()
+                            .chatId(chatId)
+                            .state(State.MAIN_MENU)
+                            .role(RoleUser.CLIENT)
+                            .build()
+            );
+        }
 
-        clientService.add(Client.builder()
-                .state(State.MAIN_MENU)
-                .build());
-
-        //todo Потом будем получать прошлое состояние пользователя из БД
-        State state = State.MAIN_MENU;
+        State state = users.getState();
 
         Handlers handlers = handlersFactory.getHandlers(state);
         Handler handler = handlers.getHandler();

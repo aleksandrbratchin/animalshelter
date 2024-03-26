@@ -1,12 +1,11 @@
 package ru.teamfour.dao.entity.user;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.teamfour.dao.entity.AuditEntity;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -14,25 +13,24 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "role",
-        discriminatorType = DiscriminatorType.STRING)
-public abstract class ParentUser extends AuditEntity {
-
+public class Users extends AuditEntity {
 
     @Column(name = "chat_id")
     Long chatId;
 
-    @Column(insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private RoleUser role;
 
     @Enumerated(EnumType.STRING)
     private State state;
 
-    public ParentUser(UUID id, Long chatId, State state) {
+    @Builder
+
+    public Users(UUID id, Long chatId, RoleUser role, State state) {
         super(id);
         this.chatId = chatId;
+        this.role = role;
         this.state = state;
     }
+
 }

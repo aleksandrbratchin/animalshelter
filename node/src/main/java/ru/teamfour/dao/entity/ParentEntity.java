@@ -16,7 +16,7 @@ public abstract class ParentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private UUID id;
+    protected UUID id;
 
     public ParentEntity(UUID id) {
         this.id = id;
