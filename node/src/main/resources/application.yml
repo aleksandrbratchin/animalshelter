@@ -6,8 +6,6 @@ spring:
     port: 5672
     username: userok
     password: password
-#  liquibase:
-#    change-log: classpath:liquibase/changelog-master.yml
   jpa:
     show-sql: true
     hibernate:

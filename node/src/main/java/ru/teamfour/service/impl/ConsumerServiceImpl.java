@@ -5,11 +5,12 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.teamfour.dao.entity.user.Client;
 import ru.teamfour.service.api.ConsumerService;
 import ru.teamfour.service.api.ProducerService;
+import ru.teamfour.service.impl.user.ClientService;
 import ru.teamfour.textcommand.command.api.State;
 import ru.teamfour.textcommand.command.api.TextCommand;
-
 import ru.teamfour.textcommand.handler.api.Handler;
 import ru.teamfour.textcommand.handler.api.Handlers;
 import ru.teamfour.textcommand.handler.impl.HandlersFactory;
@@ -22,16 +23,24 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     private final ProducerService producerService;
     private final HandlersFactory handlersFactory;
+    private final ClientService clientService;
 
-    public ConsumerServiceImpl(ProducerService producerService, HandlersFactory handlersFactory) {
+    public ConsumerServiceImpl(ProducerService producerService, HandlersFactory handlersFactory, ClientService clientService) {
         this.producerService = producerService;
         this.handlersFactory = handlersFactory;
+        this.clientService = clientService;
     }
 
     @Override
     @RabbitListener(queues = "${rabbitQueue.messages.update.TEXT}")
     public void consumerTextMessageUpdates(Update update) {
         var message = update.getMessage().getText();
+
+
+        clientService.add(Client.builder()
+                .state(State.MAIN_MENU)
+                .build());
+
         //todo Потом будем получать прошлое состояние пользователя из БД
         State state = State.MAIN_MENU;
 
