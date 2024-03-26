@@ -15,6 +15,9 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
 
     @Value("${buttonName.shelterAddress}")
     private String address;
+    @Value("${buttonName.drivingDirections}")
+    private String drivingDirections;
+
 
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
@@ -26,6 +29,10 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
         KeyboardRow row1 = new KeyboardRow();
         row1.add(address);
         keyboard.add(row1);
+        KeyboardRow row2 = new KeyboardRow();
+        row1.add(drivingDirections);
+        keyboard.add(row2);
+
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
     }
