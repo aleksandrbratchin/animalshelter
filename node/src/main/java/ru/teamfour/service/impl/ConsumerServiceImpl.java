@@ -11,6 +11,7 @@ import ru.teamfour.textcommand.command.api.State;
 import ru.teamfour.textcommand.command.api.TextCommand;
 
 import ru.teamfour.textcommand.handler.api.Handler;
+import ru.teamfour.textcommand.handler.api.Handlers;
 import ru.teamfour.textcommand.handler.impl.HandlersFactory;
 import yamlpropertysourcefactory.YamlPropertySourceFactory;
 
@@ -34,7 +35,8 @@ public class ConsumerServiceImpl implements ConsumerService {
         //todo Потом будем получать прошлое состояние пользователя из БД
         State state = State.MAIN_MENU;
 
-        Handler handler = handlersFactory.getHandlers(state).getHandler();
+        Handlers handlers = handlersFactory.getHandlers(state);
+        Handler handler = handlers.getHandler();
         TextCommand command = handler.handleRequest(update);
 
         log.info(command.getClass());
