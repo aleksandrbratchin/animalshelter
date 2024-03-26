@@ -6,6 +6,16 @@ spring:
     port: 5672
     username: userok
     password: password
+#  liquibase:
+#    change-log: classpath:liquibase/changelog-master.yml
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://94.158.219.127:5432/toptendb
+    username: userok
+    password: password
 buttonName:
   shelterInformation: Информация о приюте
   mainMenu: Главное меню
