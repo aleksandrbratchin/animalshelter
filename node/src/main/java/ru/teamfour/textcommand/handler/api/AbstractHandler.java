@@ -7,16 +7,11 @@ import ru.teamfour.textcommand.command.UnknownCommand;
 import ru.teamfour.textcommand.command.api.TextCommand;
 
 @Component
-public class AbstractHandler implements Handler {
+public abstract class AbstractHandler implements Handler{
     private Handler nextHandler;
-
     @Autowired
     private UnknownCommand unknownCommand;
-
-    @Override
-    public void setNext(Handler nextHandler) {
-        this.nextHandler = nextHandler;
-    }
+    protected TextCommand textCommand;
 
     @Override
     public TextCommand handleRequest(Update update) {
@@ -24,5 +19,11 @@ public class AbstractHandler implements Handler {
             return nextHandler.handleRequest(update);
         }
         return unknownCommand;
+    }
+
+
+    @Override
+    public void setNext(Handler nextHandler) {
+        this.nextHandler = nextHandler;
     }
 }
