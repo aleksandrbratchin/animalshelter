@@ -15,6 +15,18 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
 
     @Value("${buttonName.shelterAddress}")
     private String address;
+    @Value("${buttonName.workScheduleShelter}")
+    private String workScheduleShelter;
+    @Value("${buttonName.drivingDirections}")
+    private String drivingDirections;
+    @Value("${buttonName.securityData}")
+    private String securityData;
+    @Value("${buttonName.safetyMeasuresInShelter}")
+    private String safetyMeasuresInShelter;
+    @Value("${buttonName.contactForCommunication}")
+    private String contactForCommunication;
+    @Value("${buttonName.volunteer}")
+    private String volunteer;
 
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
@@ -25,7 +37,19 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row1 = new KeyboardRow();
         row1.add(address);
+        row1.add(workScheduleShelter);
         keyboard.add(row1);
+        KeyboardRow row2 = new KeyboardRow();
+        row2.add(drivingDirections);
+        row2.add(securityData);
+        keyboard.add(row2);
+        KeyboardRow row3 = new KeyboardRow();
+        row3.add(safetyMeasuresInShelter);
+        row3.add(contactForCommunication);
+        keyboard.add(row3);
+        KeyboardRow row4 = new KeyboardRow();
+        row4.add(volunteer);
+        keyboard.add(row4);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
     }
