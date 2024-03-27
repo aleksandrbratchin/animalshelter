@@ -11,17 +11,21 @@ public class ShelterInformationHandlers implements Handlers {
 
     public final Handler startHandler;
     public final Handler addressHandler;
+    public final Handler workScheduleShelterHandler;
 
     public ShelterInformationHandlers(
-            Handler startHandler, @Qualifier("shelterAddressHandler") Handler addressHandler) {
+            Handler startHandler, @Qualifier("shelterAddressHandler") Handler addressHandler,
+            @Qualifier("workScheduleShelterHandler") Handler workScheduleShelterHandler) {
         this.startHandler = startHandler;
         this.addressHandler = addressHandler;
-;
+        this.workScheduleShelterHandler = workScheduleShelterHandler;
     }
 
     @Override
     public Handler getHandler() {
         startHandler.setNext(addressHandler);
+        startHandler.setNext(workScheduleShelterHandler);
+
         return startHandler;
     }
 
