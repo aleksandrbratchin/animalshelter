@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.handler.impl.concreteHandler;
+package ru.teamfour.textcommand.handler.impl.client.handlerButton;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,9 +9,7 @@ import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
 public class StartHandler extends AbstractHandler {
-    private final TextCommand textCommand;
 
-    @Autowired
     public StartHandler(@Qualifier("startCommand") TextCommand textCommand) {
         this.textCommand = textCommand;
     }
@@ -24,5 +22,4 @@ public class StartHandler extends AbstractHandler {
             return super.handleRequest(update);
         }
     }
-
 }

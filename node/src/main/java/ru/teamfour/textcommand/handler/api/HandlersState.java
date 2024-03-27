@@ -2,8 +2,8 @@ package ru.teamfour.textcommand.handler.api;
 
 import ru.teamfour.textcommand.command.api.State;
 
-public interface Handlers {
+public interface HandlersState {
     Handler getHandler();
 
-    boolean isHandlers(State state);
+    boolean isState(State state);
 }

@@ -5,7 +5,6 @@ import lombok.*;
 import ru.teamfour.dao.entity.AuditEntity;
 import ru.teamfour.textcommand.command.api.State;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -13,20 +12,21 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class Users extends AuditEntity {
+public class User extends AuditEntity {
 
-    @Column(name = "chat_id")
+    @Column(name = "chat_id", unique = true, nullable = false)
     Long chatId;
 
+    @Column(name = "role_user", nullable = false)
     @Enumerated(EnumType.STRING)
     private RoleUser role;
 
+    @Column(name = "state", nullable = false)
     @Enumerated(EnumType.STRING)
     private State state;
 
     @Builder
-
-    public Users(UUID id, Long chatId, RoleUser role, State state) {
+    public User(UUID id, Long chatId, RoleUser role, State state) {
         super(id);
         this.chatId = chatId;
         this.role = role;

@@ -6,15 +6,16 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.RoleUser;
-import ru.teamfour.dao.entity.user.Users;
+import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.api.ConsumerService;
 import ru.teamfour.service.api.ProducerService;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.api.State;
 import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.Handler;
-import ru.teamfour.textcommand.handler.api.Handlers;
-import ru.teamfour.textcommand.handler.impl.HandlersFactory;
+import ru.teamfour.textcommand.handler.api.HandlersState;
+import ru.teamfour.textcommand.handler.api.HandlersStateFactory;
+import ru.teamfour.textcommand.handler.impl.HandlersRoleFactory;
 import yamlpropertysourcefactory.YamlPropertySourceFactory;
 
 @Log4j2
@@ -23,12 +24,12 @@ import yamlpropertysourcefactory.YamlPropertySourceFactory;
 public class ConsumerServiceImpl implements ConsumerService {
 
     private final ProducerService producerService;
-    private final HandlersFactory handlersFactory;
+    private final HandlersRoleFactory handlersRoleFactory;
     private final UserService userService;
 
-    public ConsumerServiceImpl(ProducerService producerService, HandlersFactory handlersFactory, UserService userService) {
+    public ConsumerServiceImpl(ProducerService producerService, HandlersRoleFactory handlersRoleFactory, UserService userService) {
         this.producerService = producerService;
-        this.handlersFactory = handlersFactory;
+        this.handlersRoleFactory = handlersRoleFactory;
         this.userService = userService;
     }
 
@@ -38,10 +39,10 @@ public class ConsumerServiceImpl implements ConsumerService {
         var message = update.getMessage().getText();
         var chatId = update.getMessage().getChat().getId();
 
-        Users users = userService.findByChatId(chatId); //todo почему orElse некорректно отрабатывает?
-        if(users == null){
+        User user = userService.findByChatId(chatId); //todo почему orElse некорректно отрабатывает?
+        if(user == null){
             userService.save(
-                    Users.builder()
+                    User.builder()
                             .chatId(chatId)
                             .state(State.MAIN_MENU)
                             .role(RoleUser.CLIENT)
@@ -49,14 +50,13 @@ public class ConsumerServiceImpl implements ConsumerService {
             );
         }
 
-        State state = users.getState();
-
-        Handlers handlers = handlersFactory.getHandlers(state);
+        HandlersStateFactory handlersStateFactory = handlersRoleFactory.getHandlers(user.getRole());
+        HandlersState handlers = handlersStateFactory.getHandlers(user.getState());
         Handler handler = handlers.getHandler();
         TextCommand command = handler.handleRequest(update);
 
         log.info(command.getClass());
-        producerService.producerAnswer(command.execute(update));
+        producerService.producerAnswer(command.execute(update, user));
 
     }
 

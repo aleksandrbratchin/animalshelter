@@ -2,7 +2,7 @@ package ru.teamfour.service.impl.user;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.teamfour.dao.entity.user.Users;
+import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.repositories.UserRepository;
 
 @Service
@@ -14,11 +14,11 @@ public class UserService {
         this.repository = repository;
     }
 
-    public Users save(Users client) {
+    public User save(User client) {
         return repository.save(client);
     }
 
-    public Users findByChatId(Long chatId) {
+    public User findByChatId(Long chatId) {
         return repository.findByChatId(chatId)
                 .orElse( //todo почему orElse некорректно отрабатывает?
                         null
