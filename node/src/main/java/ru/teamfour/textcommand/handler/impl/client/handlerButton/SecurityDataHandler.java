@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.handler.impl;
+package ru.teamfour.textcommand.handler.impl.client.handlerButton;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -7,11 +7,8 @@ import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class ShelterInformationHandler extends AbstractHandler {
-
-    private final TextCommand textCommand;
-
-    public ShelterInformationHandler(@Qualifier("shelterInformationCommand") TextCommand textCommand) {
+public class SecurityDataHandler extends AbstractHandler {
+    public SecurityDataHandler(@Qualifier("securityDataCommand") TextCommand textCommand) {
         this.textCommand = textCommand;
     }
 
@@ -23,5 +20,4 @@ public class ShelterInformationHandler extends AbstractHandler {
             return super.handleRequest(update);
         }
     }
-
 }

@@ -9,14 +9,13 @@ import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
 @Component
-public class PetReportCommand extends AbstractTextCommand {
-    @Value("${buttonName.petReport}")
+public class ShelterAddressCommand extends AbstractTextCommand {
+    @Value("${buttonName.shelterAddress}")
     private String buttonName;
 
     @Override
     public SendMessage execute(Update update, User user) {
-        //State state = State.PET_REPORT;//todo нужно еще проверок навесить
-        State state = State.MAIN_MENU;//todo заглушка пока не реализовано
+        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
         user.setState(state);
         userService.save(user);
         //todo какие то действия

@@ -1,13 +1,13 @@
-package ru.teamfour.textcommand.handler.impl;
+package ru.teamfour.textcommand.handler.impl.client.handlersMenu;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.teamfour.textcommand.command.api.State;
 import ru.teamfour.textcommand.handler.api.Handler;
-import ru.teamfour.textcommand.handler.api.Handlers;
+import ru.teamfour.textcommand.handler.api.HandlersState;
 
 @Component
-public class MenuHandlers implements Handlers {
+public class MenuHandlersState implements HandlersState {
 
     public final Handler startHandler;
     public final Handler shelterInformationHandler;
@@ -15,7 +15,7 @@ public class MenuHandlers implements Handlers {
     public final Handler adoptionHandler;
     public final Handler volunteerHandler;
 
-    public MenuHandlers(
+    public MenuHandlersState(
             @Qualifier("startHandler") Handler startHandler,
             @Qualifier("shelterInformationHandler") Handler shelterInformationHandler,
             @Qualifier("petReportHandler") Handler petReportHandler,
@@ -38,7 +38,7 @@ public class MenuHandlers implements Handlers {
     }
 
     @Override
-    public boolean isHandlers(State state) {
+    public boolean isState(State state) {
         return state == State.MAIN_MENU;
     }
 }

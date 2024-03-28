@@ -6,6 +6,16 @@ spring:
     port: 5672
     username: userok
     password: password
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yml
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url:
+    username:
+    password:
 buttonName:
   shelterInformation: Информация о приюте
   mainMenu: Главное меню
@@ -13,3 +23,9 @@ buttonName:
   petReport: Прислать отчет о питомце
   adoption: Как взять животное из приюта
   volunteer: Позвать волонтера
+  shelterAddress: Адрес
+  workScheduleShelter: Расписание работы приюта
+  drivingDirections: Схема проезда
+  safetyMeasuresInShelter: Техника безопасности на территории приюта
+  securityData: Данные охраны для оформления пропуска на машину
+  contactForCommunication: Контактные данные для связи

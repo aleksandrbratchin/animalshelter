@@ -4,26 +4,30 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
 @Component
 public class ShelterInformationCommand extends AbstractTextCommand {
-
     @Value("${buttonName.shelterInformation}")
     private String buttonName;
 
-    @Override
-    public SendMessage execute(Update update) {
-        //todo какие то действия
-        String answerMessage = "Answer: " + buttonName;
-        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
-        return addMenu(startTextCommand);
+    public ShelterInformationCommand(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
-    public State nextState() {
-        return State.SHELTER;
+    public SendMessage execute(Update update, User user) {
+
+        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
+        user.setState(state);
+        userService.save(user);
+
+        String answerMessage = "Answer: " + buttonName;
+        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
+        return addMenu(startTextCommand, state);
     }
 
     @Override
