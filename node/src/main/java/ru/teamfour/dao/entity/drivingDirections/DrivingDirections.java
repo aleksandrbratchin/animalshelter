@@ -1,10 +1,11 @@
-package ru.teamfour.dao.entity.shelters;
+package ru.teamfour.dao.entity.drivingDirections;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.teamfour.dao.entity.shelter.Shelter;
 
 @Getter
 @Setter
