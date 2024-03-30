@@ -5,12 +5,10 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.teamfour.dao.entity.user.RoleUser;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.api.ConsumerService;
 import ru.teamfour.service.api.ProducerService;
 import ru.teamfour.service.impl.user.UserService;
-import ru.teamfour.textcommand.command.api.State;
 import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.Handler;
 import ru.teamfour.textcommand.handler.api.HandlersState;
@@ -36,19 +34,8 @@ public class ConsumerServiceImpl implements ConsumerService {
     @Override
     @RabbitListener(queues = "${rabbitQueue.messages.update.TEXT}")
     public void consumerTextMessageUpdates(Update update) {
-        var message = update.getMessage().getText();
-        var chatId = update.getMessage().getChat().getId();
 
-        User user = userService.findByChatId(chatId); //todo почему orElse некорректно отрабатывает?
-        if(user == null){
-            userService.save(
-                    User.builder()
-                            .chatId(chatId)
-                            .state(State.MAIN_MENU)
-                            .role(RoleUser.CLIENT)
-                            .build()
-            );
-        }
+        User user = userService.findByUserByChatIdOrCreateUser(update);
 
         HandlersStateFactory handlersStateFactory = handlersRoleFactory.getHandlers(user.getRole());
         HandlersState handlers = handlersStateFactory.getHandlers(user.getState());

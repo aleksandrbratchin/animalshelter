@@ -9,17 +9,17 @@ import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
 @Component
-public class VolunteerCommand extends AbstractTextCommand {
-    @Value("${buttonName.volunteer}")
+public class ContactVolunteersByPhoneNumberCommand extends AbstractTextCommand {
+    @Value("${buttonName.contactVolunteersByPhoneNumber}")
     private String buttonName;
 
     @Override
     public SendMessage execute(Update update, User user) {
         State state = State.VOLUNTEER_MENU;//todo нужно еще проверок навесить
 
-        userService.updateState(user, state);
+        user = userService.updateState(user, state);
         //todo какие то действия
-        String answerMessage = "Выберите предпочитаемый способ связи с волонтером.";
+        String answerMessage = "contactVolunteersByPhoneNumber";
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         return addMenu(startTextCommand, state);
     }
