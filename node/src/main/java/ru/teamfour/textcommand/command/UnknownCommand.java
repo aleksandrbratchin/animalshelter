@@ -14,7 +14,8 @@ public class UnknownCommand extends AbstractTextCommand {
     private String message;
 
     @Override
-    public SendMessage execute(Update update, User user) {
+    public SendMessage execute(CommandContext commandContext) {
+        Update update = commandContext.getUpdate();
         return messageUtils.generateSendMessageWithText(update, message);
     }
 

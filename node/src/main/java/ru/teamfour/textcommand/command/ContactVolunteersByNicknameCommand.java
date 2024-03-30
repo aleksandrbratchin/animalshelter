@@ -9,20 +9,19 @@ import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
 @Component
-public class SafetyMeasuresInShelterCommand extends AbstractTextCommand {
-
-    @Value("${buttonName.safetyMeasuresInShelter}")
+public class ContactVolunteersByNicknameCommand extends AbstractTextCommand {
+    @Value("${buttonName.contactVolunteersByNickname}")
     private String buttonName;
 
     @Override
     public SendMessage execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
-        user.setState(state);
-        userService.save(user);
+        State state = State.VOLUNTEER_MENU;//todo нужно еще проверок навесить
+
+        user = userService.updateState(user, state);
         //todo какие то действия
-        String answerMessage = "Answer: " + buttonName;
+        String answerMessage = "contactVolunteersByNickname";
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         return addMenu(startTextCommand, state);
     }
@@ -31,5 +30,4 @@ public class SafetyMeasuresInShelterCommand extends AbstractTextCommand {
     public boolean isCommand(String message) {
         return message.equals(buttonName);
     }
-
 }

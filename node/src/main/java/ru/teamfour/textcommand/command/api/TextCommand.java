@@ -1,8 +1,7 @@
 package ru.teamfour.textcommand.command.api;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.textcommand.command.CommandContext;
 
 /***
  * Основной интерфейс для команд
@@ -17,7 +16,7 @@ public interface TextCommand {
     /***
      * Что команда делает
      */
-    SendMessage execute(Update update, User user);
+    SendMessage execute(CommandContext commandContext);
 
     /***
      * Какие команды ожидаются после этой
