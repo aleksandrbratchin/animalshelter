@@ -1,8 +1,13 @@
 server:
   port: 8090
 spring:
+  config:
+    import: classpath:myconfig.yml
   rabbitmq:
-    host: 94.158.219.127
-    port: 5672
-    username: userok
-    password: password
+    host: ${rabbitmq.host}
+    port: ${rabbitmq.port}
+    username: ${rabbitmq.username}
+    password: ${rabbitmq.password}
+bot:
+  name: ${botConfig.name}
+  token: ${botConfig.token}

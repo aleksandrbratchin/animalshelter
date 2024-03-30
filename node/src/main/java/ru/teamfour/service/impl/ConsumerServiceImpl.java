@@ -9,6 +9,7 @@ import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.api.ConsumerService;
 import ru.teamfour.service.api.ProducerService;
 import ru.teamfour.service.impl.user.UserService;
+import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.Handler;
 import ru.teamfour.textcommand.handler.api.HandlersState;
@@ -43,7 +44,7 @@ public class ConsumerServiceImpl implements ConsumerService {
         TextCommand command = handler.handleRequest(update);
 
         log.info(command.getClass());
-        producerService.producerAnswer(command.execute(update, user));
+        producerService.producerAnswer(command.execute(new CommandContext(update, user)));
 
     }
 

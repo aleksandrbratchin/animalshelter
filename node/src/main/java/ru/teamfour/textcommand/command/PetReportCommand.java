@@ -14,7 +14,9 @@ public class PetReportCommand extends AbstractTextCommand {
     private String buttonName;
 
     @Override
-    public SendMessage execute(Update update, User user) {
+    public SendMessage execute(CommandContext commandContext) {
+        User user = commandContext.getUser();
+        Update update = commandContext.getUpdate();
         //State state = State.PET_REPORT;//todo нужно еще проверок навесить
         State state = State.MAIN_MENU;//todo заглушка пока не реализовано
         user.setState(state);

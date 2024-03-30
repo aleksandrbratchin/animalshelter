@@ -14,7 +14,9 @@ public class ContactVolunteersByPhoneNumberCommand extends AbstractTextCommand {
     private String buttonName;
 
     @Override
-    public SendMessage execute(Update update, User user) {
+    public SendMessage execute(CommandContext commandContext) {
+        User user = commandContext.getUser();
+        Update update = commandContext.getUpdate();
         State state = State.VOLUNTEER_MENU;//todo нужно еще проверок навесить
 
         user = userService.updateState(user, state);
