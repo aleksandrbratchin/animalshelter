@@ -17,21 +17,20 @@ import java.util.UUID;
 @Entity
 @Table(name = "shelters")
 public class Shelter extends ParentEntity {
-    @Column
+    @Column(name = "shelter_information")
     private String shelterInformation;
-    @Column
+    @Column(name = "shelter_address")
     private String shelterAddress;
-    @Column
+    @Column(name = "work_schedule_shelter")
     private String workScheduleShelter;
-    @Column
+    @Column(name = "safety_measures_in_shelter")
     private String safetyMeasuresInShelter;
-    @Column
+    @Column(name = "security_data")
     private String securityData;
-    @Column
+    @Column(name = "contact_for_communication")
     private String contactForCommunication;
 
     @Builder
-
     public Shelter(UUID id, String shelterInformation,
                    String shelterAddress, String workScheduleShelter,
                    String safetyMeasuresInShelter, String securityData,

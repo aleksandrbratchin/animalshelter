@@ -1,12 +1,10 @@
 package ru.teamfour.service.impl.shelter;
-
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.shelter.ShelterService;
-
 import java.util.UUID;
 
 @Service
@@ -22,11 +20,8 @@ public class ShelterServiceImpl implements ShelterService {
      * @return метод возвращает объект, записанный в БД
      */
     @Override
-
     public Shelter add(Shelter shelter) {
-
         return shelterRepository.save(shelter);
-
     }
 
     /**
@@ -35,11 +30,8 @@ public class ShelterServiceImpl implements ShelterService {
      * @param id принимет UUID удаляемого объекта
      */
     @Override
-
-
     public void remove(UUID id) {
         shelterRepository.deleteById(id);
-
     }
 
     /**
@@ -49,7 +41,6 @@ public class ShelterServiceImpl implements ShelterService {
      * @return возвращает найденный объект
      */
     @Override
-
     public Shelter find(UUID id) {
         return shelterRepository.findById(id).get();
     }
