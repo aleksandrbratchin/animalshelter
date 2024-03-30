@@ -25,12 +25,16 @@ public class User extends AuditEntity {
     @Enumerated(EnumType.STRING)
     private State state;
 
+    @Embedded
+    private UserInfo userInfo;
+
     @Builder
-    public User(UUID id, Long chatId, RoleUser role, State state) {
+    public User(UUID id, Long chatId, RoleUser role, State state, UserInfo userInfo) {
         super(id);
         this.chatId = chatId;
         this.role = role;
         this.state = state;
+        this.userInfo = userInfo;
     }
 
 }

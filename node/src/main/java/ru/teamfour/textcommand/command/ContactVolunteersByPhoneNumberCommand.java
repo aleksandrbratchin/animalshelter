@@ -1,4 +1,5 @@
 package ru.teamfour.textcommand.command;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -8,20 +9,19 @@ import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
 @Component
-public class DrivingDirectionsCommand extends AbstractTextCommand {
-
-    @Value("${buttonName.drivingDirections}")
+public class ContactVolunteersByPhoneNumberCommand extends AbstractTextCommand {
+    @Value("${buttonName.contactVolunteersByPhoneNumber}")
     private String buttonName;
 
     @Override
     public SendMessage execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
-        user.setState(state);
-        userService.save(user);
+        State state = State.VOLUNTEER_MENU;//todo нужно еще проверок навесить
+
+        user = userService.updateState(user, state);
         //todo какие то действия
-        String answerMessage = "Answer: " + buttonName;
+        String answerMessage = "contactVolunteersByPhoneNumber";
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         return addMenu(startTextCommand, state);
     }
@@ -30,5 +30,4 @@ public class DrivingDirectionsCommand extends AbstractTextCommand {
     public boolean isCommand(String message) {
         return message.equals(buttonName);
     }
-
 }
