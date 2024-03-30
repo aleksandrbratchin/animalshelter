@@ -11,3 +11,8 @@ spring:
 bot:
   name: ${botConfig.name}
   token: ${botConfig.token}
+rabbitQueue:
+  messages:
+    update:
+      TEXT: ${rabbitConfig.messages.update.TEXT}
+    answer: ${rabbitConfig.messages.answer}
