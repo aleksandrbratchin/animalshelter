@@ -19,7 +19,7 @@ import yamlpropertysourcefactory.YamlPropertySourceFactory;
 
 @Log4j2
 @Service
-@PropertySource(value = "classpath:rabbitQueueType.yml", factory = YamlPropertySourceFactory.class)
+@PropertySource(value = "classpath:application.yml", factory = YamlPropertySourceFactory.class)
 public class ConsumerServiceImpl implements ConsumerService {
 
     private final ProducerService producerService;
