@@ -1,21 +1,24 @@
 server:
   port: 8091
 spring:
+  config:
+    import: classpath:myconfig.yml
   rabbitmq:
-    host: 94.158.219.127
-    port: 5672
-    username: userok
-    password: password
+    host: ${rabbitmq.host}
+    port: ${rabbitmq.port}
+    username: ${rabbitmq.username}
+    password: ${rabbitmq.password}
   liquibase:
+    enabled: false
     change-log: classpath:liquibase/changelog-master.yml
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
   datasource:
-    url:
-    username:
-    password:
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
 buttonName:
   shelterInformation: Информация о приюте
   mainMenu: Главное меню
@@ -29,3 +32,5 @@ buttonName:
   safetyMeasuresInShelter: Техника безопасности на территории приюта
   securityData: Данные охраны для оформления пропуска на машину
   contactForCommunication: Контактные данные для связи
+  contactVolunteersByPhoneNumber: По номеру телефона
+  contactVolunteersByNickname: По номеру телефона

@@ -16,7 +16,9 @@ public class SecurityDataCommand extends AbstractTextCommand{
     private String buttonName;
 
     @Override
-    public SendMessage execute(Update update, User user) {
+    public SendMessage execute(CommandContext commandContext) {
+        User user = commandContext.getUser();
+        Update update = commandContext.getUpdate();
         State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
         user.setState(state);
         userService.save(user);
