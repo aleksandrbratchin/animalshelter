@@ -1,6 +1,5 @@
 package ru.teamfour.textcommand.command;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -9,29 +8,21 @@ import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
 @Component
-public class ContactVolunteersByNicknameCommand extends AbstractTextCommand {
-    @Value("${buttonName.contactVolunteersByNickname}")
-    private String buttonName;
+public class TalkWithClientCommand extends AbstractTextCommand {
 
     @Override
     public SendMessage execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
+        State state = State.VOLUNTEER_CHAT;
+        String answerMessage = "Вы общаетесь с клиентом";
 
-        String answerMessage = "Имена пользователей: " +
-                userService.getVolunteersByNickNameIsNotNull().stream()
-                .limit(10)
-                .map(user1 -> "@" + user1.getUserInfo().getNickName())
-                .reduce((str1, str2) -> str1 + ", " + str2)
-                .orElse("Попробуйте другой способ связи с волонтером!");
-        State state = State.VOLUNTEER_MENU;
-        userService.updateState(user, state);
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         return addMenu(startTextCommand, state);
     }
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals(buttonName);
+        return true;
     }
 }

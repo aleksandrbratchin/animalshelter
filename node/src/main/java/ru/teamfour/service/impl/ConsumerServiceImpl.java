@@ -39,6 +39,10 @@ public class ConsumerServiceImpl implements ConsumerService {
 
         HandlersStateFactory handlersStateFactory = handlersRoleFactory.getHandlers(user.getRole());
         HandlersState handlers = handlersStateFactory.getHandlers(user.getState());
+        if (handlers == null) {
+            log.error("Не удалось получить меню " + user.getState());
+            return;
+        }
         Handler handler = handlers.getHandler();
         TextCommand command = handler.handleRequest(update);
 

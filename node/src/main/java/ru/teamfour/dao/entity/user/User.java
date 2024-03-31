@@ -39,6 +39,8 @@ public class User extends AuditEntity {
     @Embedded
     private UserInfo userInfo;
 
+    @Embedded
+    private VolunteerParam volunteerParam;
     @Builder
     public User(UUID id, Long chatId, RoleUser role, State state, UserInfo userInfo) {
         super(id);
@@ -46,6 +48,7 @@ public class User extends AuditEntity {
         this.role = role;
         this.state = state;
         this.userInfo = userInfo;
+        this.volunteerParam = new VolunteerParam();
     }
 
 }

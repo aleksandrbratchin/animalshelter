@@ -9,21 +9,16 @@ import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
 @Component
-public class ContactVolunteersByNicknameCommand extends AbstractTextCommand {
-    @Value("${buttonName.contactVolunteersByNickname}")
-    private String buttonName;
+public class EndChatVolunteerCommand extends AbstractTextCommand {
+    @Value("${buttonName.endChatWithVolunteer}")
+    private String endChatWithVolunteer;
 
     @Override
     public SendMessage execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
 
-        String answerMessage = "Имена пользователей: " +
-                userService.getVolunteersByNickNameIsNotNull().stream()
-                .limit(10)
-                .map(user1 -> "@" + user1.getUserInfo().getNickName())
-                .reduce((str1, str2) -> str1 + ", " + str2)
-                .orElse("Попробуйте другой способ связи с волонтером!");
+        String answerMessage = "Вы завершили чат с волонтером";
         State state = State.VOLUNTEER_MENU;
         userService.updateState(user, state);
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
@@ -32,6 +27,6 @@ public class ContactVolunteersByNicknameCommand extends AbstractTextCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals(buttonName);
+        return message.equals(endChatWithVolunteer);
     }
 }
