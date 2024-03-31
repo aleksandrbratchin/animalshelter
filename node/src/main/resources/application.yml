@@ -23,6 +23,7 @@ rabbitQueue:
   messages:
     update:
       TEXT: ${rabbitConfig.messages.update.TEXT}
+      PHOTO: ${rabbitConfig.messages.update.PHOTO}
     answer: ${rabbitConfig.messages.answer}
 buttonName:
   shelterInformation: Информация о приюте

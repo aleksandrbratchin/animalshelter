@@ -35,7 +35,6 @@ public class ConsumerServiceImpl implements ConsumerService {
     @Override
     @RabbitListener(queues = "${rabbitQueue.messages.update.TEXT}")
     public void consumerTextMessageUpdates(Update update) {
-
         User user = userService.findByUserByChatIdOrCreateUser(update);
 
         HandlersStateFactory handlersStateFactory = handlersRoleFactory.getHandlers(user.getRole());
@@ -45,6 +44,23 @@ public class ConsumerServiceImpl implements ConsumerService {
 
         log.info(command.getClass());
         producerService.producerAnswer(command.execute(new CommandContext(update, user)));
+
+    }
+
+    @Override
+    @RabbitListener(queues = "${rabbitQueue.messages.update.PHOTO}")
+    public void consumerPhotoMessageUpdates(Update update) {
+        log.info("Принято фото в node");
+    //todo сделать прием и обработку фото
+/*        User user = userService.findByUserByChatIdOrCreateUser(update);
+
+        HandlersStateFactory handlersStateFactory = handlersRoleFactory.getHandlers(user.getRole());
+        HandlersState handlers = handlersStateFactory.getHandlers(user.getState());
+        Handler handler = handlers.getHandler();
+        TextCommand command = handler.handleRequest(update);
+
+        log.info(command.getClass());
+        producerService.producerAnswer(command.execute(new CommandContext(update, user)));*/
 
     }
 
