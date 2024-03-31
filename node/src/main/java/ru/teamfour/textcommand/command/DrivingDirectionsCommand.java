@@ -1,5 +1,4 @@
 package ru.teamfour.textcommand.command;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
