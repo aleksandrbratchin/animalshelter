@@ -13,6 +13,11 @@ public abstract class AbstractHandler implements Handler{
     private UnknownCommand unknownCommand;
     protected TextCommand textCommand;
 
+    /**
+     * Если цепочка завершена ({@code nextHandler == null}) возврацает {@link UnknownCommand}
+     * @param update
+     * @return {@link TextCommand}
+     */
     @Override
     public TextCommand handleRequest(Update update) {
         if (nextHandler != null) {
