@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+/**
+ * Классс родитель для entity. Добавляет id поле типа UUID
+ */
 @Getter
 @Setter
 @MappedSuperclass

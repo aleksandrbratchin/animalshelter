@@ -4,6 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
+/**
+ * Общая информация о пользователе и контактные данные
+ */
 @Getter
 @Setter
 @NoArgsConstructor

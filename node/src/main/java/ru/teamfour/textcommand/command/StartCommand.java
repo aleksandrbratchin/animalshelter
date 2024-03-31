@@ -8,6 +8,9 @@ import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
+/**
+ * Возвращает пользователя в главное меню
+ */
 @Component
 public class StartCommand extends AbstractTextCommand {
 

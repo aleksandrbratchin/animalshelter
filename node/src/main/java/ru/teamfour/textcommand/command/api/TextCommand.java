@@ -9,19 +9,17 @@ import ru.teamfour.textcommand.command.CommandContext;
 public interface TextCommand {
     /***
      * Проверяет подходит ли сообщение для выполнения команды
-     * @param message - сообщение
+     * @param message сообщение
+     * @return boolean true - подходит, false - не подходит
      */
     boolean isCommand(String message);
 
-    /***
-     * Что команда делает
+    /**
+     * Выполнение команды
+     * @param commandContext {@link CommandContext}
+     * @return {@link SendMessage} текст сообщение с добавленным по необходимости меню
      */
     SendMessage execute(CommandContext commandContext);
 
-    /***
-     * Какие команды ожидаются после этой
-     * Нужно чтобы менять состояние пользователя
-     */
-    /*State nextState();*/
 }
 
