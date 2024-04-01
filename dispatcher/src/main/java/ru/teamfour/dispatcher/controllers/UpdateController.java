@@ -51,6 +51,8 @@ public class UpdateController {
         var message = update.getMessage();
         if (message.hasText()) {
             processTextMessage(update);
+        } else if (message.hasPhoto()) {
+            processPhotoMessage(update);
         } else {
             String msq = "Неизвестный тип сообщения!";
             log.error(msq);
@@ -71,6 +73,14 @@ public class UpdateController {
     private void processTextMessage(Update update) {
         log.info("В брокер отправлено текстовое сообщение из чата: \"" + update.getMessage().getChatId() + "\" с текстом: \"" + update.getMessage().getText() + "\"");
         updateProducer.produce(rabbitConfiguration.getText(), update);
+    }
+
+    /***
+     * Отправить фото в брокер
+     */
+    private void processPhotoMessage(Update update) {
+        log.info("В брокер отправлено фото сообщение из чата: \"" + update.getMessage().getChatId());
+        updateProducer.produce(rabbitConfiguration.getPhoto(), update);
     }
 
 }

@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.handler.impl.client.handlerButton;
+package ru.teamfour.textcommand.handler.impl.volunteer.handlerButton;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -7,9 +7,8 @@ import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class StartHandler extends AbstractHandler {
-
-    public StartHandler(@Qualifier("startCommand") TextCommand textCommand) {
+public class TalkWithClientHandler extends AbstractHandler {
+    public TalkWithClientHandler(@Qualifier("talkWithClientCommand") TextCommand textCommand) {
         this.textCommand = textCommand;
     }
 

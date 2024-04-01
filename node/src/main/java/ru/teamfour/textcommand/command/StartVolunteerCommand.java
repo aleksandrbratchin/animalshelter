@@ -1,9 +1,9 @@
 package ru.teamfour.textcommand.command;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
@@ -12,21 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class WorkScheduleShelterCommand extends AbstractTextCommand {
-
-    @Value("${buttonName.workScheduleShelter}")
-    private String buttonName;
+public class StartVolunteerCommand extends AbstractTextCommand {
 
     @Override
     public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
+        State state = State.VOLUNTEER_START_MENU;
         user.setState(state);
-        userService.save(user);
-        //todo какие то действия
-        String answerMessage = "Answer: " + buttonName;
+        userService.updateInfoAndState(user, update, state);
+        String answerMessage = "Вы обновили свои контактные данные";
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+        sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true)); //удаляет все кнопки
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
         return sendMessages;
@@ -34,7 +31,7 @@ public class WorkScheduleShelterCommand extends AbstractTextCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals(buttonName);
+        return message.equals("/start");
     }
 
 }

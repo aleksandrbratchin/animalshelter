@@ -15,20 +15,24 @@ public class VolunteerHandlersState implements HandlersState {
     public final Handler startHandler;
     public final Handler contactVolunteersByPhoneNumberHandler;
     public final Handler contactVolunteersByNicknameHandler;
+    public final Handler contactVolunteerStartChatHandler;
 
     public VolunteerHandlersState(
             @Qualifier("startHandler") Handler startHandler,
             @Qualifier("contactVolunteersByPhoneNumberHandler") Handler contactVolunteersByPhoneNumberHandler,
-            @Qualifier("contactVolunteersByNicknameHandler") Handler contactVolunteersByNicknameHandler) {
+            @Qualifier("contactVolunteersByNicknameHandler") Handler contactVolunteersByNicknameHandler,
+            @Qualifier("contactVolunteerStartChatHandler") Handler contactVolunteerStartChatHandler) {
         this.startHandler = startHandler;
         this.contactVolunteersByPhoneNumberHandler = contactVolunteersByPhoneNumberHandler;
         this.contactVolunteersByNicknameHandler = contactVolunteersByNicknameHandler;
+        this.contactVolunteerStartChatHandler = contactVolunteerStartChatHandler;
     }
 
     @Override
     public Handler getHandler() {
         startHandler.setNext(contactVolunteersByPhoneNumberHandler);
         contactVolunteersByPhoneNumberHandler.setNext(contactVolunteersByNicknameHandler);
+        contactVolunteersByNicknameHandler.setNext(contactVolunteerStartChatHandler);
         return startHandler;
     }
 

@@ -23,6 +23,7 @@ rabbitQueue:
   messages:
     update:
       TEXT: ${rabbitConfig.messages.update.TEXT}
+      PHOTO: ${rabbitConfig.messages.update.PHOTO}
     answer: ${rabbitConfig.messages.answer}
 buttonName:
   shelterInformation: Информация о приюте
@@ -38,4 +39,6 @@ buttonName:
   securityData: Данные охраны для оформления пропуска на машину
   contactForCommunication: Контактные данные для связи
   contactVolunteersByPhoneNumber: По номеру телефона
-  contactVolunteersByNickname: По номеру nickname
+  contactVolunteersByNickname: По имени пользователя
+  endChatWithVolunteer: Завершить чат с волонтером
+  startChatWithVolunteer: Начать чат с волонтером
