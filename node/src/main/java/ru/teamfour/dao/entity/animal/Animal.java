@@ -13,29 +13,32 @@ import ru.teamfour.dao.entity.ParentEntity;
 import java.util.UUID;
 
 /**
- *абстрактный класс - родитель для классов животных
+ *класс для сущности животное, в котором создается сущность по типу животного
+ * имени, возрасту, породе, привычкам, усыновление, id приюта
  */
 @Getter
 @Setter
 @MappedSuperclass
 @NoArgsConstructor
 @Entity
-@Table()
-public abstract class Animal extends ParentEntity {
+@Table(name = "animals")
+public  class Animal extends ParentEntity {
+    @Column(name="type_of_animal")
+    private String typeOfAnimal;
     @Column(name = "name")
-    String name;
+    private String name;
     @Column(name="age")
-    Integer age;
+    private Double age;
     @Column(name="breed")  //порода
-    String breed;
+    private String breed;
     @Column(name="habits")  //привычки
-    String habits;
+    private String habits;
     @Column(name="adopted")  //усыновление
-    boolean adopted;
+    private boolean adopted;
     @Column(name="id_shelter")
-    UUID idShelter;
+    private UUID idShelter;
     @Builder
-    public Animal(UUID id, String name, Integer age,
+    public Animal(UUID id,String type, String name, Double age,
                   String breed, String habits,
                   boolean adopted, UUID idShelter) {
         super(id);
