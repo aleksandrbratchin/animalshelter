@@ -7,18 +7,23 @@ import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class TalkWithVolunteerCommand extends AbstractTextCommand {
 
     @Override
-    public SendMessage execute(CommandContext commandContext) {
+    public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.VOLUNTEER_CHAT;
-        String answerMessage = "Вы общаетесь с волонтером";
+        String answerMessage = update.getMessage().getText();
 
-        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
-        return addMenu(startTextCommand, state);
+        SendMessage sendMessage = messageUtils.generateSendMessageWithText(user.getChat().getActiveChat(), answerMessage);
+        List<SendMessage> sendMessages = new ArrayList<>();
+        sendMessages.add(addMenu(sendMessage, state));
+        return sendMessages;
     }
 
     @Override

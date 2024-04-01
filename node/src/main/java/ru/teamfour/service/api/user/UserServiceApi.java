@@ -10,7 +10,11 @@ import java.util.List;
 @Service
 public interface UserServiceApi {
 
+    User findByChatId(Long chatId);
+
     User save(User client);
+
+    void saveAll(List<User> client);
 
     /**
      * Создает пользователя и задает ему значения по умолчанию

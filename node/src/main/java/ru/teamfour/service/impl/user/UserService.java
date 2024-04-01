@@ -22,8 +22,17 @@ public class UserService implements UserServiceApi {
     }
 
     @Override
+    public User findByChatId(Long chatId) {
+        return repository.findByChatId(chatId).orElse(null);//todo
+    }
+    @Override
     public User save(User client) {
         return repository.save(client);
+    }
+
+    @Override
+    public void saveAll(List<User> client) {
+        repository.saveAll(client);
     }
 
     @Override

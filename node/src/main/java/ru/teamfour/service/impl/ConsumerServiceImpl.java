@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.api.ConsumerService;
@@ -16,6 +17,8 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 import ru.teamfour.textcommand.handler.api.HandlersStateFactory;
 import ru.teamfour.textcommand.handler.impl.HandlersRoleFactory;
 import yamlpropertysourcefactory.YamlPropertySourceFactory;
+
+import java.util.List;
 
 @Log4j2
 @Service
@@ -47,8 +50,9 @@ public class ConsumerServiceImpl implements ConsumerService {
         TextCommand command = handler.handleRequest(update);
 
         log.info(command.getClass());
-        producerService.producerAnswer(command.execute(new CommandContext(update, user)));
 
+        List<SendMessage> execute = command.execute(new CommandContext(update, user));
+        execute.forEach(producerService::producerAnswer);
     }
 
     @Override

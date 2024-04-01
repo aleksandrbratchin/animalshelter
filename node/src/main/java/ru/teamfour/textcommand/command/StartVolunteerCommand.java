@@ -8,20 +8,25 @@ import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class StartVolunteerCommand extends AbstractTextCommand {
 
     @Override
-    public SendMessage execute(CommandContext commandContext) {
+    public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.VOLUNTEER_START_MENU;
         user.setState(state);
         userService.updateInfoAndState(user, update, state);
         String answerMessage = "Вы обновили свои контактные данные";
-        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
-        startTextCommand.setReplyMarkup(new ReplyKeyboardRemove(true)); //удаляет все кнопки
-        return startTextCommand;
+        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+        sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true)); //удаляет все кнопки
+        List<SendMessage> sendMessages = new ArrayList<>();
+        sendMessages.add(addMenu(sendMessage, state));
+        return sendMessages;
     }
 
     @Override

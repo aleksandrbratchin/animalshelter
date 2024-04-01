@@ -9,6 +9,9 @@ import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Меняет роль пользователя на волонтера
  */
@@ -16,7 +19,7 @@ import ru.teamfour.textcommand.command.api.State;
 public class BecomeVolunteerCommand extends AbstractTextCommand {
 
     @Override
-    public SendMessage execute(CommandContext commandContext) {
+    public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.VOLUNTEER_START_MENU;
@@ -24,9 +27,11 @@ public class BecomeVolunteerCommand extends AbstractTextCommand {
         user.setRole(RoleUser.VOLUNTEER);
         userService.updateInfoAndState(user, update, state);
         String answerMessage = "Вы стали волонтером!";
-        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
-        startTextCommand.setReplyMarkup(new ReplyKeyboardRemove(true));
-        return startTextCommand;
+        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+        sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
+        List<SendMessage> sendMessages = new ArrayList<>();
+        sendMessages.add(addMenu(sendMessage, state));
+        return sendMessages;
     }
 
     @Override

@@ -10,5 +10,6 @@ public enum State {
     ADOPTION, //Этап 2. Как взять животное из приюта
     VOLUNTEER_MENU, //Выбор способа связи с волонтером
     VOLUNTEER_CHAT, //Чат с волонтером
-    VOLUNTEER_START_MENU, PET_REPORT //Этап 3. Прислать отчет о питомце
+    VOLUNTEER_START_MENU,
+    PET_REPORT //Этап 3. Прислать отчет о питомце
 }
