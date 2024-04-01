@@ -18,11 +18,10 @@ import java.util.UUID;
  */
 @Getter
 @Setter
-@MappedSuperclass
 @NoArgsConstructor
 @Entity
 @Table(name = "animals")
-public  class Animal extends ParentEntity {
+public class Animal extends ParentEntity {
     @Column(name="type_of_animal")
     private String typeOfAnimal;
     @Column(name = "name")
