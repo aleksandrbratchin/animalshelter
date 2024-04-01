@@ -1,10 +1,8 @@
 package ru.teamfour.service.impl.animal;
 
 import jakarta.ws.rs.NotFoundException;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.teamfour.dao.entity.animal.Animal;
-import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.repositories.AnimalRepository;
 import ru.teamfour.service.api.animal.AnimalService;
 
@@ -12,9 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
 public class AnimalServiceImpl implements AnimalService {
-    AnimalRepository repository;
+    private final AnimalRepository repository;
+
+    public AnimalServiceImpl(AnimalRepository repository) {
+        this.repository = repository;
+    }
 
     /**
      * метод создает сущность  {@link Animal}  и сохраняет ее в БД
