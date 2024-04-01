@@ -18,13 +18,14 @@ public class AnimalServiceImpl implements AnimalService {
 
     /**
      * метод создает сущность  {@link Animal}  и сохраняет ее в БД
-     * @param id тип UUID, генерируется автоматически
-     * @param type вид животного
-     * @param name кличка
-     * @param age возраст
-     * @param breed порода
-     * @param habits привычки
-     * @param adopted true - усыновленное, false - неусыновленное
+     *
+     * @param id        тип UUID, генерируется автоматически
+     * @param type      вид животного
+     * @param name      кличка
+     * @param age       возраст
+     * @param breed     порода
+     * @param habits    привычки
+     * @param adopted   true - усыновленное, false - неусыновленное
      * @param idShelter id приюта, в котором будет находиться животное
      * @return возвращает созданную сущность
      */
@@ -37,16 +38,18 @@ public class AnimalServiceImpl implements AnimalService {
 
         return repository.save(animal);
     }
+
     /**
      * метод заменяет сущность  {@link Animal},
      * которая уже есть в БД с таким же UUID
-     * @param id тип UUID
-     * @param type вид животного
-     * @param name кличка
-     * @param age возраст
-     * @param breed порода
-     * @param habits привычки
-     * @param adopted true - усыновленное, false - неусыновленное
+     *
+     * @param id        тип UUID
+     * @param type      вид животного
+     * @param name      кличка
+     * @param age       возраст
+     * @param breed     порода
+     * @param habits    привычки
+     * @param adopted   true - усыновленное, false - неусыновленное
      * @param idShelter id приюта, в котором будет находиться животное
      * @return возвращает созданную сущность
      */
@@ -62,6 +65,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     /**
      * метод удаляет сущность {@link Animal} по UUID
+     *
      * @param id тип UUID
      */
     @Override
@@ -69,8 +73,10 @@ public class AnimalServiceImpl implements AnimalService {
         repository.deleteById(id);
 
     }
+
     /**
      * метод находит сущность {@link Animal} по UUID
+     *
      * @param id тип UUID
      */
     @Override
@@ -79,7 +85,6 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     /**
-     *
      * @return возвращает список всех животных
      */
     @Override
@@ -89,6 +94,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     /**
      * метод по поиску усыновленных или неусыновленных животных
+     *
      * @param b true или false
      * @return возвращает список всех животных усыновленных или неусыновленных
      */
@@ -98,7 +104,6 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     /**
-     *
      * @param type тип животного, например: собака
      * @return возвращает список животных по указанному типу
      */
