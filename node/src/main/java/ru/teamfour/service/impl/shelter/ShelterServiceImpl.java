@@ -21,6 +21,7 @@ public class ShelterServiceImpl implements ShelterService {
      */
     @Override
     public Shelter add(Shelter shelter) {
+
         return shelterRepository.save(shelter);
     }
 
