@@ -23,7 +23,7 @@ import java.util.UUID;
 @Table(name = "animals")
 public class Animal extends ParentEntity {
     @Column(name="type_of_animal")
-    private String typeOfAnimal;
+    private TypeOfAnimal typeOfAnimal;
     @Column(name = "name")
     private String name;
     @Column(name="age")
@@ -37,10 +37,12 @@ public class Animal extends ParentEntity {
     @Column(name="id_shelter")
     private UUID idShelter;
     @Builder
-    public Animal(UUID id,String type, String name, Double age,
-                  String breed, String habits,
+
+    public Animal(UUID id, TypeOfAnimal typeOfAnimal, String name,
+                  Double age, String breed, String habits,
                   boolean adopted, UUID idShelter) {
         super(id);
+        this.typeOfAnimal = typeOfAnimal;
         this.name = name;
         this.age = age;
         this.breed = breed;
