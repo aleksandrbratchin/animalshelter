@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.teamfour.dao.entity.ParentEntity;
+import ru.teamfour.dao.entity.ParentUUIDEntity;
 
 import java.util.UUID;
 
@@ -16,9 +16,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "shelters")
-public class Shelter extends ParentEntity {
-    @Column(name = "shelter_information")
-    private String shelterInformation;
+public class Shelter extends ParentUUIDEntity {
+    @Column(name = "story_of_shelter")
+    private String storyOfShelter;
     @Column(name = "shelter_address")
     private String shelterAddress;
     @Column(name = "work_schedule_shelter")
@@ -27,20 +27,18 @@ public class Shelter extends ParentEntity {
     private String safetyMeasuresInShelter;
     @Column(name = "security_data")
     private String securityData;
-    @Column(name = "contact_for_communication")
-    private String contactForCommunication;
+
 
     @Builder
-    public Shelter(UUID id, String shelterInformation,
+    public Shelter(UUID id, String storyOfShelter,
                    String shelterAddress, String workScheduleShelter,
-                   String safetyMeasuresInShelter, String securityData,
-                   String contactForCommunication) {
+                   String safetyMeasuresInShelter, String securityData
+    ) {
         super(id);
-        this.shelterInformation = shelterInformation;
+        this.storyOfShelter = storyOfShelter;
         this.shelterAddress = shelterAddress;
         this.workScheduleShelter = workScheduleShelter;
         this.safetyMeasuresInShelter = safetyMeasuresInShelter;
         this.securityData = securityData;
-        this.contactForCommunication = contactForCommunication;
     }
 }

@@ -23,8 +23,8 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
     private String securityData;
     @Value("${buttonName.safetyMeasuresInShelter}")
     private String safetyMeasuresInShelter;
-    @Value("${buttonName.contactForCommunication}")
-    private String contactForCommunication;
+    @Value("${buttonName.storyOfShelter}")
+    private String storyOfShelter;
     @Value("${buttonName.volunteer}")
     private String volunteer;
 
@@ -45,7 +45,7 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
         keyboard.add(row2);
         KeyboardRow row3 = new KeyboardRow();
         row3.add(safetyMeasuresInShelter);
-        row3.add(contactForCommunication);
+        row3.add(storyOfShelter);
         keyboard.add(row3);
         KeyboardRow row4 = new KeyboardRow();
         row4.add(volunteer);

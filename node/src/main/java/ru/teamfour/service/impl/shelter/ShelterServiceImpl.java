@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.shelter.ShelterService;
+
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,6 +23,7 @@ public class ShelterServiceImpl implements ShelterService {
      */
     @Override
     public Shelter add(Shelter shelter) {
+
         return shelterRepository.save(shelter);
     }
 
@@ -43,6 +46,11 @@ public class ShelterServiceImpl implements ShelterService {
     @Override
     public Shelter find(UUID id) {
         return shelterRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Shelter> findAll() {
+        return shelterRepository.findAll();
     }
 
     /**

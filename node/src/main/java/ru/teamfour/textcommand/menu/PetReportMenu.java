@@ -13,18 +13,18 @@ import java.util.List;
 @Component
 public class PetReportMenu extends ButtonAbstractMenu {
     //todo функционал заглушка
-    @Value("${buttonName.shelterInformation}")
-    private String shelterInformationButton;
+    @Value("${buttonName.sendPhoto}")
+    private String sendPhoto;
 
-    @Value("${buttonName.petReport}")
-    private String petReportButton;
-
-    @Value("${buttonName.adoption}")
-    private String adoptionButton;
+    @Value("${buttonName.sendText}")
+    private String sendText;
 
     @Value("${buttonName.volunteer}")
-    private String volunteerButton;
+    private String volunteer;
 
+    /***
+     * Обрисовка меню "Послать отчет о питомце"
+     */
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setSelective(true);
@@ -33,12 +33,11 @@ public class PetReportMenu extends ButtonAbstractMenu {
 
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row1 = new KeyboardRow();
-        row1.add(shelterInformationButton);
-        row1.add(adoptionButton);
+        row1.add(sendPhoto);
+        row1.add(sendText);
         keyboard.add(row1);
         KeyboardRow row2 = new KeyboardRow();
-        row2.add(petReportButton);
-        row2.add(volunteerButton);
+        row2.add(volunteer);
         keyboard.add(row2);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
