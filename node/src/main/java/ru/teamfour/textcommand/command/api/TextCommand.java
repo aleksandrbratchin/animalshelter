@@ -20,7 +20,7 @@ public interface TextCommand {
      * Выполнение команды
      *
      * @param commandContext {@link CommandContext}
-     * @return {@link SendMessage} текст сообщение с добавленным по необходимости меню
+     * @return {@link List<SendMessage>} список собщений для отправки в телеграм
      */
     List<SendMessage> execute(CommandContext commandContext);
 

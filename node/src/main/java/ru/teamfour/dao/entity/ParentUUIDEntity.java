@@ -1,6 +1,7 @@
 package ru.teamfour.dao.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,14 +15,12 @@ import java.util.UUID;
 @Setter
 @MappedSuperclass
 @NoArgsConstructor
-public abstract class ParentEntity {
+@AllArgsConstructor
+public abstract class ParentUUIDEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     protected UUID id;
 
-    public ParentEntity(UUID id) {
-        this.id = id;
-    }
 }

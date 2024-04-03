@@ -17,7 +17,7 @@ import java.util.UUID;
 @MappedSuperclass
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AuditEntity extends ParentEntity {
+public abstract class AuditEntity extends ParentUUIDEntity {
 
     @LastModifiedDate
     protected LocalDateTime date_update;

@@ -1,14 +1,11 @@
 package ru.teamfour.dao.entity.animal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.teamfour.dao.entity.ParentEntity;
+import ru.teamfour.dao.entity.ParentUUIDEntity;
 
 import java.util.UUID;
 
@@ -21,9 +18,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "animals")
-public class Animal extends ParentEntity {
+public class Animal extends ParentUUIDEntity {
     @Column(name="type_of_animal")
-    private TypeOfAnimal typeOfAnimal;
+    @Enumerated(EnumType.STRING)
+    private TypeAnimal typeOfAnimal;
     @Column(name = "name")
     private String name;
     @Column(name="age")
@@ -37,10 +35,7 @@ public class Animal extends ParentEntity {
     @Column(name="id_shelter")
     private UUID idShelter;
     @Builder
-
-    public Animal(UUID id, TypeOfAnimal typeOfAnimal, String name,
-                  Double age, String breed, String habits,
-                  boolean adopted, UUID idShelter) {
+    public Animal(UUID id, TypeAnimal typeOfAnimal, String name, Double age, String breed, String habits, boolean adopted, UUID idShelter) {
         super(id);
         this.typeOfAnimal = typeOfAnimal;
         this.name = name;

@@ -2,17 +2,17 @@ package ru.teamfour.service.api.animal;
 
 import org.springframework.stereotype.Service;
 import ru.teamfour.dao.entity.animal.Animal;
-import ru.teamfour.dao.entity.animal.TypeOfAnimal;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public interface AnimalService {
-    Animal create(UUID id, TypeOfAnimal type, String name, Double age, String breed,
+    Animal create(UUID id, TypeAnimal type, String name, Double age, String breed,
                   String habits, boolean adopted, UUID id_shelter);
 
-    Animal put(UUID id, TypeOfAnimal type, String name, Double age, String breed,
+    Animal put(UUID id, TypeAnimal type, String name, Double age, String breed,
                String habits, boolean adopted, UUID id_shelter);
 
     void delete(UUID id);
@@ -23,5 +23,5 @@ public interface AnimalService {
 
     List<Animal> findAllByAdopted(boolean b);
 
-    List<Animal> findAllByType(TypeOfAnimal type);
+    List<Animal> findAllByType(TypeAnimal type);
 }

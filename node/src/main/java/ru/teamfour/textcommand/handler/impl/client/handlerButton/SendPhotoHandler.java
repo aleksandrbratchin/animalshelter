@@ -7,7 +7,7 @@ import ru.teamfour.textcommand.command.api.TextCommand;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 @Component
 public class SendPhotoHandler extends AbstractHandler {
-    public SendPhotoHandler(@Qualifier("sendPhotoHandlerCommand") TextCommand textCommand) {
+    public SendPhotoHandler(@Qualifier("sendPhotoCommand") TextCommand textCommand) {
         this.textCommand = textCommand;
     }
 

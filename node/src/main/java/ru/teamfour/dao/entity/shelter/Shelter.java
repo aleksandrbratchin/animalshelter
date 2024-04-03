@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.teamfour.dao.entity.ParentEntity;
+import ru.teamfour.dao.entity.ParentUUIDEntity;
 
 import java.util.UUID;
 
@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "shelters")
-public class Shelter extends ParentEntity {
+public class Shelter extends ParentUUIDEntity {
     @Column(name = "story_of_shelter")
     private String storyOfShelter;
     @Column(name = "shelter_address")
