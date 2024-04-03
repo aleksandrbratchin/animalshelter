@@ -5,23 +5,27 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
-
 @Component
-public class PetReportCommand extends AbstractTextCommand {
-    @Value("${buttonName.petReport}")
+public class SendPhotoHandlerCommand extends AbstractTextCommand {
+    @Value("${buttonName.sendPhoto}")
     private String buttonName;
+
+    public SendPhotoHandlerCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public SendMessage execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        //State state = State.PET_REPORT;//todo нужно еще проверок навесить
-        State state = State.PET_REPORT;//todo заглушка пока не реализовано
+
+        State state = State.PET_REPORT;//todo нужно еще проверок навесить
         user.setState(state);
         userService.save(user);
-        //todo какие то действия
+
         String answerMessage = "Answer: " + buttonName;
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         return addMenu(startTextCommand, state);
@@ -31,4 +35,5 @@ public class PetReportCommand extends AbstractTextCommand {
     public boolean isCommand(String message) {
         return message.equals(buttonName);
     }
+
 }
