@@ -3,6 +3,7 @@ package ru.teamfour.service.impl.animal;
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
 import ru.teamfour.dao.entity.animal.Animal;
+import ru.teamfour.dao.entity.animal.TypeOfAnimal;
 import ru.teamfour.repositories.AnimalRepository;
 import ru.teamfour.service.api.animal.AnimalService;
 
@@ -31,7 +32,7 @@ public class AnimalServiceImpl implements AnimalService {
      * @return возвращает созданную сущность
      */
     @Override
-    public Animal create(UUID id, String type, String name, Double age,
+    public Animal create(UUID id, TypeOfAnimal type, String name, Double age,
                          String breed, String habits,
                          boolean adopted, UUID idShelter) {
         Animal animal = new Animal(id, type, name, age, breed,
@@ -55,7 +56,7 @@ public class AnimalServiceImpl implements AnimalService {
      * @return возвращает созданную сущность
      */
     @Override
-    public Animal put(UUID id, String type, String name, Double age,
+    public Animal put(UUID id, TypeOfAnimal type, String name, Double age,
                       String breed, String habits, boolean adopted,
                       UUID idShelter) {
         Animal animal = new Animal(id, type, name, age, breed,
@@ -109,7 +110,7 @@ public class AnimalServiceImpl implements AnimalService {
      * @return возвращает список животных по указанному типу
      */
     @Override
-    public List<Animal> findAllByType(String type) {
-        return repository.findAnimalByTypeOfAnimalIgnoreCase(type);
+    public List<Animal> findAllByType(TypeOfAnimal type) {
+        return repository.findAnimalByTypeOfAnimal(type);
     }
 }
