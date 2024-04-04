@@ -13,6 +13,7 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 public class MenuHandlersState implements HandlersState {
 
     public final Handler startHandler;
+    public final Handler initHandler;
     public final Handler shelterInformationHandler;
     public final Handler petReportHandler;
     public final Handler adoptionHandler;
@@ -21,12 +22,14 @@ public class MenuHandlersState implements HandlersState {
 
     public MenuHandlersState(
             @Qualifier("startHandler") Handler startHandler,
+            @Qualifier("initHandler") Handler initHandler,
             @Qualifier("shelterInformationHandler") Handler shelterInformationHandler,
             @Qualifier("petReportHandler") Handler petReportHandler,
             @Qualifier("adoptionHandler") Handler adoptionHandler,
             @Qualifier("volunteerHandler") Handler volunteerHandler,
             @Qualifier("becomeVolunteerHandler") Handler becomeVolunteerHandler) {
         this.startHandler = startHandler;
+        this.initHandler = initHandler;
         this.shelterInformationHandler = shelterInformationHandler;
         this.petReportHandler = petReportHandler;
         this.adoptionHandler = adoptionHandler;
