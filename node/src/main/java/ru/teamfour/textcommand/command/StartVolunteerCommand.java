@@ -11,6 +11,10 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * /start в меню волонтера
+ * обновляет информацию о волонтере
+ */
 @Component
 public class StartVolunteerCommand extends AbstractTextCommand {
 

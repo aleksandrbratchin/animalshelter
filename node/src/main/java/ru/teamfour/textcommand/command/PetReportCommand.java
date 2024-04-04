@@ -20,11 +20,9 @@ public class PetReportCommand extends AbstractTextCommand {
     public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        //State state = State.PET_REPORT;//todo нужно еще проверок навесить
-        State state = State.PET_REPORT;//todo заглушка пока не реализовано
+        State state = State.PET_REPORT;
         user.setState(state);
         userService.save(user);
-        //todo какие то действия
         String answerMessage = "Answer: " + buttonName;
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

@@ -11,6 +11,10 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Кнопка "По номеру телефона" в меню "Позвать волонтера"
+ * Если есть волонтеры с заполненными номерами телефонов формирует сообщение с номерами телефонов наимение загруженных волонтеров
+ */
 @Component
 public class ContactVolunteersByPhoneNumberCommand extends AbstractTextCommand {
     @Value("${buttonName.contactVolunteersByPhoneNumber}")
@@ -21,7 +25,7 @@ public class ContactVolunteersByPhoneNumberCommand extends AbstractTextCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
 
-        String answerMessage = "Номера телефонов: " +
+        String answerMessage =
                 userService.getVolunteersByPhoneNumberIsNotNull().stream()
                         .limit(10)
                         .map(user1 -> user1.getUserInfo().getPhoneNumber())

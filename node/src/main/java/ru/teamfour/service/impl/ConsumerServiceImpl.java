@@ -2,7 +2,6 @@ package ru.teamfour.service.impl;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -16,13 +15,11 @@ import ru.teamfour.textcommand.handler.api.Handler;
 import ru.teamfour.textcommand.handler.api.HandlersState;
 import ru.teamfour.textcommand.handler.api.HandlersStateFactory;
 import ru.teamfour.textcommand.handler.impl.HandlersRoleFactory;
-import yamlpropertysourcefactory.YamlPropertySourceFactory;
 
 import java.util.List;
 
 @Log4j2
 @Service
-@PropertySource(value = "classpath:application.yml", factory = YamlPropertySourceFactory.class)
 public class ConsumerServiceImpl implements ConsumerService {
 
     private final ProducerService producerService;
@@ -59,7 +56,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     @RabbitListener(queues = "${rabbitQueue.messages.update.PHOTO}")
     public void consumerPhotoMessageUpdates(Update update) {
         log.info("Принято фото в node");
-    //todo сделать прием и обработку фото
+        //todo сделать прием и обработку фото
 /*        User user = userService.findByUserByChatIdOrCreateUser(update);
 
         HandlersStateFactory handlersStateFactory = handlersRoleFactory.getHandlers(user.getRole());

@@ -9,7 +9,6 @@ import yamlpropertysourcefactory.YamlPropertySourceFactory;
 
 @Data
 @Component
-@PropertySource(value = "classpath:application.yml", factory = YamlPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "bot")
 public class BotConfig {
     private String name;

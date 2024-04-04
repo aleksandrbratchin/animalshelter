@@ -10,7 +10,6 @@ import org.springframework.context.annotation.PropertySource;
 import yamlpropertysourcefactory.YamlPropertySourceFactory;
 
 @Configuration
-@PropertySource(value = "classpath:application.yml", factory = YamlPropertySourceFactory.class)
 public class RabbitConfiguration {
 
     @Value("${rabbitQueue.messages.update.TEXT}")

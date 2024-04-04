@@ -26,7 +26,7 @@ public class ShelterInformationCommand extends AbstractTextCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
 
-        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
+        State state = State.INFO_SHELTER;
         user.setState(state);
         userService.save(user);
 

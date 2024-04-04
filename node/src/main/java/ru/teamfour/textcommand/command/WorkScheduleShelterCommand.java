@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
@@ -26,10 +25,8 @@ public class WorkScheduleShelterCommand extends AbstractTextCommand {
     public List<SendMessage> execute(CommandContext commandContext) {
 
         Update update = commandContext.getUpdate();
-        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
+        State state = State.INFO_SHELTER;
 
-
-        //todo какие то действия
         String answerMessage = "Расписание работы приюта: " +
                 shelterService.findAll().get(0).getWorkScheduleShelter();
 

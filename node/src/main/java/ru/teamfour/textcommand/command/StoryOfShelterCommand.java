@@ -22,10 +22,8 @@ public class StoryOfShelterCommand extends AbstractTextCommand {
     public List<SendMessage> execute(CommandContext commandContext) {
 
         Update update = commandContext.getUpdate();
-        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
+        State state = State.INFO_SHELTER;
 
-
-        //todo какие то действия
         String answerMessage = "Рассказ о приюте: " +
                 shelterService.findAll().get(0).getStoryOfShelter();
 

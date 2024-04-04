@@ -26,7 +26,7 @@ public class SendPhotoCommand extends AbstractTextCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
 
-        State state = State.PET_REPORT;//todo нужно еще проверок навесить
+        State state = State.PET_REPORT;
         user.setState(state);
         userService.save(user);
 

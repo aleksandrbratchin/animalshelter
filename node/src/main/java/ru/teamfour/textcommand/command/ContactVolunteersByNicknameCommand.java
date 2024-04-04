@@ -11,6 +11,10 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Кнопка "По имени пользователя" в меню "Позвать волонтера"
+ * Если есть волонтеры, формирует сообщение с именами пользователей наимение загруженных волонтеров
+ */
 @Component
 public class ContactVolunteersByNicknameCommand extends AbstractTextCommand {
     @Value("${buttonName.contactVolunteersByNickname}")
@@ -21,7 +25,7 @@ public class ContactVolunteersByNicknameCommand extends AbstractTextCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
 
-        String answerMessage = "Имена пользователей: " +
+        String answerMessage =
                 userService.getVolunteersByNickNameIsNotNull().stream()
                 .limit(10)
                 .map(user1 -> "@" + user1.getUserInfo().getNickName())
