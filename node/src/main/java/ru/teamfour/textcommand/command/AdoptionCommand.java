@@ -21,7 +21,7 @@ public class AdoptionCommand extends AbstractTextCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         //State state = State.ADOPTION;//todo нужно еще проверок навесить
-        State state = State.MAIN_MENU;//todo заглушка пока не реализовано
+        State state = State.ADOPTION;//todo заглушка пока не реализовано
         user.setState(state);
         userService.save(user);
 

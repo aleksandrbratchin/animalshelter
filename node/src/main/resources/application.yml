@@ -38,6 +38,10 @@ buttonName:
   safetyMeasuresInShelter: Техника безопасности на территории приюта
   securityData: Данные охраны для оформления пропуска на машину
   contactForCommunication: Контактные данные для связи
+  listAnimals: Показать весь список животных
+  rulesAnimal: Првавила знакомства с животным
+  listDocuments: Список документов
+  recommendations: Рекомендации
   contactVolunteersByPhoneNumber: По номеру телефона
   contactVolunteersByNickname: По имени пользователя
   endChatWithVolunteer: Завершить чат с волонтером
