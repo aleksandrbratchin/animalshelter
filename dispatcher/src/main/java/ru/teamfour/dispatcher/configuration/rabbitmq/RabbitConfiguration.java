@@ -10,11 +10,14 @@ import org.springframework.context.annotation.PropertySource;
 import yamlpropertysourcefactory.YamlPropertySourceFactory;
 
 @Configuration
-@PropertySource(value = "classpath:rabbitQueueType.yml", factory = YamlPropertySourceFactory.class)
+@PropertySource(value = "classpath:application.yml", factory = YamlPropertySourceFactory.class)
 public class RabbitConfiguration {
 
     @Value("${rabbitQueue.messages.update.TEXT}")
     private String text;
+
+    @Value("${rabbitQueue.messages.update.PHOTO}")
+    private String photo;
 
     @Value("${rabbitQueue.messages.answer}")
     private String answer;
@@ -30,6 +33,11 @@ public class RabbitConfiguration {
     }
 
     @Bean
+    public Queue photoMessageQueue() {
+        return new Queue(photo);
+    }
+
+    @Bean
     public Queue answerMessageQueue() {
         return new Queue(answer);
     }
@@ -41,4 +49,9 @@ public class RabbitConfiguration {
     public String getAnswer() {
         return answer;
     }
+
+    public String getPhoto() {
+        return photo;
+    }
+
 }

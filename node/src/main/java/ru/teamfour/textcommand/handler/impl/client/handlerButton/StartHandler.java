@@ -1,6 +1,5 @@
 package ru.teamfour.textcommand.handler.impl.client.handlerButton;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;

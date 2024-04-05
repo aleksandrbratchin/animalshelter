@@ -8,13 +8,16 @@ import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class VolunteerCommand extends AbstractTextCommand {
     @Value("${buttonName.volunteer}")
     private String buttonName;
 
     @Override
-    public SendMessage execute(CommandContext commandContext) {
+    public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.VOLUNTEER_MENU;//todo нужно еще проверок навесить
@@ -22,8 +25,10 @@ public class VolunteerCommand extends AbstractTextCommand {
         userService.updateState(user, state);
         //todo какие то действия
         String answerMessage = "Выберите предпочитаемый способ связи с волонтером.";
-        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
-        return addMenu(startTextCommand, state);
+        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+        List<SendMessage> sendMessages = new ArrayList<>();
+        sendMessages.add(addMenu(sendMessage, state));
+        return sendMessages;
     }
 
     @Override

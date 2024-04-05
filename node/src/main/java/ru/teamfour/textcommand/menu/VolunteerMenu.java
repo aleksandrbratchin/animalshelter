@@ -19,6 +19,9 @@ public class VolunteerMenu extends ButtonAbstractMenu {
     @Value("${buttonName.contactVolunteersByPhoneNumber}")
     private String contactVolunteersByPhoneNumber;
 
+    @Value("${buttonName.startChatWithVolunteer}")
+    private String startChatWithVolunteer;
+
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setSelective(true);
@@ -30,6 +33,9 @@ public class VolunteerMenu extends ButtonAbstractMenu {
         row1.add(contactVolunteersByNickname);
         row1.add(contactVolunteersByPhoneNumber);
         keyboard.add(row1);
+        KeyboardRow row2 = new KeyboardRow();
+        row2.add(startChatWithVolunteer);
+        keyboard.add(row2);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
     }

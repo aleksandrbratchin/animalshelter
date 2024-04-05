@@ -1,29 +1,41 @@
 package ru.teamfour.textcommand.command;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ShelterAddressCommand extends AbstractTextCommand {
     @Value("${buttonName.shelterAddress}")
     private String buttonName;
+    @Autowired
+    private ShelterServiceImpl shelterService;
 
     @Override
-    public SendMessage execute(CommandContext commandContext) {
-        User user = commandContext.getUser();
+    public List<SendMessage> execute(CommandContext commandContext) {
+
         Update update = commandContext.getUpdate();
         State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
-        user.setState(state);
-        userService.save(user);
+
+
         //todo какие то действия
-        String answerMessage = "Answer: " + buttonName;
-        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
-        return addMenu(startTextCommand, state);
+        String answerMessage = "Адрес: " +
+                shelterService.findAll().get(0).getShelterAddress();
+
+        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+        List<SendMessage> sendMessages = new ArrayList<>();
+        sendMessages.add(addMenu(sendMessage, state));
+        return sendMessages;
+
     }
 
     @Override

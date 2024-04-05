@@ -19,6 +19,12 @@ spring:
     url: ${db.url}
     username: ${db.username}
     password: ${db.password}
+rabbitQueue:
+  messages:
+    update:
+      TEXT: ${rabbitConfig.messages.update.TEXT}
+      PHOTO: ${rabbitConfig.messages.update.PHOTO}
+    answer: ${rabbitConfig.messages.answer}
 buttonName:
   shelterInformation: Информация о приюте
   mainMenu: Главное меню
@@ -33,4 +39,9 @@ buttonName:
   securityData: Данные охраны для оформления пропуска на машину
   contactForCommunication: Контактные данные для связи
   contactVolunteersByPhoneNumber: По номеру телефона
-  contactVolunteersByNickname: По номеру телефона
+  contactVolunteersByNickname: По имени пользователя
+  endChatWithVolunteer: Завершить чат с волонтером
+  startChatWithVolunteer: Начать чат с волонтером
+  storyOfShelter: Рассказ о приюте
+  sendPhoto: Отправить фото
+  sendText: Отправить текст

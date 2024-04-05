@@ -7,6 +7,15 @@ import org.telegram.telegrambots.meta.api.objects.Update;
  */
 public interface ConsumerService {
 
+    /**
+     * Прием и обработка текстовых сообщений
+     * @param update {@link Update}
+     */
     void consumerTextMessageUpdates(Update update);
+    /**
+     * Прием и обработка фото сообщений
+     * @param update {@link Update}
+     */
+    void consumerPhotoMessageUpdates(Update update);
 
 }
