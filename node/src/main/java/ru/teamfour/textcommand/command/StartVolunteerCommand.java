@@ -11,6 +11,10 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * /start в меню волонтера
+ * обновляет информацию о волонтере
+ */
 @Component
 public class StartVolunteerCommand extends AbstractTextCommand {
 
@@ -25,7 +29,7 @@ public class StartVolunteerCommand extends AbstractTextCommand {
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true)); //удаляет все кнопки
         List<SendMessage> sendMessages = new ArrayList<>();
-        sendMessages.add(addMenu(sendMessage, state));
+        sendMessages.add(sendMessage);
         return sendMessages;
     }
 

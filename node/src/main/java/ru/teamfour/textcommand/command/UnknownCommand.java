@@ -9,6 +9,9 @@ import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Формирует сообщение о том что введена неизвестная команда
+ */
 @Component
 public class UnknownCommand extends AbstractTextCommand {
 

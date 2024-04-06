@@ -24,10 +24,9 @@ public class StartCommand extends AbstractTextCommand {
     public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.MAIN_MENU;//todo нужно еще проверок навесить
+        State state = State.MAIN_MENU;
         user.setState(state);
         userService.save(user);
-        //todo какие то действия
         String answerMessage = "Answer: " + buttonName;
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
@@ -37,7 +36,7 @@ public class StartCommand extends AbstractTextCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals("/start") || message.equals(buttonName);
+        return message.equals("/main_menu") || message.equals(buttonName);
     }
 
 }

@@ -1,8 +1,12 @@
 package ru.teamfour.dao.entity.user;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.teamfour.dao.entity.AuditEntity;
+import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.UUID;
@@ -45,8 +49,12 @@ public class User extends AuditEntity {
     @Embedded
     private Chat chat;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shelter_id", referencedColumnName = "id")
+    private Shelter shelter;
+
     @Builder
-    public User(UUID id, Long chatId, RoleUser role, State state, UserInfo userInfo) {
+    public User(UUID id, Long chatId, RoleUser role, State state, UserInfo userInfo, Shelter shelter) {
         super(id);
         this.chatId = chatId;
         this.role = role;
@@ -54,6 +62,8 @@ public class User extends AuditEntity {
         this.userInfo = userInfo;
         this.volunteerParam = new VolunteerParam();
         this.chat = new Chat();
+        this.shelter = shelter;
+
     }
 
 }

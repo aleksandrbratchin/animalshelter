@@ -20,48 +20,19 @@ public class AnimalServiceImpl implements AnimalService {
 
     /**
      * метод создает сущность  {@link Animal}  и сохраняет ее в БД
-     *
-     * @param id        тип UUID, генерируется автоматически
-     * @param type      вид животного
-     * @param name      кличка
-     * @param age       возраст
-     * @param breed     порода
-     * @param habits    привычки
-     * @param adopted   true - усыновленное, false - неусыновленное
-     * @param idShelter id приюта, в котором будет находиться животное
      * @return возвращает созданную сущность
      */
     @Override
-    public Animal create(UUID id, TypeAnimal type, String name, Double age,
-                         String breed, String habits,
-                         boolean adopted, UUID idShelter) {
-        Animal animal = new Animal(id, type, name, age, breed,
-                habits, adopted, idShelter);
-
+    public Animal create(Animal animal) {
         return repository.save(animal);
     }
 
     /**
      * метод заменяет сущность  {@link Animal},
      * которая уже есть в БД с таким же UUID
-     *
-     * @param id        тип UUID
-     * @param type      вид животного
-     * @param name      кличка
-     * @param age       возраст
-     * @param breed     порода
-     * @param habits    привычки
-     * @param adopted   true - усыновленное, false - неусыновленное
-     * @param idShelter id приюта, в котором будет находиться животное
-     * @return возвращает созданную сущность
      */
     @Override
-    public Animal put(UUID id, TypeAnimal type, String name, Double age,
-                      String breed, String habits, boolean adopted,
-                      UUID idShelter) {
-        Animal animal = new Animal(id, type, name, age, breed,
-                habits, adopted, idShelter);
-
+    public Animal put(Animal animal) {
         return repository.save(animal);
     }
 

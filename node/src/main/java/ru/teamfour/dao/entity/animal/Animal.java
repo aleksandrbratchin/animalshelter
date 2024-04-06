@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.teamfour.dao.entity.ParentUUIDEntity;
+import ru.teamfour.dao.entity.shelter.Shelter;
 
 import java.util.UUID;
 
@@ -32,10 +33,14 @@ public class Animal extends ParentUUIDEntity {
     private String habits;
     @Column(name="adopted")  //усыновление
     private boolean adopted;
-    @Column(name="id_shelter")
-    private UUID idShelter;
+    /**
+     * Приют к которому относится животное
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter_id")
+    private Shelter shelter;
     @Builder
-    public Animal(UUID id, TypeAnimal typeOfAnimal, String name, Double age, String breed, String habits, boolean adopted, UUID idShelter) {
+    public Animal(UUID id, TypeAnimal typeOfAnimal, String name, Double age, String breed, String habits, boolean adopted, Shelter shelter) {
         super(id);
         this.typeOfAnimal = typeOfAnimal;
         this.name = name;
@@ -43,6 +48,6 @@ public class Animal extends ParentUUIDEntity {
         this.breed = breed;
         this.habits = habits;
         this.adopted = adopted;
-        this.idShelter = idShelter;
+        this.shelter = shelter;
     }
 }
