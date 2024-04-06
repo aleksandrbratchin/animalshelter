@@ -38,9 +38,9 @@ public class EndChatClientCommand extends AbstractTextCommand {
         SendMessage clientSendMessage = messageUtils.generateSendMessageWithText(idChatClient, answerClientMessage);
         SendMessage volunteerSendMessage = messageUtils.generateSendMessageWithText(idChatVolunteer, answerVolunteerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
+        sendMessages.add(addMenu(clientSendMessage, client.getState()));
         volunteerSendMessage.setReplyMarkup(new ReplyKeyboardRemove(true)); //удаляет все кнопки
         sendMessages.add(volunteerSendMessage);
-        sendMessages.add(addMenu(clientSendMessage, client.getState()));
         return sendMessages;
     }
 
