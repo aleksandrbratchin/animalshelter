@@ -49,8 +49,8 @@ public class User extends AuditEntity {
     @Embedded
     private Chat chat;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "shelter_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter_id")
     private Shelter shelter;
 
     @Builder
