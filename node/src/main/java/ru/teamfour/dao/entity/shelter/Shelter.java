@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.teamfour.dao.entity.ParentUUIDEntity;
 import ru.teamfour.dao.entity.animal.Animal;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,29 +26,35 @@ public class Shelter extends ParentUUIDEntity {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
     /**
+     * тип животных в приюте
+     */
+    @Column(name="type_of_animal", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TypeAnimal typeOfAnimal;
+    /**
      * О приюте
      */
-    @Column(name = "about_shelter")
+    @Column(name = "about_shelter", columnDefinition = "TEXT")
     private String aboutShelter;
     /**
      * Адрес
      */
-    @Column(name = "address")
+    @Column(name = "address", columnDefinition = "TEXT")
     private String address;
     /**
      * График работы приюта
      */
-    @Column(name = "work_schedule")
+    @Column(name = "work_schedule", columnDefinition = "TEXT")
     private String workSchedule;
     /**
      * Техника безопасности на территории приюта
      */
-    @Column(name = "safety_measures")
+    @Column(name = "safety_measures", columnDefinition = "TEXT")
     private String safetyMeasures;
     /**
      * данные охраны для оформления пропуска на машину
      */
-    @Column(name = "security_data")
+    @Column(name = "security_data", columnDefinition = "TEXT")
     private String securityData;
     /**
      * животные в приюте
@@ -70,4 +77,30 @@ public class Shelter extends ParentUUIDEntity {
         this.securityData = securityData;
         this.animals = animals;
     }
+
+    public String getAboutShelter() {
+        return replace(aboutShelter);
+    }
+
+    public String getAddress() {
+        return replace(address);
+    }
+
+    public String getWorkSchedule() {
+        return replace(workSchedule);
+    }
+
+    public String getSafetyMeasures() {
+        return replace(safetyMeasures);
+    }
+
+    public String getSecurityData() {
+        return replace(securityData);
+    }
+
+    //todo возможно заменить на post processor
+    private String replace(String str){
+        return str.replaceAll("<br>","\n").replaceAll("<tab>","    ");
+    }
+
 }

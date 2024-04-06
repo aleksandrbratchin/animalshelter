@@ -45,7 +45,17 @@ public class ShelterServiceImpl implements ShelterService {
      */
     @Override
     public Shelter find(UUID id) {
-        return shelterRepository.findById(id).get();
+        return shelterRepository.findById(id).orElseThrow(RuntimeException::new);//todo
+    }
+
+    /**
+     * метод находит объект {@link Shelter} в БД по названию приюта
+     * @param name название приюта
+     * @return {@link Shelter} с названием {@code name}
+     */
+    @Override
+    public Shelter findByName(String name) {
+        return shelterRepository.findByName(name).orElseThrow(RuntimeException::new);//todo
     }
 
     @Override
@@ -60,7 +70,6 @@ public class ShelterServiceImpl implements ShelterService {
      * @param shelter объект класса {@link Shelter}
      * @return возвращает переданный объект
      */
-
     @Override
     public Shelter change(UUID id, Shelter shelter) {
         return shelterRepository.save(shelter);

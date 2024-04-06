@@ -42,7 +42,7 @@ public class UserService implements UserServiceApi {
         return repository.save(
                 User.builder()
                         .chatId(chatId)
-                        .state(State.MAIN_MENU)
+                        .state(state)
                         .role(RoleUser.CLIENT)
                         .userInfo(getUserInfo(update))
                         .build()

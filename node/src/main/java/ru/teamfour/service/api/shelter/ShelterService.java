@@ -11,8 +11,10 @@ public interface ShelterService {
     void remove(UUID id);
 
     Shelter find(UUID id);
-    List<Shelter> findAll();
 
+    Shelter findByName(String name);
+
+    List<Shelter> findAll();
 
     Shelter change(UUID id, Shelter shelter);
 }

@@ -13,14 +13,18 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 public class InitMenuHandlersState implements HandlersState {
 
     public final Handler initHandler;
+    public final Handler chooseShelterHandler;
 
     public InitMenuHandlersState(
-            @Qualifier("initHandler") Handler initHandler) {
+            @Qualifier("initHandler") Handler initHandler,
+            @Qualifier("chooseShelterHandler") Handler chooseShelterHandler) {
         this.initHandler = initHandler;
+        this.chooseShelterHandler = chooseShelterHandler;
     }
 
     @Override
     public Handler getHandler() {
+        initHandler.setNext(chooseShelterHandler);
         return initHandler;
     }
 

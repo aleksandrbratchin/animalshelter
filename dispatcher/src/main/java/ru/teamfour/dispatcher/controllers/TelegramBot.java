@@ -26,8 +26,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         // Создание меню
         List<BotCommand> commandList = new ArrayList<>();
-        commandList.add(new BotCommand("/start", "Начальное меню"));
-        commandList.add(new BotCommand("/init", "Меню выбора приютов"));
+        commandList.add(new BotCommand("/main_menu", "Главное меню"));
         try {
             this.execute(new SetMyCommands(commandList, new BotCommandScopeDefault(), null));
         } catch (TelegramApiException e) {

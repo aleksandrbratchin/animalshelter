@@ -36,7 +36,7 @@ public class StartCommand extends AbstractTextCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals("/start") || message.equals(buttonName);
+        return message.equals("/main_menu") || message.equals(buttonName);
     }
 
 }

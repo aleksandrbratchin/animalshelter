@@ -29,7 +29,7 @@ public class StartVolunteerCommand extends AbstractTextCommand {
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true)); //удаляет все кнопки
         List<SendMessage> sendMessages = new ArrayList<>();
-        sendMessages.add(addMenu(sendMessage, state));
+        sendMessages.add(sendMessage);
         return sendMessages;
     }
 

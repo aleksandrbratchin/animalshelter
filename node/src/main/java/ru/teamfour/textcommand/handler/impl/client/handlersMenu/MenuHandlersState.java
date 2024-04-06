@@ -44,6 +44,7 @@ public class MenuHandlersState implements HandlersState {
         petReportHandler.setNext(adoptionHandler);
         adoptionHandler.setNext(volunteerHandler);
         volunteerHandler.setNext(becomeVolunteerHandler);
+        becomeVolunteerHandler.setNext(initHandler);
         return startHandler;
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 public class DrivingDirectionsCommand extends AbstractTextCommand {
-
+    //todo сделать возврат фото
     @Value("${buttonName.drivingDirections}")
     private String buttonName;
 
