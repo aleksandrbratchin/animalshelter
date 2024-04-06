@@ -35,7 +35,7 @@ public class StartVolunteerCommand extends AbstractTextCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals("/start");
+        return message.equals("/main_menu");
     }
 
 }
