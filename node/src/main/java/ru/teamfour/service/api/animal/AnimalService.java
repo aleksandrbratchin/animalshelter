@@ -9,11 +9,10 @@ import java.util.UUID;
 
 @Service
 public interface AnimalService {
-    Animal create(UUID id, TypeAnimal type, String name, Double age, String breed,
-                  String habits, boolean adopted, UUID id_shelter);
 
-    Animal put(UUID id, TypeAnimal type, String name, Double age, String breed,
-               String habits, boolean adopted, UUID id_shelter);
+    Animal create(Animal animal);
+
+    Animal put(Animal animal);
 
     void delete(UUID id);
 

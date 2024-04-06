@@ -28,7 +28,7 @@ public class WorkScheduleShelterCommand extends AbstractTextCommand {
         State state = State.INFO_SHELTER;
 
         String answerMessage = "Расписание работы приюта: " +
-                shelterService.findAll().get(0).getWorkScheduleShelter();
+                shelterService.findAll().get(0).getWorkSchedule();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

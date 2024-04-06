@@ -28,7 +28,7 @@ public class SafetyMeasuresInShelterCommand extends AbstractTextCommand {
         State state = State.INFO_SHELTER;
 
         String answerMessage = "Техника безопасности на территории приюта: " +
-                shelterService.findAll().get(0).getSafetyMeasuresInShelter();
+                shelterService.findAll().get(0).getSafetyMeasures();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

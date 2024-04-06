@@ -27,8 +27,8 @@ public class ContactForCommunicationCommand extends AbstractTextCommand {
         Update update = commandContext.getUpdate();
         State state = State.INFO_SHELTER;
 
-        String answerMessage = "Контактные данные для связи: " +
-                shelterService.findAll().get(0).getStoryOfShelter();
+        String answerMessage = "Контактные данные для связи: "/* todo прием контактных данных +
+                shelterService.findAll().get(0).getStoryOfShelter()*/;
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

@@ -26,7 +26,7 @@ public class ShelterAddressCommand extends AbstractTextCommand {
         State state = State.INFO_SHELTER;
 
         String answerMessage = "Адрес: " +
-                shelterService.findAll().get(0).getShelterAddress();
+                shelterService.findAll().get(0).getAddress();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

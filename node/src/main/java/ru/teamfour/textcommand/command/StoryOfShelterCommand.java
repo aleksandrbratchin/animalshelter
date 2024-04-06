@@ -25,7 +25,7 @@ public class StoryOfShelterCommand extends AbstractTextCommand {
         State state = State.INFO_SHELTER;
 
         String answerMessage = "Рассказ о приюте: " +
-                shelterService.findAll().get(0).getStoryOfShelter();
+                shelterService.findAll().get(0).getAboutShelter();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

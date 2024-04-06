@@ -42,7 +42,7 @@ public class InitCommand extends AbstractTextCommand {
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
         for (int i = 0; i < all.size(); i++) {
-            row.add(all.get(i).getStoryOfShelter());
+            row.add(all.get(i).getName());
             if ((i + 1) % 2 == 0) {
                 keyboard.add(row);
                 row = new KeyboardRow();
