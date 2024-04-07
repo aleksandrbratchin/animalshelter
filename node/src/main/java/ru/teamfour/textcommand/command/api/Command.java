@@ -8,7 +8,7 @@ import java.util.List;
 /***
  * Основной интерфейс для команд
  */
-public interface TextCommand {
+public interface Command {
     /***
      * Проверяет подходит ли сообщение для выполнения команды
      * @param message сообщение
@@ -22,7 +22,7 @@ public interface TextCommand {
      * @param commandContext {@link CommandContext}
      * @return {@link List<SendMessage>} список собщений для отправки в телеграм
      */
-    List<SendMessage> execute(CommandContext commandContext);
+    MessageToTelegram execute(CommandContext commandContext);
 
 }
 

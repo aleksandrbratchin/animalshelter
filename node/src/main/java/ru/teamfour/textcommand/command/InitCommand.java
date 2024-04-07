@@ -11,7 +11,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.api.shelter.ShelterService;
-import ru.teamfour.textcommand.command.api.AbstractTextCommand;
+import ru.teamfour.textcommand.command.api.AbstractCommand;
+import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.List;
  * Меню выбора приютов
  */
 @Component
-public class InitCommand extends AbstractTextCommand {
+public class InitCommand extends AbstractCommand {
 
     @Value("${buttonName.initCommand}")
     private String buttonName;
@@ -30,7 +31,7 @@ public class InitCommand extends AbstractTextCommand {
     private ShelterService shelterService;
 
     @Override
-    public List<SendMessage> execute(CommandContext commandContext) {
+    public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.INIT_MENU;
@@ -44,7 +45,9 @@ public class InitCommand extends AbstractTextCommand {
             sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
             List<SendMessage> sendMessages = new ArrayList<>();
             sendMessages.add(sendMessage);
-            return sendMessages;
+            return MessageToTelegram.builder()
+                    .sendMessages(sendMessages)
+                    .build();
         } else {
             //делаем меню
             ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
@@ -68,7 +71,9 @@ public class InitCommand extends AbstractTextCommand {
             sendMessage.setReplyMarkup(keyboardMarkup);
             List<SendMessage> sendMessages = new ArrayList<>();
             sendMessages.add(sendMessage);
-            return sendMessages;
+            return MessageToTelegram.builder()
+                    .sendMessages(sendMessages)
+                    .build();
         }
 
     }

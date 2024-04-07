@@ -6,14 +6,15 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
-import ru.teamfour.textcommand.command.api.AbstractTextCommand;
+import ru.teamfour.textcommand.command.api.AbstractCommand;
+import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ContactForCommunicationCommand extends AbstractTextCommand {
+public class ContactForCommunicationCommand extends AbstractCommand {
 
     @Value("${buttonName.contactForCommunication}")
     private String buttonName;
@@ -22,7 +23,7 @@ public class ContactForCommunicationCommand extends AbstractTextCommand {
     private ShelterServiceImpl shelterService;
 
     @Override
-    public List<SendMessage> execute(CommandContext commandContext) {
+    public MessageToTelegram execute(CommandContext commandContext) {
 
         Update update = commandContext.getUpdate();
         State state = State.INFO_SHELTER;
@@ -33,7 +34,9 @@ public class ContactForCommunicationCommand extends AbstractTextCommand {
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
-        return sendMessages;
+        return MessageToTelegram.builder()
+                .sendMessages(sendMessages)
+                .build();
 
     }
 

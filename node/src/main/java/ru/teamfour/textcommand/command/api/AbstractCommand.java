@@ -11,7 +11,7 @@ import ru.teamfour.textcommand.menu.MenuButtonFactory;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
 @Component
-public abstract class AbstractTextCommand implements TextCommand {
+public abstract class AbstractCommand implements Command {
     @Autowired
     protected MessageUtils messageUtils;
     @Autowired

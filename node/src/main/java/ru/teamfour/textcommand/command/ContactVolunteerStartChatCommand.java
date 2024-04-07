@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.teamfour.dao.entity.user.Chat;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.textcommand.command.api.AbstractTextCommand;
+import ru.teamfour.textcommand.command.api.AbstractCommand;
+import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
@@ -17,12 +18,12 @@ import java.util.List;
  * Если свободных волонтеров нет формирует сообщение об этом
  */
 @Component
-public class ContactVolunteerStartChatCommand extends AbstractTextCommand {
+public class ContactVolunteerStartChatCommand extends AbstractCommand {
     @Value("${buttonName.startChatWithVolunteer}")
     private String startChatWithVolunteer;
 
     @Override
-    public List<SendMessage> execute(CommandContext commandContext) {
+    public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         State state = State.VOLUNTEER_CHAT;
         var volunteer = userService.getAvailableVolunteer();
@@ -42,11 +43,15 @@ public class ContactVolunteerStartChatCommand extends AbstractTextCommand {
             List<SendMessage> sendMessages = new ArrayList<>();
             sendMessages.add(addMenu(volunteerSendMessage, state));
             sendMessages.add(addMenu(clientSendMessage, state));
-            return sendMessages;
+            return MessageToTelegram.builder()
+                    .sendMessages(sendMessages)
+                    .build();
         } else {
             List<SendMessage> sendMessages = new ArrayList<>();
             sendMessages.add(messageUtils.generateSendMessageWithText(user.getChatId(), "Нет свободных волонтеров!"));
-            return sendMessages;
+            return MessageToTelegram.builder()
+                    .sendMessages(sendMessages)
+                    .build();
         }
     }
 

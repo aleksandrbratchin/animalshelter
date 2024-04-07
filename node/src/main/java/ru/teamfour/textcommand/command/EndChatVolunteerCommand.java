@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import ru.teamfour.dao.entity.user.Chat;
-import ru.teamfour.textcommand.command.api.AbstractTextCommand;
+import ru.teamfour.textcommand.command.api.AbstractCommand;
+import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
@@ -16,12 +17,12 @@ import java.util.List;
  * Формирует сообщение в чат клиента и волонтера о том что чат завершен
  */
 @Component
-public class EndChatVolunteerCommand extends AbstractTextCommand {
+public class EndChatVolunteerCommand extends AbstractCommand {
     @Value("${buttonName.endChatWithVolunteer}")
     private String endChatWithVolunteer;
 
     @Override
-    public List<SendMessage> execute(CommandContext commandContext) {
+    public MessageToTelegram execute(CommandContext commandContext) {
         var client = commandContext.getUser();
         long idChatClient = client.getChatId();
         long idChatVolunteer = client.getChat().getActiveChat();
@@ -41,7 +42,9 @@ public class EndChatVolunteerCommand extends AbstractTextCommand {
         sendMessages.add(addMenu(clientSendMessage, client.getState()));
         volunteerSendMessage.setReplyMarkup(new ReplyKeyboardRemove(true)); //удаляет все кнопки
         sendMessages.add(volunteerSendMessage);
-        return sendMessages;
+        return MessageToTelegram.builder()
+                .sendMessages(sendMessages)
+                .build();
 
     }
 

@@ -7,7 +7,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.api.shelter.ShelterService;
-import ru.teamfour.textcommand.command.api.AbstractTextCommand;
+import ru.teamfour.textcommand.command.api.AbstractCommand;
+import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ import java.util.List;
  * Выбор приюта
  */
 @Component
-public class ChooseShelter extends AbstractTextCommand {
+public class ChooseShelter extends AbstractCommand {
 
     @Autowired
     private ShelterService shelterService;
 
     @Override
-    public List<SendMessage> execute(CommandContext commandContext) {
+    public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         String name = update.getMessage().getText();
@@ -35,7 +36,9 @@ public class ChooseShelter extends AbstractTextCommand {
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, "Вы выбрали приют \"" + name + "\"");
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
-        return sendMessages;
+        return MessageToTelegram.builder()
+                .sendMessages(sendMessages)
+                .build();
     }
 
     /**
