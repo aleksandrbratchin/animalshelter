@@ -8,6 +8,7 @@ import lombok.Setter;
 import ru.teamfour.dao.entity.ParentUUIDEntity;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
+import ru.teamfour.dao.entity.drivingDirections.DrivingDirections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Shelter extends ParentUUIDEntity {
     /**
      * тип животных в приюте
      */
-    @Column(name="type_of_animal", nullable = false)
+    @Column(name = "type_of_animal", nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeAnimal typeOfAnimal;
     /**
@@ -67,9 +68,10 @@ public class Shelter extends ParentUUIDEntity {
     private List<Animal> animals = new ArrayList<>();
 
     @Builder
-    public Shelter(UUID id, String name, String aboutShelter, String address, String workSchedule, String safetyMeasures, String securityData, List<Animal> animals) {
+    public Shelter(UUID id, String name, TypeAnimal typeOfAnimal, String aboutShelter, String address, String workSchedule, String safetyMeasures, String securityData, List<Animal> animals) {
         super(id);
         this.name = name;
+        this.typeOfAnimal = typeOfAnimal;
         this.aboutShelter = aboutShelter;
         this.address = address;
         this.workSchedule = workSchedule;
@@ -99,8 +101,8 @@ public class Shelter extends ParentUUIDEntity {
     }
 
     //todo возможно заменить на post processor
-    private String replace(String str){
-        return str.replaceAll("<br>","\n").replaceAll("<tab>","    ");
+    private String replace(String str) {
+        return str.replaceAll("<br>", "\n").replaceAll("<tab>", "    ");
     }
 
 }

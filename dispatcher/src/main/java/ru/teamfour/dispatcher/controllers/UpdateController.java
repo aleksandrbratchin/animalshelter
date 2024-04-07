@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dispatcher.configuration.rabbitmq.RabbitConfiguration;
 import ru.teamfour.dispatcher.myutils.MessageUtils;
@@ -61,13 +62,6 @@ public class UpdateController {
     }
 
     /***
-     * Публичный метод отправки ответов в телеграм
-     */
-    public void sendToTelegram(SendMessage sendMessage) {
-        telegramBot.sendAnswerMessage(sendMessage);
-    }
-
-    /***
      * Отправить текстовое сообщение в брокер
      */
     private void processTextMessage(Update update) {
@@ -80,7 +74,20 @@ public class UpdateController {
      */
     private void processPhotoMessage(Update update) {
         log.info("В брокер отправлено фото сообщение из чата: \"" + update.getMessage().getChatId());
-        updateProducer.produce(rabbitConfiguration.getPhoto(), update);
+        updateProducer.producePhoto(rabbitConfiguration.getPhoto(), update);
     }
 
+    /***
+     * Публичный метод отправки ответов в телеграм
+     */
+    public void sendToTelegram(SendMessage sendMessage) {
+        telegramBot.sendAnswerMessage(sendMessage);
+    }
+
+    /***
+     * Отправить фото в телеграм
+     */
+    public void sendToTelegramPhoto(SendPhoto sendPhoto) {
+        telegramBot.sendAnswerPhotoMessage(sendPhoto);
+    }
 }

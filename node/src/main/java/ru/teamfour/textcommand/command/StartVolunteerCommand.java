@@ -5,7 +5,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.textcommand.command.api.AbstractTextCommand;
+import ru.teamfour.textcommand.command.api.AbstractCommand;
+import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
@@ -16,10 +17,10 @@ import java.util.List;
  * обновляет информацию о волонтере
  */
 @Component
-public class StartVolunteerCommand extends AbstractTextCommand {
+public class StartVolunteerCommand extends AbstractCommand {
 
     @Override
-    public List<SendMessage> execute(CommandContext commandContext) {
+    public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.VOLUNTEER_START_MENU;
@@ -30,7 +31,9 @@ public class StartVolunteerCommand extends AbstractTextCommand {
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true)); //удаляет все кнопки
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(sendMessage);
-        return sendMessages;
+        return MessageToTelegram.builder()
+                .sendMessages(sendMessages)
+                .build();
     }
 
     @Override

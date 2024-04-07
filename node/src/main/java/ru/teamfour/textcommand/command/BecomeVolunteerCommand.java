@@ -6,7 +6,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import ru.teamfour.dao.entity.user.RoleUser;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.textcommand.command.api.AbstractTextCommand;
+import ru.teamfour.textcommand.command.api.AbstractCommand;
+import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
@@ -16,10 +17,10 @@ import java.util.List;
  * Меняет роль пользователя на волонтера
  */
 @Component
-public class BecomeVolunteerCommand extends AbstractTextCommand {
+public class BecomeVolunteerCommand extends AbstractCommand {
 
     @Override
-    public List<SendMessage> execute(CommandContext commandContext) {
+    public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.VOLUNTEER_START_MENU;
@@ -31,7 +32,9 @@ public class BecomeVolunteerCommand extends AbstractTextCommand {
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
-        return sendMessages;
+        return MessageToTelegram.builder()
+                .sendMessages(sendMessages)
+                .build();
     }
 
     @Override

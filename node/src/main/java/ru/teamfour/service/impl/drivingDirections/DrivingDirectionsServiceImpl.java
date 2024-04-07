@@ -1,35 +1,27 @@
 package ru.teamfour.service.impl.drivingDirections;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.teamfour.dao.entity.drivingDirections.DrivingDirections;
-import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.repositories.DrivingDirectionsRepository;
 import ru.teamfour.service.api.drivingDirections.DrivingDirectionsService;
-import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.UUID;
-
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
 public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
     //надо подумать над Value
-    @Value("/drivingDirections")
+/*    @Value("/drivingDirections")
     private String drivingDirectionsDir;
-    private final ShelterServiceImpl shelterService;
+    private final ShelterServiceImpl shelterService;*/
     private final DrivingDirectionsRepository drivingDirectionsRepository;
 
-    public DrivingDirectionsServiceImpl(ShelterServiceImpl shelterService,
+    public DrivingDirectionsServiceImpl(DrivingDirectionsRepository drivingDirectionsRepository) {
+        this.drivingDirectionsRepository = drivingDirectionsRepository;
+    }
+
+/*    public DrivingDirectionsServiceImpl(ShelterServiceImpl shelterService,
                                         DrivingDirectionsRepository drivingDirectionsRepository) {
         this.shelterService = shelterService;
         this.drivingDirectionsRepository = drivingDirectionsRepository
@@ -83,12 +75,10 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
             return baos.toByteArray();
 
         }
-    }
+    }*/
 
     @Override
-
-    public DrivingDirections findDrivingDirectionsByShelterId(UUID shelterId) {
-
+    public DrivingDirections findByShelterId(UUID shelterId) {
         return drivingDirectionsRepository.findByShelterId(shelterId).orElse(new DrivingDirections());
     }
 }

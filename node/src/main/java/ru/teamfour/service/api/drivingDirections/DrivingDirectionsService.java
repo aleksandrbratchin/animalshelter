@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 public interface DrivingDirectionsService {
-    void uploadDrivingDirections(UUID shelterId, MultipartFile drivingDirectionsFile) throws IOException;
+    /*void uploadDrivingDirections(UUID shelterId, MultipartFile drivingDirectionsFile) throws IOException;*/
 
-    DrivingDirections findDrivingDirectionsByShelterId(UUID shelterId);
+    DrivingDirections findByShelterId(UUID shelterId);
 }

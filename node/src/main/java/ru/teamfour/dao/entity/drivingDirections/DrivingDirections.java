@@ -1,27 +1,30 @@
 package ru.teamfour.dao.entity.drivingDirections;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import ru.teamfour.dao.entity.ParentUUIDEntity;
 import ru.teamfour.dao.entity.shelter.Shelter;
+
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "drivingDirections")
-public class DrivingDirections {
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String filePath;
-    private long fileSize;
-    private String mediaType;
-    @Lob
-    @JsonIgnore
+public class DrivingDirections extends ParentUUIDEntity {
+
     private byte[] data;
-    @OneToOne
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Shelter shelter;
+
+    @Builder
+    public DrivingDirections(UUID id, byte[] data, Shelter shelter) {
+        super(id);
+        this.data = data;
+        this.shelter = shelter;
+    }
 }
