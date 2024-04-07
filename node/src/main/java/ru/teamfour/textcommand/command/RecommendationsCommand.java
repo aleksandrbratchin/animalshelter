@@ -12,27 +12,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AdoptionCommand extends AbstractTextCommand {
-    @Value("${buttonName.adoption}")
+public class RecommendationsCommand extends AbstractTextCommand {
+    @Value("${buttonName.recommendations}")
     private String buttonName;
+
+
+    @Override
+    public boolean isCommand(String message) {
+        return message.equals(buttonName);
+    }
 
     @Override
     public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.ADOPTION;
+        //State state = State.PET_REPORT;//todo нужно еще проверок навесить
+        State state = State.ADOPTION; //LIST_ANIMALS_MENU;//todo заглушка пока не реализовано
         user.setState(state);
         userService.save(user);
-
+        //todo какие то действия
         String answerMessage = "Answer: " + buttonName;
-        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
-        sendMessages.add(addMenu(sendMessage, state));
+        sendMessages.add(addMenu(startTextCommand, state));
         return sendMessages;
-    }
-
-    @Override
-    public boolean isCommand(String message) {
-        return message.equals(buttonName);
     }
 }
