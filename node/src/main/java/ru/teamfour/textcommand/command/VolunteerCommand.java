@@ -11,6 +11,9 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Кнопка "Позвать волонтера" в главном меню
+ */
 @Component
 public class VolunteerCommand extends AbstractTextCommand {
     @Value("${buttonName.volunteer}")
@@ -20,10 +23,9 @@ public class VolunteerCommand extends AbstractTextCommand {
     public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.VOLUNTEER_MENU;//todo нужно еще проверок навесить
+        State state = State.VOLUNTEER_MENU;
 
         userService.updateState(user, state);
-        //todo какие то действия
         String answerMessage = "Выберите предпочитаемый способ связи с волонтером.";
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

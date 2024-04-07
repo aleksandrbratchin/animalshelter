@@ -36,16 +36,16 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
 
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row1 = new KeyboardRow();
+        row1.add(storyOfShelter);
         row1.add(address);
-        row1.add(workScheduleShelter);
         keyboard.add(row1);
         KeyboardRow row2 = new KeyboardRow();
+        row2.add(workScheduleShelter);
         row2.add(drivingDirections);
-        row2.add(securityData);
         keyboard.add(row2);
         KeyboardRow row3 = new KeyboardRow();
         row3.add(safetyMeasuresInShelter);
-        row3.add(storyOfShelter);
+        row3.add(securityData);
         keyboard.add(row3);
         KeyboardRow row4 = new KeyboardRow();
         row4.add(volunteer);

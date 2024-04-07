@@ -13,22 +13,22 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 public class VolunteerChatState implements HandlersState {
 
     public final Handler startHandler;
-    public final Handler contactVolunteerEndChatHandler;
+    public final Handler endChatVolunteerHandler;
     public final Handler talkWithVolunteerHandler;
 
     public VolunteerChatState(
             @Qualifier("startHandler") Handler startHandler,
-            @Qualifier("endChatVolunteerHandler") Handler contactVolunteerEndChatHandler,
+            @Qualifier("endChatVolunteerHandler") Handler endChatVolunteerHandler,
             @Qualifier("talkWithVolunteerHandler") Handler talkWithVolunteerHandler) {
         this.startHandler = startHandler;
-        this.contactVolunteerEndChatHandler = contactVolunteerEndChatHandler;
+        this.endChatVolunteerHandler = endChatVolunteerHandler;
         this.talkWithVolunteerHandler = talkWithVolunteerHandler;
     }
 
     @Override
     public Handler getHandler() {
-        startHandler.setNext(contactVolunteerEndChatHandler);
-        contactVolunteerEndChatHandler.setNext(talkWithVolunteerHandler);
+        startHandler.setNext(endChatVolunteerHandler);
+        endChatVolunteerHandler.setNext(talkWithVolunteerHandler);
         return startHandler;
     }
 

@@ -25,6 +25,9 @@ public class MainMenu extends ButtonAbstractMenu {
     @Value("${buttonName.volunteer}")
     private String volunteerButton;
 
+    @Value("${buttonName.initCommand}")
+    private String initCommand;
+
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setSelective(true);
@@ -38,8 +41,11 @@ public class MainMenu extends ButtonAbstractMenu {
         keyboard.add(row1);
         KeyboardRow row2 = new KeyboardRow();
         row2.add(petReportButton);
-        row2.add(volunteerButton);
+        row2.add(initCommand);
         keyboard.add(row2);
+        KeyboardRow row3 = new KeyboardRow();
+        row3.add(volunteerButton);
+        keyboard.add(row3);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
     }

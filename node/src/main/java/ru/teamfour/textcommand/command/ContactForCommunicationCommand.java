@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
@@ -26,12 +25,10 @@ public class ContactForCommunicationCommand extends AbstractTextCommand {
     public List<SendMessage> execute(CommandContext commandContext) {
 
         Update update = commandContext.getUpdate();
-        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
+        State state = State.INFO_SHELTER;
 
-
-        //todo какие то действия
-        String answerMessage = "Контактные данные для связи: " +
-                shelterService.findAll().get(0).getStoryOfShelter();
+        String answerMessage = "Контактные данные для связи: "/* todo прием контактных данных +
+                shelterService.findAll().get(0).getStoryOfShelter()*/;
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
@@ -39,6 +36,7 @@ public class ContactForCommunicationCommand extends AbstractTextCommand {
         return sendMessages;
 
     }
+
     @Override
     public boolean isCommand(String message) {
         return message.equals(buttonName);

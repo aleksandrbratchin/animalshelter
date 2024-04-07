@@ -42,7 +42,7 @@ public class UserService implements UserServiceApi {
         return repository.save(
                 User.builder()
                         .chatId(chatId)
-                        .state(State.MAIN_MENU)
+                        .state(state)
                         .role(RoleUser.CLIENT)
                         .userInfo(getUserInfo(update))
                         .build()
@@ -62,13 +62,18 @@ public class UserService implements UserServiceApi {
         return repository.save(user);
     }
 
+    /**
+     * Находит пользователя в БД по {@code chatId}. Если пользователя нет, создает его.
+     * @param update из телеграм {@link Update}
+     * @return {@link User}
+     */
     @Override
     public User findByUserByChatIdOrCreateUser(Update update) {
         var message = update.getMessage();
         var chatId = message.getChat().getId();
         return repository.findByChatId(chatId)
                 .orElseGet(
-                        () -> this.save(update, State.MAIN_MENU)
+                        () -> this.save(update, State.INIT_MENU)
                 );
     }
 

@@ -10,6 +10,9 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Формирует сообщение в чат клиента от волонтера
+ */
 @Component
 public class TalkWithVolunteerCommand extends AbstractTextCommand {
 

@@ -45,7 +45,9 @@ buttonName:
   contactVolunteersByPhoneNumber: По номеру телефона
   contactVolunteersByNickname: По имени пользователя
   endChatWithVolunteer: Завершить чат с волонтером
+  endChatWithClient: Завершить чат с клиентом
   startChatWithVolunteer: Начать чат с волонтером
   storyOfShelter: Рассказ о приюте
   sendPhoto: Отправить фото
   sendText: Отправить текст
+  initCommand: Изменить приют
