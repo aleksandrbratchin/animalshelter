@@ -49,7 +49,7 @@ public class User extends AuditEntity {
     @Embedded
     private Chat chat;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shelter_id")
     private Shelter shelter;
 

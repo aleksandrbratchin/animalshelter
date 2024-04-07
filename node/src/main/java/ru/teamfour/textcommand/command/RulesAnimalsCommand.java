@@ -8,6 +8,9 @@ import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.AbstractTextCommand;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class RulesAnimalsCommand extends AbstractTextCommand {
     @Value("${buttonName.rulesAnimal}")
@@ -20,7 +23,7 @@ public class RulesAnimalsCommand extends AbstractTextCommand {
     }
 
     @Override
-    public SendMessage execute(CommandContext commandContext) {
+    public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         //State state = State.PET_REPORT;//todo нужно еще проверок навесить
@@ -30,6 +33,8 @@ public class RulesAnimalsCommand extends AbstractTextCommand {
         //todo какие то действия
         String answerMessage = "Answer: " + buttonName;
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
-        return addMenu(startTextCommand, state);
+        List<SendMessage> sendMessages = new ArrayList<>();
+        sendMessages.add(addMenu(startTextCommand, state));
+        return sendMessages;
     }
 }

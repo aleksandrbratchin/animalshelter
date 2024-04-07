@@ -20,7 +20,7 @@ public class AdoptionCommand extends AbstractTextCommand {
     public List<SendMessage> execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.MAIN_MENU;
+        State state = State.ADOPTION;
         user.setState(state);
         userService.save(user);
 
