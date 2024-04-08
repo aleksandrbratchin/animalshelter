@@ -11,20 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PetReportMenu extends ButtonAbstractMenu {
+public class LeaveContactDetailsForCommunicationMenu extends ButtonAbstractMenu {
 
-    @Value("${buttonName.sendPhoto}")
-    private String sendPhoto;
+    @Value("${buttonName.backToMainMenuButton}")
+    private String backToMainMenuButton;
 
-    @Value("${buttonName.sendText}")
-    private String sendText;
-
-    @Value("${buttonName.volunteer}")
-    private String volunteer;
-
-    /***
-     * Обрисовка меню "Послать отчет о питомце"
-     */
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setSelective(true);
@@ -33,19 +24,15 @@ public class PetReportMenu extends ButtonAbstractMenu {
 
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row1 = new KeyboardRow();
-        row1.add(sendPhoto);
-        row1.add(sendText);
+        row1.add(backToMainMenuButton);
         keyboard.add(row1);
-        KeyboardRow row2 = new KeyboardRow();
-        row2.add(volunteer);
-        keyboard.add(row2);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
     }
 
     @Override
     public boolean isMenu(State state) {
-        return state == State.PET_REPORT;
+        return state == State.LEAVE_CONTACT_DETAILS_FOR_COMMUNICATION_MENU;
     }
 
 }

@@ -7,8 +7,9 @@ import ru.teamfour.textcommand.command.api.Command;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class ContactForCommunicationHandler extends AbstractHandler {
-    public ContactForCommunicationHandler(@Qualifier("contactForCommunicationCommand") Command command) {
+public class LeaveContactDetailsForCommunicationHandler extends AbstractHandler {
+
+    public LeaveContactDetailsForCommunicationHandler(@Qualifier("leaveContactDetailsForCommunicationCommand") Command command) {
         this.command = command;
     }
 

@@ -14,5 +14,5 @@ public enum State {
     VOLUNTEER_START_MENU,
     PET_REPORT, //Этап 3. Прислать отчет о питомце
 
-    LIST_ANIMALS_MENU // Меню, которое выводит список животных для усыновления
+    LEAVE_CONTACT_DETAILS_FOR_COMMUNICATION_MENU, CLIENT_CHAT, LIST_ANIMALS_MENU // Меню, которое выводит список животных для усыновления
 }

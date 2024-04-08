@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 public class AdoptionMenu extends ButtonAbstractMenu {
-    //todo функционал заглушка
+
     @Value("${buttonName.listAnimals}")
     private String listAnimals;
     @Value("${buttonName.rulesAnimal}")
@@ -25,6 +25,8 @@ public class AdoptionMenu extends ButtonAbstractMenu {
     private String volunteerButton;
     @Value("${buttonName.backButton}")
     private String backButton;
+    @Value("${buttonName.contactForCommunication}")
+    private String contactForCommunication;
 
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
@@ -42,9 +44,12 @@ public class AdoptionMenu extends ButtonAbstractMenu {
         row2.add(recommendations);
         keyboard.add(row2);
         KeyboardRow row3 = new KeyboardRow();
-        row3.add(volunteerButton);
-        row3.add(backButton);
+        row3.add(contactForCommunication);
         keyboard.add(row3);
+        KeyboardRow row4 = new KeyboardRow();
+        row4.add(volunteerButton);
+        row4.add(backButton);
+        keyboard.add(row4);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
     }

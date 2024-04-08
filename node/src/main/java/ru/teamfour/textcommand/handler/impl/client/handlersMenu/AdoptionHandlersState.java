@@ -19,6 +19,7 @@ public class AdoptionHandlersState implements HandlersState {
     public final Handler recommendationsHandler;
     public final Handler volunteerHandler;
     public final Handler backToMainMenuHandler;
+    public final Handler leaveContactDetailsForCommunicationHandler;
     public AdoptionHandlersState(
             @Qualifier("mainMenuHandler") Handler mainMenuHandler,
             @Qualifier("listAnimalsHandler") Handler listAnimalsHandler,
@@ -26,6 +27,7 @@ public class AdoptionHandlersState implements HandlersState {
             @Qualifier("listDocumentsHandler") Handler listDocumentsHandler,
             @Qualifier("recommendationsHandler") Handler recommendationsHandler,
             @Qualifier("backToMainMenuHandler") Handler backToMainMenuHandler,
+            @Qualifier("leaveContactDetailsForCommunicationHandler") Handler leaveContactDetailsForCommunicationHandler,
             @Qualifier("volunteerHandler")Handler volunteerHandler) {
         this.mainMenuHandler = mainMenuHandler;
         this.listAnimalsHandler = listAnimalsHandler;
@@ -34,6 +36,7 @@ public class AdoptionHandlersState implements HandlersState {
         this.recommendationsHandler = recommendationsHandler;
         this.volunteerHandler = volunteerHandler;
         this.backToMainMenuHandler = backToMainMenuHandler;
+        this.leaveContactDetailsForCommunicationHandler = leaveContactDetailsForCommunicationHandler;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class AdoptionHandlersState implements HandlersState {
         listDocumentsHandler.setNext(recommendationsHandler);
         recommendationsHandler.setNext(volunteerHandler);
         volunteerHandler.setNext(backToMainMenuHandler);
+        backToMainMenuHandler.setNext(leaveContactDetailsForCommunicationHandler);
         return mainMenuHandler;
     }
 
