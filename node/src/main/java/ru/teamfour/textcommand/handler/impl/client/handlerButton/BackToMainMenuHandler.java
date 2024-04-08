@@ -7,9 +7,9 @@ import ru.teamfour.textcommand.command.api.Command;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class StartHandler extends AbstractHandler {
+public class BackToMainMenuHandler extends AbstractHandler {
 
-    public StartHandler(@Qualifier("startCommand") Command command) {
+    public BackToMainMenuHandler(@Qualifier("backToMainMenuCommand") Command command) {
         this.command = command;
     }
 

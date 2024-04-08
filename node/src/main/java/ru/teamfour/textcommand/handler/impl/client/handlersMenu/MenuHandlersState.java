@@ -12,7 +12,7 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 @RoleUserQualifier(RoleUser.CLIENT)
 public class MenuHandlersState implements HandlersState {
 
-    public final Handler startHandler;
+    public final Handler mainMenuHandler;
     public final Handler initHandler;
     public final Handler shelterInformationHandler;
     public final Handler petReportHandler;
@@ -21,14 +21,14 @@ public class MenuHandlersState implements HandlersState {
     public final Handler becomeVolunteerHandler;
 
     public MenuHandlersState(
-            @Qualifier("startHandler") Handler startHandler,
+            @Qualifier("mainMenuHandler") Handler mainMenuHandler,
             @Qualifier("initHandler") Handler initHandler,
             @Qualifier("shelterInformationHandler") Handler shelterInformationHandler,
             @Qualifier("petReportHandler") Handler petReportHandler,
             @Qualifier("adoptionHandler") Handler adoptionHandler,
             @Qualifier("volunteerHandler") Handler volunteerHandler,
             @Qualifier("becomeVolunteerHandler") Handler becomeVolunteerHandler) {
-        this.startHandler = startHandler;
+        this.mainMenuHandler = mainMenuHandler;
         this.initHandler = initHandler;
         this.shelterInformationHandler = shelterInformationHandler;
         this.petReportHandler = petReportHandler;
@@ -39,13 +39,13 @@ public class MenuHandlersState implements HandlersState {
 
     @Override
     public Handler getHandler() {
-        startHandler.setNext(shelterInformationHandler);
+        mainMenuHandler.setNext(shelterInformationHandler);
         shelterInformationHandler.setNext(petReportHandler);
         petReportHandler.setNext(adoptionHandler);
         adoptionHandler.setNext(volunteerHandler);
         volunteerHandler.setNext(becomeVolunteerHandler);
         becomeVolunteerHandler.setNext(initHandler);
-        return startHandler;
+        return mainMenuHandler;
     }
 
     @Override

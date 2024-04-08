@@ -16,7 +16,7 @@ import java.util.List;
  * Возвращает пользователя в главное меню
  */
 @Component
-public class StartCommand extends AbstractCommand {
+public class MainMenuCommand extends AbstractCommand {
 
     @Value("${buttonName.mainMenu}")
     private String buttonName;

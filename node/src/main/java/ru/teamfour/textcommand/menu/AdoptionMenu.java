@@ -21,9 +21,10 @@ public class AdoptionMenu extends ButtonAbstractMenu {
     private String listDocuments;
     @Value("${buttonName.recommendations}")
     private String recommendations;
-
     @Value("${buttonName.volunteer}")
     private String volunteerButton;
+    @Value("${buttonName.backButton}")
+    private String backButton;
 
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
@@ -41,7 +42,8 @@ public class AdoptionMenu extends ButtonAbstractMenu {
         row2.add(recommendations);
         keyboard.add(row2);
         KeyboardRow row3 = new KeyboardRow();
-        row2.add(volunteerButton);
+        row3.add(volunteerButton);
+        row3.add(backButton);
         keyboard.add(row3);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
