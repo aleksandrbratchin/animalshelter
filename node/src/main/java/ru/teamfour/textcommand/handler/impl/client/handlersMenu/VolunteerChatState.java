@@ -34,6 +34,6 @@ public class VolunteerChatState implements HandlersState {
 
     @Override
     public boolean isState(State state) {
-        return state == State.VOLUNTEER_CHAT;
+        return state == State.CLIENT_CHAT;
     }
 }
