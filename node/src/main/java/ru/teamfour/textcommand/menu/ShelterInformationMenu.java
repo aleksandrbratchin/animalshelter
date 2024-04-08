@@ -27,6 +27,8 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
     private String storyOfShelter;
     @Value("${buttonName.volunteer}")
     private String volunteer;
+    @Value("${buttonName.backButton}")
+    private String backButton;
 
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
@@ -49,6 +51,7 @@ public class ShelterInformationMenu extends ButtonAbstractMenu {
         keyboard.add(row3);
         KeyboardRow row4 = new KeyboardRow();
         row4.add(volunteer);
+        row4.add(backButton);
         keyboard.add(row4);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;

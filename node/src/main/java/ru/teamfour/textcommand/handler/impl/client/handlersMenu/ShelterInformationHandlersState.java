@@ -12,7 +12,7 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 @RoleUserQualifier(RoleUser.CLIENT)
 public class ShelterInformationHandlersState implements HandlersState {
 
-    public final Handler startHandler;
+    public final Handler mainMenuHandler;
     public final Handler addressHandler;
     public final Handler workScheduleShelterHandler;
     public final Handler drivingDirectionsHandler;
@@ -20,19 +20,21 @@ public class ShelterInformationHandlersState implements HandlersState {
     public final Handler securityDataHandler;
     public final Handler volunteerHandler;
     public final Handler storyOfShelterHandler;
+    public final Handler backToMainMenuHandler;
 
 
     public ShelterInformationHandlersState(
-            @Qualifier("startHandler") Handler startHandler,
+            @Qualifier("mainMenuHandler") Handler mainMenuHandler,
             @Qualifier("shelterAddressHandler") Handler addressHandler,
             @Qualifier("workScheduleShelterHandler") Handler workScheduleShelterHandler,
             @Qualifier("drivingDirectionsHandler") Handler drivingDirectionsHandler,
             @Qualifier("safetyMeasuresInShelterHandler") Handler safetyMeasuresInShelterHandler,
             @Qualifier("securityDataHandler") Handler securityDataHandler,
             @Qualifier("volunteerHandler") Handler volunteerHandler,
+            @Qualifier("backToMainMenuHandler") Handler backToMainMenuHandler,
             @Qualifier("storyOfShelterHandler") Handler storyOfShelterHandler
     ) {
-        this.startHandler = startHandler;
+        this.mainMenuHandler = mainMenuHandler;
         this.addressHandler = addressHandler;
         this.workScheduleShelterHandler = workScheduleShelterHandler;
         this.drivingDirectionsHandler = drivingDirectionsHandler;
@@ -40,18 +42,20 @@ public class ShelterInformationHandlersState implements HandlersState {
         this.securityDataHandler = securityDataHandler;
         this.volunteerHandler = volunteerHandler;
         this.storyOfShelterHandler = storyOfShelterHandler;
+        this.backToMainMenuHandler = backToMainMenuHandler;
     }
 
     @Override
     public Handler getHandler() {
-        startHandler.setNext(addressHandler);
+        mainMenuHandler.setNext(addressHandler);
         addressHandler.setNext(workScheduleShelterHandler);
         workScheduleShelterHandler.setNext(drivingDirectionsHandler);
         drivingDirectionsHandler.setNext(safetyMeasuresInShelterHandler);
         safetyMeasuresInShelterHandler.setNext(securityDataHandler);
         securityDataHandler.setNext(storyOfShelterHandler);
         storyOfShelterHandler.setNext(volunteerHandler);
-        return startHandler;
+        volunteerHandler.setNext(backToMainMenuHandler);
+        return mainMenuHandler;
     }
 
     @Override
