@@ -20,7 +20,7 @@ public class TalkWithClientCommand extends AbstractCommand {
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.VOLUNTEER_CHAT;
+        State state = State.CLIENT_CHAT;
         String answerMessage = update.getMessage().getText();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(user.getChat().getActiveChat(), answerMessage);

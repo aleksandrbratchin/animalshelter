@@ -31,7 +31,7 @@ public class BecomeVolunteerCommand extends AbstractCommand {
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
         List<SendMessage> sendMessages = new ArrayList<>();
-        sendMessages.add(addMenu(sendMessage, state));
+        sendMessages.add(sendMessage);
         return MessageToTelegram.builder()
                 .sendMessages(sendMessages)
                 .build();

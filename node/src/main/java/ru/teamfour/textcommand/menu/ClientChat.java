@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class VolunteerChat extends ButtonAbstractMenu {
+public class ClientChat extends ButtonAbstractMenu {
 
-    @Value("${buttonName.endChatWithClient}")
+    @Value("${buttonName.endChatWithVolunteer}")
     private String endChatWithVolunteer;
 
     public ReplyKeyboardMarkup getMenu() {
@@ -32,7 +32,7 @@ public class VolunteerChat extends ButtonAbstractMenu {
 
     @Override
     public boolean isMenu(State state) {
-        return state == State.VOLUNTEER_CHAT;
+        return state == State.CLIENT_CHAT;
     }
 
 }
