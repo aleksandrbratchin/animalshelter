@@ -18,7 +18,7 @@ public class DrivingDirections extends ParentUUIDEntity {
     private byte[] data;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    @JoinColumn(name = "shelter_id", referencedColumnName = "id")
     private Shelter shelter;
 
     @Builder
