@@ -1,4 +1,4 @@
-package ru.teamfour.service.impl;
+package ru.teamfour.service.impl.infoForAdoption;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

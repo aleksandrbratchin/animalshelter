@@ -13,6 +13,7 @@ public enum State {
     VOLUNTEER_CHAT, //Чат с волонтером
     VOLUNTEER_START_MENU,
     PET_REPORT, //Этап 3. Прислать отчет о питомце
+    RECOMMENDATIONS, //меню  рекомендаций для усыновителей
 
     LIST_ANIMALS_MENU // Меню, которое выводит список животных для усыновления
 }

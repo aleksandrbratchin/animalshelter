@@ -39,7 +39,7 @@ buttonName:
   drivingDirections: Схема проезда
   safetyMeasuresInShelter: Техника безопасности на территории приюта
   securityData: Данные охраны для оформления пропуска на машину
-  contactForCommunication: Контактные данные для связи
+  contactForCommunication: Оставить контактные данные для связи
   listAnimals: Показать весь список животных
   rulesAnimal: Правила знакомства с животным
   listDocuments: Список документов
@@ -60,4 +60,5 @@ buttonName:
   homeImprovementForPuppy: Обустройство дома для щенка
   tipsFromDogHandler: Советы кинолога
   homeImprovementForAnimalWithDisabilities: Обустройство дома для животного с ограниченными возможностями
+  listDogHandlers: список кинологов
 
