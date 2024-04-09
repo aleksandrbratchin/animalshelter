@@ -9,12 +9,9 @@ import ru.teamfour.service.api.infoForAdoption.InfoForAdoptionService;
 @AllArgsConstructor
 public class InfoForAdoptionServiceImpl implements InfoForAdoptionService {
 
-
-
-
-    InfoForAdoptionRepository repository;
+    private final InfoForAdoptionRepository repository;
     @Override
     public InfoForAdoption findInfoForAdoptionById(Integer id) {
-                return repository.findInfoForAdoptionById(id).get();
+                return repository.findInfoForAdoptionById(id).get(); //todo хотябы null
     }
 }

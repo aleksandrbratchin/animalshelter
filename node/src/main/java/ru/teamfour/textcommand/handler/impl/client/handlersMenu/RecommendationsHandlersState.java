@@ -47,7 +47,6 @@ public class RecommendationsHandlersState implements HandlersState {
         homeImprovementForAdultAnimalHandler.setNext(homeImprovementForAnimalWithDisabilitiesHandler);
         homeImprovementForAnimalWithDisabilitiesHandler.setNext(tipsFromDogHandlerHandler);
         tipsFromDogHandlerHandler.setNext(listDogHandlersHandler);
-        listDogHandlersHandler.setNext(adoptionHandler);
         return adoptionHandler;
     }
 

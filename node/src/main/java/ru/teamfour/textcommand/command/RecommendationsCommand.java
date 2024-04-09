@@ -24,7 +24,7 @@ public class RecommendationsCommand extends AbstractCommand {
         //State state = State.PET_REPORT;//todo нужно еще проверок навесить
         State state = State.RECOMMENDATIONS; //LIST_ANIMALS_MENU;//todo заглушка пока не реализовано
 
-       // userService.updateState(user, state);
+        userService.updateState(user, state);
         //todo какие то действия
         String answerMessage = "Answer: " + buttonName;
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);

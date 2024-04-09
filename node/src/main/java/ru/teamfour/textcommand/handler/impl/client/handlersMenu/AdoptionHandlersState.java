@@ -30,8 +30,7 @@ public class AdoptionHandlersState implements HandlersState {
             @Qualifier("listDocumentsHandler") Handler listDocumentsHandler,
             @Qualifier("recommendationsHandler") Handler recommendationsHandler,
             @Qualifier("backToMainMenuHandler") Handler backToMainMenuHandler,
-
-            @Qualifier("reasonsForRefusalOfAdoptionHandler") Handler reasonsForRefusalOfAdoptionHandler) {
+            @Qualifier("reasonsForRefusalOfAdoptionHandler") Handler reasonsForRefusalOfAdoptionHandler,
             @Qualifier("leaveContactDetailsForCommunicationHandler") Handler leaveContactDetailsForCommunicationHandler,
             @Qualifier("volunteerHandler")Handler volunteerHandler) {
         this.mainMenuHandler = mainMenuHandler;
