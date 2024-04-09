@@ -18,7 +18,7 @@ public class RecommendationsHandlersState implements HandlersState {
     public final Handler homeImprovementForAdultAnimalHandler;
     public final Handler homeImprovementForAnimalWithDisabilitiesHandler;
     public final Handler tipsFromDogHandlerHandler;
-    //public final Handler backToAdoptionHandler;
+    public final Handler backToAdoptionHandler;
     public final Handler listDogHandlersHandler;
     public RecommendationsHandlersState(
             @Qualifier("adoptionHandler") Handler adoptionHandler,
@@ -26,7 +26,7 @@ public class RecommendationsHandlersState implements HandlersState {
             @Qualifier("homeImprovementForPuppyHandler") Handler homeImprovementForPuppyHandler,
             @Qualifier("homeImprovementForAdultAnimalHandler") Handler homeImprovementForAdultAnimalHandler,
             @Qualifier("homeImprovementForAnimalWithDisabilitiesHandler") Handler homeImprovementForAnimalWithDisabilitiesHandler,
-           // @Qualifier("backToAdoptionHandler") Handler backToAdoptionHandler,
+            @Qualifier("backToAdoptionHandler") Handler backToAdoptionHandler,
             @Qualifier("tipsFromDogHandlerHandler")Handler tipsFromDogHandlerHandler, 
             @Qualifier("listDogHandlersHandler")Handler listDogHandlersHandler) {
         this.adoptionHandler = adoptionHandler;
@@ -35,7 +35,7 @@ public class RecommendationsHandlersState implements HandlersState {
         this.homeImprovementForAdultAnimalHandler = homeImprovementForAdultAnimalHandler;
         this.homeImprovementForAnimalWithDisabilitiesHandler = homeImprovementForAnimalWithDisabilitiesHandler;
         this.tipsFromDogHandlerHandler = tipsFromDogHandlerHandler;
-       // this.backToAdoptionHandler = backToAdoptionHandler;
+        this.backToAdoptionHandler = backToAdoptionHandler;
         this.listDogHandlersHandler = listDogHandlersHandler;
     }
 
@@ -47,6 +47,7 @@ public class RecommendationsHandlersState implements HandlersState {
         homeImprovementForAdultAnimalHandler.setNext(homeImprovementForAnimalWithDisabilitiesHandler);
         homeImprovementForAnimalWithDisabilitiesHandler.setNext(tipsFromDogHandlerHandler);
         tipsFromDogHandlerHandler.setNext(listDogHandlersHandler);
+        listDogHandlersHandler.setNext(backToAdoptionHandler);
         return adoptionHandler;
     }
 

@@ -41,7 +41,7 @@ buttonName:
   securityData: Данные охраны для оформления пропуска на машину
   contactForCommunication: Оставить контактные данные для связи
   listAnimals: Показать весь список животных
-  rulesAnimal: Правила знакомства с животным
+  rulesAnimals: Правила знакомства с животным
   listDocuments: Список документов
   recommendations: Рекомендации
   contactVolunteersByPhoneNumber: По номеру телефона
@@ -63,4 +63,5 @@ buttonName:
   homeImprovementForAnimalWithDisabilities: Обустройство дома для животного с ограниченными возможностями
   listDogHandlers: список кинологов
   backToMainMenuButton: Вернуться в главное меню
+  backToAdoption: Вернуться в предыдущее меню
 
