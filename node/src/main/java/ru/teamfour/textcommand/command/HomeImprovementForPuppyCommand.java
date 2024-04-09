@@ -1,13 +1,12 @@
 package ru.teamfour.textcommand.command;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.teamfour.dao.entity.drivingDirections.DrivingDirections;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.impl.infoForAdoption.InfoForAdoptionServiceImpl;
+import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
@@ -16,25 +15,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ListDocumentsCommand extends AbstractCommand {
-    @Value("${buttonName.listDocuments}")
+public class HomeImprovementForPuppyCommand  extends AbstractCommand {
+    @Value("${buttonName.homeImprovementForPuppy}")
     private String buttonName;
-    private InfoForAdoptionServiceImpl service;
 
-    public ListDocumentsCommand(InfoForAdoptionServiceImpl service) {
+    public HomeImprovementForPuppyCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
+
+    private InfoForAdoptionServiceImpl service;
 
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.ADOPTION;
-        user.setState(state);
-        userService.save(user);
+        State state = State.RECOMMENDATIONS;
 
-        String answerMessage = "Answer: " + service.findInfoForAdoptionById(1).getInformation();
+        String answerMessage = "Советы по обустройству дома для щенка: \n" +
+                service.findInfoForAdoptionById(7).getInformation();
+
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

@@ -5,10 +5,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.textcommand.command.api.Command;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
-
 @Component
-public class ListDocumentsHandler extends AbstractHandler {
-    public ListDocumentsHandler(@Qualifier("listDocumentsCommand") Command command) {
+public class TransportationHandler extends AbstractHandler {
+    public TransportationHandler(@Qualifier("transportationCommand") Command command) {
         this.command = command;
     }
 

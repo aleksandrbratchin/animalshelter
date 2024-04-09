@@ -39,9 +39,9 @@ buttonName:
   drivingDirections: Схема проезда
   safetyMeasuresInShelter: Техника безопасности на территории приюта
   securityData: Данные охраны для оформления пропуска на машину
-  contactForCommunication: Контактные данные для связи
+  contactForCommunication: Оставить контактные данные для связи
   listAnimals: Показать весь список животных
-  rulesAnimal: Првавила знакомства с животным
+  rulesAnimal: Правила знакомства с животным
   listDocuments: Список документов
   recommendations: Рекомендации
   contactVolunteersByPhoneNumber: По номеру телефона
@@ -54,4 +54,13 @@ buttonName:
   sendText: Отправить текст
   initCommand: Изменить приют
   backButton: Назад
+
+  reasonsForRefusalOfAdoption: Причины отказа в усыновлении
+  transportation: Транспортировка
+  homeImprovementForAdultAnimal: Обустройство дома для взрослого животного
+  homeImprovementForPuppy: Обустройство дома для щенка
+  tipsFromDogHandler: Советы кинолога
+  homeImprovementForAnimalWithDisabilities: Обустройство дома для животного с ограниченными возможностями
+  listDogHandlers: список кинологов
   backToMainMenuButton: Вернуться в главное меню
+
