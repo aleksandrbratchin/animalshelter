@@ -25,24 +25,23 @@ public class ContactVolunteerStartChatCommand extends AbstractCommand {
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
-        State state = State.VOLUNTEER_CHAT;
         var volunteer = userService.getAvailableVolunteer();
         if (volunteer != null) {
             volunteer.setChat(new Chat(user.getChatId()));
-            volunteer.setState(state);
+            volunteer.setState(State.VOLUNTEER_CHAT);
             volunteer.getVolunteerParam().setWorkload(volunteer.getVolunteerParam().getWorkload() + 1);
 
             String answerClientMessage = "Вы начали чат с волонтером @" + volunteer.getUserInfo().getNickName();
             String answerVolunteerMessage = "Вы начали чат с клиентом @" + user.getUserInfo().getNickName();
 
-            user.setState(state);
+            user.setState(State.CLIENT_CHAT);
             user.setChat(new Chat(volunteer.getChatId()));
             userService.saveAll(List.of(user, volunteer));
             SendMessage clientSendMessage = messageUtils.generateSendMessageWithText(user.getChatId(), answerClientMessage);
             SendMessage volunteerSendMessage = messageUtils.generateSendMessageWithText(volunteer.getChatId(), answerVolunteerMessage);
             List<SendMessage> sendMessages = new ArrayList<>();
-            sendMessages.add(addMenu(volunteerSendMessage, state));
-            sendMessages.add(addMenu(clientSendMessage, state));
+            sendMessages.add(addMenu(volunteerSendMessage, State.VOLUNTEER_CHAT));
+            sendMessages.add(addMenu(clientSendMessage, State.CLIENT_CHAT));
             return MessageToTelegram.builder()
                     .sendMessages(sendMessages)
                     .build();

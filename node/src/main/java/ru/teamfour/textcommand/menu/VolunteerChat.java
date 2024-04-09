@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class VolunteerChat extends ButtonAbstractMenu {
 
-    @Value("${buttonName.endChatWithVolunteer}")
+    @Value("${buttonName.endChatWithClient}")
     private String endChatWithVolunteer;
 
     public ReplyKeyboardMarkup getMenu() {

@@ -54,6 +54,7 @@ buttonName:
   sendText: Отправить текст
   initCommand: Изменить приют
   backButton: Назад
+
   reasonsForRefusalOfAdoption: Причины отказа в усыновлении
   transportation: Транспортировка
   homeImprovementForAdultAnimal: Обустройство дома для взрослого животного
@@ -61,4 +62,5 @@ buttonName:
   tipsFromDogHandler: Советы кинолога
   homeImprovementForAnimalWithDisabilities: Обустройство дома для животного с ограниченными возможностями
   listDogHandlers: список кинологов
+  backToMainMenuButton: Вернуться в главное меню
 

@@ -21,6 +21,7 @@ public class ShelterInformationHandlersState implements HandlersState {
     public final Handler volunteerHandler;
     public final Handler storyOfShelterHandler;
     public final Handler backToMainMenuHandler;
+    public final Handler leaveContactDetailsForCommunicationHandler;
 
 
     public ShelterInformationHandlersState(
@@ -32,6 +33,7 @@ public class ShelterInformationHandlersState implements HandlersState {
             @Qualifier("securityDataHandler") Handler securityDataHandler,
             @Qualifier("volunteerHandler") Handler volunteerHandler,
             @Qualifier("backToMainMenuHandler") Handler backToMainMenuHandler,
+            @Qualifier("leaveContactDetailsForCommunicationHandler") Handler leaveContactDetailsForCommunicationHandler,
             @Qualifier("storyOfShelterHandler") Handler storyOfShelterHandler
     ) {
         this.mainMenuHandler = mainMenuHandler;
@@ -43,6 +45,7 @@ public class ShelterInformationHandlersState implements HandlersState {
         this.volunteerHandler = volunteerHandler;
         this.storyOfShelterHandler = storyOfShelterHandler;
         this.backToMainMenuHandler = backToMainMenuHandler;
+        this.leaveContactDetailsForCommunicationHandler = leaveContactDetailsForCommunicationHandler;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class ShelterInformationHandlersState implements HandlersState {
         securityDataHandler.setNext(storyOfShelterHandler);
         storyOfShelterHandler.setNext(volunteerHandler);
         volunteerHandler.setNext(backToMainMenuHandler);
+        backToMainMenuHandler.setNext(leaveContactDetailsForCommunicationHandler);
         return mainMenuHandler;
     }
 

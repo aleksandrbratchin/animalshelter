@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 public class AdoptionMenu extends ButtonAbstractMenu {
-    //todo функционал заглушка
+
     @Value("${buttonName.listAnimals}")
     private String listAnimals;
     @Value("${buttonName.rulesAnimal}")

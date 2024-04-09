@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Component
 public class EndChatClientCommand extends AbstractCommand {
-    @Value("${buttonName.endChatWithVolunteer}")
+    @Value("${buttonName.endChatWithClient}")
     private String endChatWithVolunteer;
 
     @Override

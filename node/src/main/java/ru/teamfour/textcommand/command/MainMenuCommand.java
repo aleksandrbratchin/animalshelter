@@ -28,7 +28,7 @@ public class MainMenuCommand extends AbstractCommand {
         State state = State.MAIN_MENU;
         user.setState(state);
         userService.save(user);
-        String answerMessage = "Answer: " + buttonName;
+        String answerMessage = "Главное меню";
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

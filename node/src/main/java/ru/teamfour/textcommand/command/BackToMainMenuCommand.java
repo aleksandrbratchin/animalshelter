@@ -19,7 +19,10 @@ import java.util.List;
 public class BackToMainMenuCommand extends AbstractCommand {
 
     @Value("${buttonName.backButton}")
-    private String buttonName;
+    private String backButton;
+
+    @Value("${buttonName.backToMainMenuButton}")
+    private String backToMainMenuButton;
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
@@ -39,7 +42,7 @@ public class BackToMainMenuCommand extends AbstractCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals(buttonName);
+        return message.equals(backButton) || message.equals(backToMainMenuButton);
     }
 
 }

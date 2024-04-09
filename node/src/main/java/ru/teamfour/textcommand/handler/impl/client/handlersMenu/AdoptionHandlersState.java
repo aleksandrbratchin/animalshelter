@@ -19,7 +19,9 @@ public class AdoptionHandlersState implements HandlersState {
     public final Handler recommendationsHandler;
     public final Handler volunteerHandler;
     public final Handler backToMainMenuHandler;
+
     public final Handler reasonsForRefusalOfAdoptionHandler;
+    public final Handler leaveContactDetailsForCommunicationHandler;
 
     public AdoptionHandlersState(
             @Qualifier("mainMenuHandler") Handler mainMenuHandler,
@@ -28,8 +30,10 @@ public class AdoptionHandlersState implements HandlersState {
             @Qualifier("listDocumentsHandler") Handler listDocumentsHandler,
             @Qualifier("recommendationsHandler") Handler recommendationsHandler,
             @Qualifier("backToMainMenuHandler") Handler backToMainMenuHandler,
-            @Qualifier("volunteerHandler") Handler volunteerHandler,
+
             @Qualifier("reasonsForRefusalOfAdoptionHandler") Handler reasonsForRefusalOfAdoptionHandler) {
+            @Qualifier("leaveContactDetailsForCommunicationHandler") Handler leaveContactDetailsForCommunicationHandler,
+            @Qualifier("volunteerHandler")Handler volunteerHandler) {
         this.mainMenuHandler = mainMenuHandler;
         this.listAnimalsHandler = listAnimalsHandler;
         this.rulesAnimalHandler = rulesAnimalHandler;
@@ -38,6 +42,7 @@ public class AdoptionHandlersState implements HandlersState {
         this.volunteerHandler = volunteerHandler;
         this.backToMainMenuHandler = backToMainMenuHandler;
         this.reasonsForRefusalOfAdoptionHandler = reasonsForRefusalOfAdoptionHandler;
+        this.leaveContactDetailsForCommunicationHandler = leaveContactDetailsForCommunicationHandler;
     }
 
     @Override
@@ -49,6 +54,7 @@ public class AdoptionHandlersState implements HandlersState {
         recommendationsHandler.setNext(reasonsForRefusalOfAdoptionHandler);
         reasonsForRefusalOfAdoptionHandler.setNext(volunteerHandler);
         volunteerHandler.setNext(backToMainMenuHandler);
+        backToMainMenuHandler.setNext(leaveContactDetailsForCommunicationHandler);
         return mainMenuHandler;
     }
 
