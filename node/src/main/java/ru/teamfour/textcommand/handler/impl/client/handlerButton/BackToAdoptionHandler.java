@@ -7,8 +7,9 @@ import ru.teamfour.textcommand.command.api.Command;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class ListDocumentsHandler extends AbstractHandler {
-    public ListDocumentsHandler(@Qualifier("listDocumentsCommand") Command command) {
+public class BackToAdoptionHandler extends AbstractHandler {
+
+    public BackToAdoptionHandler(@Qualifier("backToAdoptionCommand") Command command) {
         this.command = command;
     }
 

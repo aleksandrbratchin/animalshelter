@@ -10,6 +10,8 @@ import ru.teamfour.service.api.infoForAdoption.InfoForAdoptionService;
 public class InfoForAdoptionServiceImpl implements InfoForAdoptionService {
 
 
+
+
     InfoForAdoptionRepository repository;
     @Override
     public InfoForAdoption findInfoForAdoptionById(Integer id) {

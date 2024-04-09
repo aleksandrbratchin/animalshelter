@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.command.recommendations;
+package ru.teamfour.textcommand.command;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,26 +15,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class HomeImprovementForAnimalWithDisabilitiesCommand extends AbstractCommand {
-    @Value("${buttonName.homeImprovementForAnimalWithDisabilities}")
+public class HomeImprovementForAdultAnimalCommand  extends AbstractCommand {
+    @Value("${buttonName.homeImprovementForAdultAnimal}")
     private String buttonName;
-
-    public HomeImprovementForAnimalWithDisabilitiesCommand(InfoForAdoptionServiceImpl service) {
-        this.service = service;
-    }
 
     private InfoForAdoptionServiceImpl service;
 
+    public HomeImprovementForAdultAnimalCommand(InfoForAdoptionServiceImpl service) {
+        this.service = service;
+    }
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
+        user.setState(state);
+        userService.save(user);
 
-        String answerMessage = "Советы по содержанию дома животного с ограниченными возможностями: \n" +
-                service.findInfoForAdoptionById(8);
-
+        String answerMessage = "Answer: " + service.findInfoForAdoptionById(5).getInformation();
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
@@ -43,10 +42,11 @@ public class HomeImprovementForAnimalWithDisabilitiesCommand extends AbstractCom
                 .build();
     }
 
+
+
     @Override
     public boolean isCommand(String message) {
         return message.equals(buttonName);
     }
-
 }
 

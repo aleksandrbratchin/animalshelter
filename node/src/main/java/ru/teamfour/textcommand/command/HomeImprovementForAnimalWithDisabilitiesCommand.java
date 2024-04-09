@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.command.recommendations;
+package ru.teamfour.textcommand.command;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,15 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class HomeImprovementForAdultAnimalCommand  extends AbstractCommand {
-    @Value("${buttonName.homeImprovementForAdultAnimal}")
+public class HomeImprovementForAnimalWithDisabilitiesCommand extends AbstractCommand {
+    @Value("${buttonName.homeImprovementForAnimalWithDisabilities}")
     private String buttonName;
 
-    public HomeImprovementForAdultAnimalCommand(InfoForAdoptionServiceImpl service) {
+    private InfoForAdoptionServiceImpl service;
+
+    public HomeImprovementForAnimalWithDisabilitiesCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
-
-    private InfoForAdoptionServiceImpl service;
 
 
     @Override
@@ -32,8 +32,8 @@ public class HomeImprovementForAdultAnimalCommand  extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage = "Советы по обустройству дома для взрослого животного: \n" +
-                service.findInfoForAdoptionById(5);
+        String answerMessage = "Советы по содержанию дома животного с ограниченными возможностями: \n" +
+                service.findInfoForAdoptionById(8).getInformation();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
@@ -47,5 +47,6 @@ public class HomeImprovementForAdultAnimalCommand  extends AbstractCommand {
     public boolean isCommand(String message) {
         return message.equals(buttonName);
     }
+
 }
 

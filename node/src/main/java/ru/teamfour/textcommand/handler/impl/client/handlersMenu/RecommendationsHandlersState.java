@@ -10,45 +10,45 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 
 @Component
 @RoleUserQualifier(RoleUser.CLIENT)
-public class RecomendationsHandlersState implements HandlersState {
+public class RecommendationsHandlersState implements HandlersState {
 
-    public final Handler mainMenuHandler;
+    public final Handler adoptionHandler;
     public final Handler transportationHandler;
     public final Handler homeImprovementForPuppyHandler;
     public final Handler homeImprovementForAdultAnimalHandler;
     public final Handler homeImprovementForAnimalWithDisabilitiesHandler;
     public final Handler tipsFromDogHandlerHandler;
-    public final Handler backToMainMenuHandler;
+    //public final Handler backToAdoptionHandler;
     public final Handler listDogHandlersHandler;
-    public  RecomendationsHandlersState(
-            @Qualifier("mainMenuHandler") Handler mainMenuHandler,
+    public RecommendationsHandlersState(
+            @Qualifier("adoptionHandler") Handler adoptionHandler,
             @Qualifier("transportationHandler") Handler transportationHandler,
             @Qualifier("homeImprovementForPuppyHandler") Handler homeImprovementForPuppyHandler,
             @Qualifier("homeImprovementForAdultAnimalHandler") Handler homeImprovementForAdultAnimalHandler,
             @Qualifier("homeImprovementForAnimalWithDisabilitiesHandler") Handler homeImprovementForAnimalWithDisabilitiesHandler,
-            @Qualifier("backToMainMenuHandler") Handler backToMainMenuHandler,
+           // @Qualifier("backToAdoptionHandler") Handler backToAdoptionHandler,
             @Qualifier("tipsFromDogHandlerHandler")Handler tipsFromDogHandlerHandler, 
             @Qualifier("listDogHandlersHandler")Handler listDogHandlersHandler) {
-        this.mainMenuHandler = mainMenuHandler;
+        this.adoptionHandler = adoptionHandler;
         this.transportationHandler =transportationHandler;
         this.homeImprovementForPuppyHandler = homeImprovementForPuppyHandler;
         this.homeImprovementForAdultAnimalHandler = homeImprovementForAdultAnimalHandler;
         this.homeImprovementForAnimalWithDisabilitiesHandler = homeImprovementForAnimalWithDisabilitiesHandler;
         this.tipsFromDogHandlerHandler = tipsFromDogHandlerHandler;
-        this.backToMainMenuHandler = backToMainMenuHandler;
+       // this.backToAdoptionHandler = backToAdoptionHandler;
         this.listDogHandlersHandler = listDogHandlersHandler;
     }
 
     @Override
     public Handler getHandler() {
-        mainMenuHandler.setNext(transportationHandler);
+        adoptionHandler.setNext(transportationHandler);
         transportationHandler.setNext(homeImprovementForPuppyHandler);
         homeImprovementForPuppyHandler.setNext(homeImprovementForAdultAnimalHandler);
         homeImprovementForAdultAnimalHandler.setNext(homeImprovementForAnimalWithDisabilitiesHandler);
         homeImprovementForAnimalWithDisabilitiesHandler.setNext(tipsFromDogHandlerHandler);
         tipsFromDogHandlerHandler.setNext(listDogHandlersHandler);
-        listDogHandlersHandler.setNext(backToMainMenuHandler);
-        return mainMenuHandler;
+        listDogHandlersHandler.setNext(adoptionHandler);
+        return adoptionHandler;
     }
 
     @Override

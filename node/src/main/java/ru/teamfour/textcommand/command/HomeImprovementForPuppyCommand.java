@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.command.recommendations;
+package ru.teamfour.textcommand.command;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TipsFromDogHandlerCommand  extends AbstractCommand {
-    @Value("${buttonName.tipsFromDogHandler}")
+public class HomeImprovementForPuppyCommand  extends AbstractCommand {
+    @Value("${buttonName.homeImprovementForPuppy}")
     private String buttonName;
 
-    public TipsFromDogHandlerCommand(InfoForAdoptionServiceImpl service) {
+    public HomeImprovementForPuppyCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
 
@@ -32,8 +32,8 @@ public class TipsFromDogHandlerCommand  extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage = "Советы кинолога: \n" +
-                service.findInfoForAdoptionById(6);
+        String answerMessage = "Советы по обустройству дома для щенка: \n" +
+                service.findInfoForAdoptionById(7).getInformation();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
@@ -47,5 +47,5 @@ public class TipsFromDogHandlerCommand  extends AbstractCommand {
     public boolean isCommand(String message) {
         return message.equals(buttonName);
     }
-
 }
+
