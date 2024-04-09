@@ -1,11 +1,9 @@
 package ru.teamfour.textcommand.command;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.teamfour.dao.entity.drivingDirections.DrivingDirections;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.impl.infoForAdoption.InfoForAdoptionServiceImpl;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
@@ -16,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ListDocumentsCommand extends AbstractCommand {
-    @Value("${buttonName.listDocuments}")
-    private String buttonName;
+public class ReasonsForRefusalOfAdoptionCommand extends AbstractCommand {
+    @Value("${buttonName.reasonsForRefusalOfAdoption}")
+        private String buttonName;
     private InfoForAdoptionServiceImpl service;
 
-    public ListDocumentsCommand(InfoForAdoptionServiceImpl service) {
+    public ReasonsForRefusalOfAdoptionCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
 
@@ -34,7 +32,7 @@ public class ListDocumentsCommand extends AbstractCommand {
         user.setState(state);
         userService.save(user);
 
-        String answerMessage = "Answer: " + service.findInfoForAdoptionById(1).getInformation();
+        String answerMessage = "Answer: " + service.findInfoForAdoptionById(2).getInformation();
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
@@ -48,4 +46,3 @@ public class ListDocumentsCommand extends AbstractCommand {
         return message.equals(buttonName);
     }
 }
-

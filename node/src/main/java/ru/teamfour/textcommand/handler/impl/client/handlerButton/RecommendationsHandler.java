@@ -8,7 +8,7 @@ import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
 public class RecommendationsHandler extends AbstractHandler {
-    public RecommendationsHandler(@Qualifier("listAnimalsCommand") Command command) {
+    public RecommendationsHandler(@Qualifier("recommendationsCommand") Command command) {
         this.command = command;
     }
 
