@@ -15,8 +15,8 @@ public class AdoptionMenu extends ButtonAbstractMenu {
 
     @Value("${buttonName.listAnimals}")
     private String listAnimals;
-    @Value("${buttonName.rulesAnimal}")
-    private String rulesAnimal;
+    @Value("${buttonName.rulesAnimals}")
+    private String rulesAnimals;
     @Value("${buttonName.listDocuments}")
     private String listDocuments;
     @Value("${buttonName.recommendations}")
@@ -39,7 +39,7 @@ public class AdoptionMenu extends ButtonAbstractMenu {
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row1 = new KeyboardRow();
         row1.add(listAnimals);
-        row1.add(rulesAnimal);
+        row1.add(rulesAnimals);
         keyboard.add(row1);
         KeyboardRow row2 = new KeyboardRow();
         row2.add(listDocuments);

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
@@ -17,16 +18,18 @@ public class RecommendationsCommand extends AbstractCommand {
     @Value("${buttonName.recommendations}")
     private String buttonName;
 
+
+
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        //State state = State.PET_REPORT;//todo нужно еще проверок навесить
-        State state = State.RECOMMENDATIONS; //LIST_ANIMALS_MENU;//todo заглушка пока не реализовано
 
-        userService.updateState(user, state);
-        //todo какие то действия
-        String answerMessage = "Answer: " + buttonName;
+        State state = State.RECOMMENDATIONS;
+        user.setState(state);
+        userService.save(user);
+
+        String answerMessage = "информация о усыновлении из приюта \"" + user.getShelter().getName() + "\"";
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
@@ -40,4 +43,3 @@ public class RecommendationsCommand extends AbstractCommand {
         return message.equals(buttonName);
     }
 }
-
