@@ -24,6 +24,7 @@ public class AdoptionCommand extends AbstractCommand {
         State state = State.ADOPTION;
         user.setState(state);
         userService.save(user);
+        userService.updateState(user, state);
 
         String answerMessage = "Answer: " + buttonName;
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);

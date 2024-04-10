@@ -20,6 +20,8 @@ public class BackToAdoptionCommand extends AbstractCommand {
 
     @Value("${buttonName.backButton}")
     private String buttonName;
+    @Value("${buttonName.backToAdoption}")
+    private String backToAdoption;
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {

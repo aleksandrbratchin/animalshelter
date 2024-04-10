@@ -14,7 +14,7 @@ public class AdoptionHandlersState implements HandlersState {
 
     public final Handler mainMenuHandler;
     public final Handler listAnimalsHandler;
-    public final Handler rulesAnimalHandler;
+    public final Handler rulesAnimalsHandler;
     public final Handler listDocumentsHandler;
     public final Handler recommendationsHandler;
     public final Handler volunteerHandler;
@@ -26,7 +26,7 @@ public class AdoptionHandlersState implements HandlersState {
     public AdoptionHandlersState(
             @Qualifier("mainMenuHandler") Handler mainMenuHandler,
             @Qualifier("listAnimalsHandler") Handler listAnimalsHandler,
-            @Qualifier("rulesAnimalHandler") Handler rulesAnimalHandler,
+            @Qualifier("rulesAnimalsHandler") Handler rulesAnimalsHandler,
             @Qualifier("listDocumentsHandler") Handler listDocumentsHandler,
             @Qualifier("recommendationsHandler") Handler recommendationsHandler,
             @Qualifier("backToMainMenuHandler") Handler backToMainMenuHandler,
@@ -35,7 +35,7 @@ public class AdoptionHandlersState implements HandlersState {
             @Qualifier("volunteerHandler")Handler volunteerHandler) {
         this.mainMenuHandler = mainMenuHandler;
         this.listAnimalsHandler = listAnimalsHandler;
-        this.rulesAnimalHandler = rulesAnimalHandler;
+        this.rulesAnimalsHandler = rulesAnimalsHandler;
         this.listDocumentsHandler = listDocumentsHandler;
         this.recommendationsHandler = recommendationsHandler;
         this.volunteerHandler = volunteerHandler;
@@ -47,8 +47,8 @@ public class AdoptionHandlersState implements HandlersState {
     @Override
     public Handler getHandler() {
         mainMenuHandler.setNext(listAnimalsHandler);
-        listAnimalsHandler.setNext(rulesAnimalHandler);
-        rulesAnimalHandler.setNext(listDocumentsHandler);
+        listAnimalsHandler.setNext(rulesAnimalsHandler);
+        rulesAnimalsHandler.setNext(listDocumentsHandler);
         listDocumentsHandler.setNext(recommendationsHandler);
         recommendationsHandler.setNext(reasonsForRefusalOfAdoptionHandler);
         reasonsForRefusalOfAdoptionHandler.setNext(volunteerHandler);
