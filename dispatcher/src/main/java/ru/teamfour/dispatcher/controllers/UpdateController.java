@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dispatcher.configuration.rabbitmq.RabbitConfiguration;
 import ru.teamfour.dispatcher.myutils.MessageUtils;
@@ -51,18 +52,13 @@ public class UpdateController {
         var message = update.getMessage();
         if (message.hasText()) {
             processTextMessage(update);
+        } else if (message.hasPhoto()) {
+            processPhotoMessage(update);
         } else {
             String msq = "Неизвестный тип сообщения!";
             log.error(msq);
             sendToTelegram(messageUtils.generateSendMessageWithText(update, msq));
         }
-    }
-
-    /***
-     * Публичный метод отправки ответов в телеграм
-     */
-    public void sendToTelegram(SendMessage sendMessage) {
-        telegramBot.sendAnswerMessage(sendMessage);
     }
 
     /***
@@ -73,4 +69,25 @@ public class UpdateController {
         updateProducer.produce(rabbitConfiguration.getText(), update);
     }
 
+    /***
+     * Отправить фото в брокер
+     */
+    private void processPhotoMessage(Update update) {
+        log.info("В брокер отправлено фото сообщение из чата: \"" + update.getMessage().getChatId());
+        updateProducer.producePhoto(rabbitConfiguration.getPhoto(), update);
+    }
+
+    /***
+     * Публичный метод отправки ответов в телеграм
+     */
+    public void sendToTelegram(SendMessage sendMessage) {
+        telegramBot.sendAnswerMessage(sendMessage);
+    }
+
+    /***
+     * Отправить фото в телеграм
+     */
+    public void sendToTelegramPhoto(SendPhoto sendPhoto) {
+        telegramBot.sendAnswerPhotoMessage(sendPhoto);
+    }
 }

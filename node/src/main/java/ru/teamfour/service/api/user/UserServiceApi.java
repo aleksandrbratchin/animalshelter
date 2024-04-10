@@ -5,10 +5,16 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.List;
+
 @Service
 public interface UserServiceApi {
 
+    User findByChatId(Long chatId);
+
     User save(User client);
+
+    void saveAll(List<User> client);
 
     /**
      * Создает пользователя и задает ему значения по умолчанию
@@ -41,4 +47,22 @@ public interface UserServiceApi {
      * @return Пользователя {@link User}
      */
     User findByUserByChatIdOrCreateUser(Update update);
+
+    /**
+     * Получает наименее загруженного волонтера
+     * @return наименее загруженный волонтер
+     */
+    User getAvailableVolunteer();
+
+    /**
+     * Получает список волонтеров с именем пользователя
+     * @return список волонтеров
+     */
+    List<User> getVolunteersByNickNameIsNotNull();
+
+    /**
+     * Получает список волонтеров с номерами телефонов
+     * @return список волонтеров
+     */
+    List<User> getVolunteersByPhoneNumberIsNotNull();
 }

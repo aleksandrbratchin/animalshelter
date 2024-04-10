@@ -10,6 +10,8 @@ import ru.teamfour.repositories.UserRepository;
 import ru.teamfour.service.api.user.UserServiceApi;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class UserService implements UserServiceApi {
@@ -20,8 +22,17 @@ public class UserService implements UserServiceApi {
     }
 
     @Override
+    public User findByChatId(Long chatId) {
+        return repository.findByChatId(chatId).orElse(null);//todo
+    }
+    @Override
     public User save(User client) {
         return repository.save(client);
+    }
+
+    @Override
+    public void saveAll(List<User> client) {
+        repository.saveAll(client);
     }
 
     @Override
@@ -31,7 +42,7 @@ public class UserService implements UserServiceApi {
         return repository.save(
                 User.builder()
                         .chatId(chatId)
-                        .state(State.MAIN_MENU)
+                        .state(state)
                         .role(RoleUser.CLIENT)
                         .userInfo(getUserInfo(update))
                         .build()
@@ -51,13 +62,18 @@ public class UserService implements UserServiceApi {
         return repository.save(user);
     }
 
+    /**
+     * Находит пользователя в БД по {@code chatId}. Если пользователя нет, создает его.
+     * @param update из телеграм {@link Update}
+     * @return {@link User}
+     */
     @Override
     public User findByUserByChatIdOrCreateUser(Update update) {
         var message = update.getMessage();
         var chatId = message.getChat().getId();
         return repository.findByChatId(chatId)
                 .orElseGet(
-                        () -> this.save(update, State.MAIN_MENU)
+                        () -> this.save(update, State.INIT_MENU)
                 );
     }
 
@@ -77,5 +93,20 @@ public class UserService implements UserServiceApi {
                 .phoneNumber(contact == null ? null : contact.getPhoneNumber())
                 .nickName(telegramUser.getUserName())
                 .build();
+    }
+
+    @Override
+    public User getAvailableVolunteer(){
+        return repository.getAvailableVolunteer().orElse(null);//todo что делать если доступных волонтеров нет
+    }
+
+    @Override
+    public List<User> getVolunteersByNickNameIsNotNull(){
+        return repository.getVolunteersByNickNameIsNotNull();
+    }
+
+    @Override
+    public List<User> getVolunteersByPhoneNumberIsNotNull(){
+        return repository.getVolunteersByPhoneNumberIsNotNull();
     }
 }

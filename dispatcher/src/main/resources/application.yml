@@ -15,4 +15,7 @@ rabbitQueue:
   messages:
     update:
       TEXT: ${rabbitConfig.messages.update.TEXT}
-    answer: ${rabbitConfig.messages.answer}
+      PHOTO: ${rabbitConfig.messages.update.PHOTO}
+    answer:
+      PHOTO: ${rabbitConfig.messages.answer.PHOTO}
+      TEXT: ${rabbitConfig.messages.answer.TEXT}

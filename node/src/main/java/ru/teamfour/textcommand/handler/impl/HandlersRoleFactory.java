@@ -6,6 +6,9 @@ import ru.teamfour.textcommand.handler.api.HandlersStateFactory;
 
 import java.util.List;
 
+/**
+ * Фабрика которая получает доступные меню {@link HandlersStateFactory}  для пользователя в зависимости от его роли {@link RoleUser}
+ */
 @Component
 public class HandlersRoleFactory {
 

@@ -5,31 +5,41 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 import ru.teamfour.service.impl.user.UserService;
-import ru.teamfour.textcommand.command.api.AbstractTextCommand;
+import ru.teamfour.textcommand.command.api.AbstractCommand;
+import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
-public class ShelterInformationCommand extends AbstractTextCommand {
+public class ShelterInformationCommand extends AbstractCommand {
     @Value("${buttonName.shelterInformation}")
     private String buttonName;
 
-    public ShelterInformationCommand(UserService userService) {
-        this.userService = userService;
+    private final ShelterServiceImpl shelterService;
+    public ShelterInformationCommand(ShelterServiceImpl shelterService) {
+        this.shelterService = shelterService;
     }
 
     @Override
-    public SendMessage execute(CommandContext commandContext) {
+    public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
 
-        State state = State.INFO_SHELTER;//todo нужно еще проверок навесить
+        State state = State.INFO_SHELTER;
         user.setState(state);
         userService.save(user);
 
-        String answerMessage = "Answer: " + buttonName;
-        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
-        return addMenu(startTextCommand, state);
+        String answerMessage = "Здесь вы можете получить подробную информацию о приюте \"" + user.getShelter().getName() + "\"";
+        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+        List<SendMessage> sendMessages = new ArrayList<>();
+        sendMessages.add(addMenu(sendMessage, state));
+        return MessageToTelegram.builder()
+                .sendMessages(sendMessages)
+                .build();
     }
 
     @Override

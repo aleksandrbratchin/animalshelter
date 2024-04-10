@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 public class PetReportMenu extends ButtonAbstractMenu {
-    //todo функционал заглушка
+
     @Value("${buttonName.sendPhoto}")
     private String sendPhoto;
 
