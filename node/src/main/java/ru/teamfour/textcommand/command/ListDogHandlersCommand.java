@@ -6,7 +6,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.impl.infoForAdoption.InfoForAdoptionServiceImpl;
-import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
@@ -14,17 +13,16 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.awt.SystemColor.info;
+
 @Component
 public class ListDogHandlersCommand  extends AbstractCommand {
     @Value("${buttonName.listDogHandlers}")
     private String buttonName;
-
+    private final InfoForAdoptionServiceImpl service;
     public ListDogHandlersCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
-
-    private InfoForAdoptionServiceImpl service;
-
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
@@ -32,8 +30,7 @@ public class ListDogHandlersCommand  extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage = "Список кинологов: \n" +
-                service.findInfoForAdoptionById(9).getInformation();
+        String answerMessage = service.findInfoForAdoptionForDog().getListDogHandlers();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

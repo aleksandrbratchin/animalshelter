@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.teamfour.dao.entity.infoForAdoption.InfoForAdoption;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.impl.infoForAdoption.InfoForAdoptionServiceImpl;
 import ru.teamfour.textcommand.command.CommandContext;
@@ -18,13 +19,10 @@ import java.util.List;
 public class HomeImprovementForAnimalWithDisabilitiesCommand extends AbstractCommand {
     @Value("${buttonName.homeImprovementForAnimalWithDisabilities}")
     private String buttonName;
-
     private InfoForAdoptionServiceImpl service;
-
     public HomeImprovementForAnimalWithDisabilitiesCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
-
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
@@ -32,9 +30,7 @@ public class HomeImprovementForAnimalWithDisabilitiesCommand extends AbstractCom
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage = "Советы по содержанию дома животного с ограниченными возможностями: \n" +
-                service.findInfoForAdoptionById(8).getInformation();
-
+        String answerMessage =service.findInfoForAdoptionForDog().getHomeImprovementForAnimalWithDisabilities();
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

@@ -19,7 +19,23 @@ public class InfoForAdoption {
     @Column(name = "id")
     @Id
     private Integer id;
-    @Column(name="informatuon")
-    private String information;
+    @Column(name="reasons_for_refusal_of_adoption") //Причины отказа в усыновлении
+    private String reasonsForRefusalOfAdoption;
+    @Column(name="transportation") // Транспортировка
+    private String transportation;
+    @Column(name=" homeImprovementForAdultAnimal") // Обустройство дома для взрослого животного
+    private String  homeImprovementForAdultAnimal;
+    @Column(name="homeImprovementForPuppy") // Обустройство дома для щенка
+    private String homeImprovementForPuppy;
+    @Column(name="tipsFromDogHandler") //  Советы кинолога
+    private String tipsFromDogHandler;
+    @Column(name=" homeImprovementForAnimalWithDisabilities") //  Обустройство дома для животного с ограниченными возможностями
+    private String  homeImprovementForAnimalWithDisabilities;
+    @Column(name="listDogHandlers") //   список кинологов
+    private String listDogHandlers;
+    @Column(name="rulesAnimals") //  Правила знакомства с животным
+    private String rulesAnimals;
+    @Column(name=" listDocuments") //   Список документов для усыновления
+    private String listDocuments;
 
 }

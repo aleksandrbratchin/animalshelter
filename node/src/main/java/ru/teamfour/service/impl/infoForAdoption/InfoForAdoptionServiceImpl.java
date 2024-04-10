@@ -10,8 +10,8 @@ import ru.teamfour.service.api.infoForAdoption.InfoForAdoptionService;
 public class InfoForAdoptionServiceImpl implements InfoForAdoptionService {
 
     private final InfoForAdoptionRepository repository;
-    @Override
-    public InfoForAdoption findInfoForAdoptionById(Integer id) {
-                return repository.findInfoForAdoptionById(id).get(); //todo хотябы null
+   @Override
+    public InfoForAdoption findInfoForAdoptionForDog() {
+                return repository.findInfoForAdoptionById(1).get(); //todo хотябы null
     }
 }

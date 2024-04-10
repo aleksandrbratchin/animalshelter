@@ -16,13 +16,11 @@ import java.util.List;
 @Component
 public class ReasonsForRefusalOfAdoptionCommand extends AbstractCommand {
     @Value("${buttonName.reasonsForRefusalOfAdoption}")
-        private String buttonName;
-    private InfoForAdoptionServiceImpl service;
-
+    private String buttonName;
+    private final InfoForAdoptionServiceImpl service;
     public ReasonsForRefusalOfAdoptionCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
-
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
@@ -32,8 +30,8 @@ public class ReasonsForRefusalOfAdoptionCommand extends AbstractCommand {
         user.setState(state);
         userService.save(user);
 
-        String answerMessage = "Answer: " + service.findInfoForAdoptionById(2).getInformation();
-        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+        String answerMessage = service.findInfoForAdoptionForDog().getReasonsForRefusalOfAdoption();
+                SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
         return MessageToTelegram.builder()
