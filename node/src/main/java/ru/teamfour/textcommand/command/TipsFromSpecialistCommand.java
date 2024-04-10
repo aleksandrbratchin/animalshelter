@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TipsFromDogHandlerCommand  extends AbstractCommand {
+public class TipsFromSpecialistCommand extends AbstractCommand {
     @Value("${buttonName.tipsFromDogHandler}")
     private String buttonName;
     private final InfoForAdoptionServiceImpl service;
 
-    public TipsFromDogHandlerCommand(InfoForAdoptionServiceImpl service) {
+    public TipsFromSpecialistCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
 
@@ -29,7 +29,8 @@ public class TipsFromDogHandlerCommand  extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage = service.findInfoForAdoptionForDog().getTipsFromDogHandler();
+        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getTipsFromSpecialist();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

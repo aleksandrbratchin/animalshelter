@@ -30,7 +30,8 @@ public class HomeImprovementForAnimalWithDisabilitiesCommand extends AbstractCom
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage =service.findInfoForAdoptionForDog().getHomeImprovementForAnimalWithDisabilities();
+        String answerMessage =service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getHomeImprovementForAnimalWithDisabilities();
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

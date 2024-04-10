@@ -26,11 +26,11 @@ public class RulesAnimalsCommand extends AbstractCommand {
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.ADOPTION; //LIST_ANIMALS_MENU;//todo заглушка пока не реализовано
-        user.setState(state);
-        userService.save(user);
-        //todo какие то действия
-        String answerMessage = service.findInfoForAdoptionForDog().getRulesAnimals();
+        State state = State.ADOPTION;
+
+
+        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getRulesAnimals();
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(startTextCommand, state));

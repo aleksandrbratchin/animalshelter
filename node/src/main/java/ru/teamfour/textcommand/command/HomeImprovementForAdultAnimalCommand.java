@@ -20,21 +20,20 @@ public class HomeImprovementForAdultAnimalCommand  extends AbstractCommand {
     @Value("${buttonName.homeImprovementForAdultAnimal}")
     private String buttonName;
 
+    private InfoForAdoptionServiceImpl service;
+
     public HomeImprovementForAdultAnimalCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
-
-    private InfoForAdoptionServiceImpl service;
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
-        user.setState(state);
-        userService.save(user);
 
-        String answerMessage = service.findInfoForAdoptionForDog().getHomeImprovementForAdultAnimal();
+        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getHomeImprovementForAdultAnimal();
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

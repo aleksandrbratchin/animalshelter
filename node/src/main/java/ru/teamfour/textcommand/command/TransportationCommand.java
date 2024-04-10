@@ -29,10 +29,10 @@ public class TransportationCommand extends AbstractCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
-        user.setState(state);
-        userService.save(user);
 
-        String answerMessage = service.findInfoForAdoptionForDog().getTransportation();
+
+        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getTransportation();
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

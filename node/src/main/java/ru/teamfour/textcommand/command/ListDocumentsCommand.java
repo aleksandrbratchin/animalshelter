@@ -27,10 +27,10 @@ public class ListDocumentsCommand extends AbstractCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.ADOPTION;
-        user.setState(state);
-        userService.save(user);
 
-        String answerMessage = service.findInfoForAdoptionForDog().getListDocuments();
+
+        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getListDocuments();
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

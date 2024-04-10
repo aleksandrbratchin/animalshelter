@@ -27,10 +27,9 @@ public class ReasonsForRefusalOfAdoptionCommand extends AbstractCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.ADOPTION;
-        user.setState(state);
-        userService.save(user);
 
-        String answerMessage = service.findInfoForAdoptionForDog().getReasonsForRefusalOfAdoption();
+        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getReasonsForRefusalOfAdoption();
                 SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

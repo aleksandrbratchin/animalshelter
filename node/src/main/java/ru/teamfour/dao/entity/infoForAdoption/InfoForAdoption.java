@@ -1,41 +1,96 @@
 package ru.teamfour.dao.entity.infoForAdoption;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import ru.teamfour.dao.entity.ParentUUIDEntity;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
 
+import java.util.UUID;
+
+/**
+ * класс с полями различных рекомендаций для усыновителей
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "info_for_adoption")
 @AllArgsConstructor
-public class InfoForAdoption {
-    @Column(name = "id")
-    @Id
-    private Integer id;
-    @Column(name="reasons_for_refusal_of_adoption") //Причины отказа в усыновлении
+public class InfoForAdoption extends ParentUUIDEntity {
+    /**
+     * тип животных в приюте
+     */
+    @Column(name = "type_of_animal", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TypeAnimal typeOfAnimal;
+    /**
+     * /**
+     * Причины отказа в усыновлении
+     */
+    @Column(name = "reasons_for_refusal_of_adoption") //Причины отказа в усыновлении
     private String reasonsForRefusalOfAdoption;
-    @Column(name="transportation") // Транспортировка
+    /**
+     * Транспортировка животного
+     */
+    @Column(name = "transportation")
     private String transportation;
-    @Column(name=" homeImprovementForAdultAnimal") // Обустройство дома для взрослого животного
-    private String  homeImprovementForAdultAnimal;
-    @Column(name="homeImprovementForPuppy") // Обустройство дома для щенка
-    private String homeImprovementForPuppy;
-    @Column(name="tipsFromDogHandler") //  Советы кинолога
-    private String tipsFromDogHandler;
-    @Column(name=" homeImprovementForAnimalWithDisabilities") //  Обустройство дома для животного с ограниченными возможностями
-    private String  homeImprovementForAnimalWithDisabilities;
-    @Column(name="listDogHandlers") //   список кинологов
-    private String listDogHandlers;
-    @Column(name="rulesAnimals") //  Правила знакомства с животным
+    /**
+     * Обустройство дома для взрослого животного
+     */
+    @Column(name = " homeImprovementForAdultAnimal")
+    private String homeImprovementForAdultAnimal;
+    /**
+     * Обустройство дома для молодого животного
+     */
+    @Column(name = "homeImprovementForYoungAnimal")
+    private String homeImprovementForYoungAnimal;
+    /**
+     * советы специалиста
+     */
+    @Column(name = "tipsFromSpecialist")
+    private String tipsFromSpecialist;
+    /**
+     * Обустройство дома для животного с ограниченными возможностями
+     */
+    @Column(name = " homeImprovementForAnimalWithDisabilities")
+    private String homeImprovementForAnimalWithDisabilities;
+    /**
+     * список специалистов
+     */
+    @Column(name = "list_specialists")
+    private String listSpecialists;
+    /**
+     * Правила знакомства с животным
+     */
+    @Column(name = "rules_animals")
     private String rulesAnimals;
-    @Column(name=" listDocuments") //   Список документов для усыновления
+    /**
+     * Список документов для усыновления
+     */
+    @Column(name = " list_documents") //   Список документов для усыновления
     private String listDocuments;
+    //@Builder
 
+    public InfoForAdoption(UUID id, TypeAnimal typeOfAnimal,
+                           String reasonsForRefusalOfAdoption,
+                           String transportation,
+                           String homeImprovementForAdultAnimal,
+                           String homeImprovementForYoungAnimal,
+                           String tipsFromSpecialist,
+                           String homeImprovementForAnimalWithDisabilities,
+                           String listSpecialists,
+                           String rulesAnimals,
+                           String listDocuments) {
+        super(id);
+        this.typeOfAnimal = typeOfAnimal;
+        this.reasonsForRefusalOfAdoption = reasonsForRefusalOfAdoption;
+        this.transportation = transportation;
+        this.homeImprovementForAdultAnimal = homeImprovementForAdultAnimal;
+        this.homeImprovementForYoungAnimal = homeImprovementForYoungAnimal;
+        this.tipsFromSpecialist = tipsFromSpecialist;
+        this.homeImprovementForAnimalWithDisabilities = homeImprovementForAnimalWithDisabilities;
+        this.listSpecialists = listSpecialists;
+        this.rulesAnimals = rulesAnimals;
+        this.listDocuments = listDocuments;
+    }
 }

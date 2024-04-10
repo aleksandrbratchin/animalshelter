@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.impl.infoForAdoption.InfoForAdoptionServiceImpl;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
@@ -13,14 +14,14 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.awt.SystemColor.info;
+import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 @Component
-public class ListDogHandlersCommand  extends AbstractCommand {
-    @Value("${buttonName.listDogHandlers}")
+public class HomeImprovementForYoungAnimalCommand extends AbstractCommand {
+    @Value("${buttonName.homeImprovementForYoungAnimal}")
     private String buttonName;
-    private final InfoForAdoptionServiceImpl service;
-    public ListDogHandlersCommand(InfoForAdoptionServiceImpl service) {
+    private InfoForAdoptionServiceImpl service;
+    public HomeImprovementForYoungAnimalCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
 
@@ -30,7 +31,8 @@ public class ListDogHandlersCommand  extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage = service.findInfoForAdoptionForDog().getListDogHandlers();
+        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getHomeImprovementForYoungAnimal();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
@@ -44,5 +46,5 @@ public class ListDogHandlersCommand  extends AbstractCommand {
     public boolean isCommand(String message) {
         return message.equals(buttonName);
     }
-
 }
+
