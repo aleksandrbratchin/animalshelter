@@ -1,10 +1,7 @@
 package ru.teamfour.dao.entity.animal;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.teamfour.dao.entity.ParentUUIDEntity;
 import ru.teamfour.dao.entity.shelter.Shelter;
 
@@ -50,4 +47,17 @@ public class Animal extends ParentUUIDEntity {
         this.adopted = adopted;
         this.shelter = shelter;
     }
+
+    @Override
+    public String toString() {
+        return
+                " кличка - " + name + ", " +
+                " возраст - " + age + ", " +
+                " порода - " + breed + ", " +
+                " особенности поведения - " + habits +
+                "\n"
+                ;
+    }
 }
+
+

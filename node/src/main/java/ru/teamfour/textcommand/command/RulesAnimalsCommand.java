@@ -39,7 +39,7 @@ public class RulesAnimalsCommand extends AbstractCommand {
         user.setState(state);
         userService.save(user);
         //todo какие то действия
-        String answerMessage = "Answer: " + service.findInfoForAdoptionById(3).getInformation();
+        String answerMessage = service.findInfoForAdoptionById(3).getInformation();
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(startTextCommand, state));
