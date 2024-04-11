@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.impl.infoForAdoption.InfoForAdoptionServiceImpl;
-import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
@@ -14,17 +14,16 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
+
 @Component
-public class TipsFromDogHandlerCommand  extends AbstractCommand {
-    @Value("${buttonName.tipsFromDogHandler}")
+public class HomeImprovementForYoungAnimalCommand extends AbstractCommand {
+    @Value("${buttonName.homeImprovementForYoungAnimal}")
     private String buttonName;
-
     private InfoForAdoptionServiceImpl service;
-
-    public TipsFromDogHandlerCommand(InfoForAdoptionServiceImpl service) {
+    public HomeImprovementForYoungAnimalCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
-
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
@@ -32,8 +31,8 @@ public class TipsFromDogHandlerCommand  extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage = "Советы кинолога: \n" +
-                service.findInfoForAdoptionById(6).getInformation();
+        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getHomeImprovementForYoungAnimal();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
@@ -47,5 +46,5 @@ public class TipsFromDogHandlerCommand  extends AbstractCommand {
     public boolean isCommand(String message) {
         return message.equals(buttonName);
     }
-
 }
+
