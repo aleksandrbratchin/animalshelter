@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 public class TipsFromSpecialistCommand extends AbstractCommand {
-    @Value("${buttonName.tipsFromDogHandler}")
+    @Value("${buttonName.tipsFromSpecialist}")
     private String buttonName;
     private final InfoForAdoptionServiceImpl service;
 

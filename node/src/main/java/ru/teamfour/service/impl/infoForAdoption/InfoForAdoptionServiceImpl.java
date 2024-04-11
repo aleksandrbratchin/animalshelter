@@ -13,6 +13,6 @@ public class InfoForAdoptionServiceImpl implements InfoForAdoptionService {
     private final InfoForAdoptionRepository repository;
    @Override
     public InfoForAdoption findInfoForAdoptionByTypeAnimal(TypeAnimal typeAnimal) {
-                return repository.findInfoForAdoptionByTypeAnimal(typeAnimal).orElseThrow();
+                return repository.findInfoForAdoptionByTypeOfAnimal(typeAnimal).orElseThrow();
     }
 }
