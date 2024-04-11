@@ -19,7 +19,6 @@ public class AdoptionHandlersState implements HandlersState {
     public final Handler recommendationsHandler;
     public final Handler volunteerHandler;
     public final Handler backToMainMenuHandler;
-
     public final Handler reasonsForRefusalOfAdoptionHandler;
     public final Handler leaveContactDetailsForCommunicationHandler;
 

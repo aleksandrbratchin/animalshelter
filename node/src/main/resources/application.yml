@@ -58,10 +58,10 @@ buttonName:
   reasonsForRefusalOfAdoption: Причины отказа в усыновлении
   transportation: Транспортировка
   homeImprovementForAdultAnimal: Обустройство дома для взрослого животного
-  homeImprovementForPuppy: Обустройство дома для щенка
-  tipsFromDogHandler: Советы кинолога
+  homeImprovementForYoungAnimal: Обустройство дома для молодого животного
+  tipsFromSpecialist: Советы специалиста
   homeImprovementForAnimalWithDisabilities: Обустройство дома для животного с ограниченными возможностями
-  listDogHandlers: список кинологов
+  listSpecialists: список специалистов
   backToMainMenuButton: Вернуться в главное меню
   backToAdoption: Вернуться в предыдущее меню
 

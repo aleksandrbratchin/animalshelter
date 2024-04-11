@@ -14,40 +14,40 @@ public class RecommendationsHandlersState implements HandlersState {
 
     public final Handler adoptionHandler;
     public final Handler transportationHandler;
-    public final Handler homeImprovementForPuppyHandler;
+    public final Handler homeImprovementForYoungAnimalHandler;
     public final Handler homeImprovementForAdultAnimalHandler;
     public final Handler homeImprovementForAnimalWithDisabilitiesHandler;
-    public final Handler tipsFromDogHandlerHandler;
+    public final Handler tipsFromSpecialistHandler;
     public final Handler backToAdoptionHandler;
-    public final Handler listDogHandlersHandler;
+    public final Handler listSpecialistsHandler;
     public RecommendationsHandlersState(
             @Qualifier("adoptionHandler") Handler adoptionHandler,
             @Qualifier("transportationHandler") Handler transportationHandler,
-            @Qualifier("homeImprovementForPuppyHandler") Handler homeImprovementForPuppyHandler,
+            @Qualifier("homeImprovementForYoungAnimalHandler") Handler homeImprovementForYoungAnimalHandler,
             @Qualifier("homeImprovementForAdultAnimalHandler") Handler homeImprovementForAdultAnimalHandler,
             @Qualifier("homeImprovementForAnimalWithDisabilitiesHandler") Handler homeImprovementForAnimalWithDisabilitiesHandler,
             @Qualifier("backToAdoptionHandler") Handler backToAdoptionHandler,
-            @Qualifier("tipsFromDogHandlerHandler")Handler tipsFromDogHandlerHandler, 
-            @Qualifier("listDogHandlersHandler")Handler listDogHandlersHandler) {
+            @Qualifier("tipsFromSpecialistHandler")Handler tipsFromSpecialistHandler,
+            @Qualifier("listSpecialistsHandler")Handler listSpecialistsHandler) {
         this.adoptionHandler = adoptionHandler;
         this.transportationHandler =transportationHandler;
-        this.homeImprovementForPuppyHandler = homeImprovementForPuppyHandler;
+        this.homeImprovementForYoungAnimalHandler = homeImprovementForYoungAnimalHandler;
         this.homeImprovementForAdultAnimalHandler = homeImprovementForAdultAnimalHandler;
         this.homeImprovementForAnimalWithDisabilitiesHandler = homeImprovementForAnimalWithDisabilitiesHandler;
-        this.tipsFromDogHandlerHandler = tipsFromDogHandlerHandler;
+        this.tipsFromSpecialistHandler = tipsFromSpecialistHandler;
         this.backToAdoptionHandler = backToAdoptionHandler;
-        this.listDogHandlersHandler = listDogHandlersHandler;
+        this.listSpecialistsHandler = listSpecialistsHandler;
     }
 
     @Override
     public Handler getHandler() {
         adoptionHandler.setNext(transportationHandler);
-        transportationHandler.setNext(homeImprovementForPuppyHandler);
-        homeImprovementForPuppyHandler.setNext(homeImprovementForAdultAnimalHandler);
+        transportationHandler.setNext(homeImprovementForYoungAnimalHandler);
+        homeImprovementForYoungAnimalHandler.setNext(homeImprovementForAdultAnimalHandler);
         homeImprovementForAdultAnimalHandler.setNext(homeImprovementForAnimalWithDisabilitiesHandler);
-        homeImprovementForAnimalWithDisabilitiesHandler.setNext(tipsFromDogHandlerHandler);
-        tipsFromDogHandlerHandler.setNext(listDogHandlersHandler);
-        listDogHandlersHandler.setNext(backToAdoptionHandler);
+        homeImprovementForAnimalWithDisabilitiesHandler.setNext(tipsFromSpecialistHandler);
+        tipsFromSpecialistHandler.setNext(listSpecialistsHandler);
+        listSpecialistsHandler.setNext(backToAdoptionHandler);
         return adoptionHandler;
     }
 
