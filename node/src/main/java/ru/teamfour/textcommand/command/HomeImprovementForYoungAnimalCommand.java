@@ -4,17 +4,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.service.impl.infoForAdoption.InfoForAdoptionServiceImpl;
+import ru.teamfour.service.impl.infoforadoption.InfoForAdoptionServiceImpl;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 @Component
 public class HomeImprovementForYoungAnimalCommand extends AbstractCommand {

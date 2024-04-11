@@ -1,7 +1,7 @@
-package ru.teamfour.service.api.infoForAdoption;
+package ru.teamfour.service.api.infoforadoption;
 
 import ru.teamfour.dao.entity.animal.TypeAnimal;
-import ru.teamfour.dao.entity.infoForAdoption.InfoForAdoption;
+import ru.teamfour.dao.entity.infoforadoption.InfoForAdoption;
 
 public interface InfoForAdoptionService {
     public InfoForAdoption findInfoForAdoptionByTypeAnimal(TypeAnimal typeAnimal);

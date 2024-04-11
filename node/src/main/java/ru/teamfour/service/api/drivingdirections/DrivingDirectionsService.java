@@ -1,9 +1,7 @@
-package ru.teamfour.service.api.drivingDirections;
+package ru.teamfour.service.api.drivingdirections;
 
-import org.springframework.web.multipart.MultipartFile;
-import ru.teamfour.dao.entity.drivingDirections.DrivingDirections;
+import ru.teamfour.dao.entity.drivingdirections.DrivingDirections;
 
-import java.io.IOException;
 import java.util.UUID;
 
 public interface DrivingDirectionsService {
