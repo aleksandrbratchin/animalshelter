@@ -8,7 +8,6 @@ import lombok.Setter;
 import ru.teamfour.dao.entity.ParentUUIDEntity;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
-import ru.teamfour.dao.entity.drivingDirections.DrivingDirections;
 
 import java.util.ArrayList;
 import java.util.List;

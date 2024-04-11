@@ -1,4 +1,4 @@
-package ru.teamfour.dao.entity.infoForAdoption;
+package ru.teamfour.dao.entity.infoforadoption;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,7 +27,7 @@ public class InfoForAdoption extends ParentUUIDEntity {
      * /**
      * Причины отказа в усыновлении
      */
-    @Column(name = "reasons_for_refusal_of_adoption", nullable = false) //Причины отказа в усыновлении
+    @Column(name = "reasons_for_refusal_of_adoption", nullable = false)
     private String reasonsForRefusalOfAdoption;
     /**
      * Транспортировка животного
@@ -67,7 +67,7 @@ public class InfoForAdoption extends ParentUUIDEntity {
     /**
      * Список документов для усыновления
      */
-    @Column(name = " list_documents", nullable = false) //   Список документов для усыновления
+    @Column(name = " list_documents", nullable = false)
     private String listDocuments;
     //@Builder
 
