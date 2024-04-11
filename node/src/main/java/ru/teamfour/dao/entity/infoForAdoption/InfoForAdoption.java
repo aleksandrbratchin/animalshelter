@@ -20,54 +20,54 @@ public class InfoForAdoption extends ParentUUIDEntity {
     /**
      * тип животных в приюте
      */
-    @Column(name = "type_of_animal", nullable = false)
+    @Column(name = "type_of_animal", unique = true, nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeAnimal typeOfAnimal;
     /**
      * /**
      * Причины отказа в усыновлении
      */
-    @Column(name = "reasons_for_refusal_of_adoption") //Причины отказа в усыновлении
+    @Column(name = "reasons_for_refusal_of_adoption", nullable = false) //Причины отказа в усыновлении
     private String reasonsForRefusalOfAdoption;
     /**
      * Транспортировка животного
      */
-    @Column(name = "transportation")
+    @Column(name = "transportation", nullable = false)
     private String transportation;
     /**
      * Обустройство дома для взрослого животного
      */
-    @Column(name = " homeImprovementForAdultAnimal")
+    @Column(name = " homeImprovementForAdultAnimal", nullable = false)
     private String homeImprovementForAdultAnimal;
     /**
      * Обустройство дома для молодого животного
      */
-    @Column(name = "homeImprovementForYoungAnimal")
+    @Column(name = "homeImprovementForYoungAnimal", nullable = false)
     private String homeImprovementForYoungAnimal;
     /**
      * советы специалиста
      */
-    @Column(name = "tipsFromSpecialist")
+    @Column(name = "tipsFromSpecialist", nullable = false)
     private String tipsFromSpecialist;
     /**
      * Обустройство дома для животного с ограниченными возможностями
      */
-    @Column(name = " homeImprovementForAnimalWithDisabilities")
+    @Column(name = " homeImprovementForAnimalWithDisabilities", nullable = false)
     private String homeImprovementForAnimalWithDisabilities;
     /**
      * список специалистов
      */
-    @Column(name = "list_specialists")
+    @Column(name = "list_specialists", nullable = false)
     private String listSpecialists;
     /**
      * Правила знакомства с животным
      */
-    @Column(name = "rules_animals")
+    @Column(name = "rules_animals", nullable = false)
     private String rulesAnimals;
     /**
      * Список документов для усыновления
      */
-    @Column(name = " list_documents") //   Список документов для усыновления
+    @Column(name = " list_documents", nullable = false) //   Список документов для усыновления
     private String listDocuments;
     //@Builder
 
