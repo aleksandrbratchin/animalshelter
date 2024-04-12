@@ -7,8 +7,9 @@ import ru.teamfour.textcommand.command.api.Command;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class HomeImprovementForPuppyHandler  extends AbstractHandler {
-    public HomeImprovementForPuppyHandler(@Qualifier("homeImprovementForPuppyCommand") Command command) {
+
+public class TipsFromSpecialistHandler extends AbstractHandler {
+    public TipsFromSpecialistHandler(@Qualifier("tipsFromSpecialistCommand") Command command) {
         this.command = command;
     }
 
