@@ -1,12 +1,10 @@
 package ru.teamfour.textcommand.command;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.service.api.animal.AnimalService;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
@@ -14,35 +12,37 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Возвращает пользователя в главное меню "кнопка назад"
+ */
 @Component
-public class ListAnimalsCommand extends AbstractCommand {
-    @Autowired
-    private AnimalService animalService;
-    @Value("${buttonName.listAnimals}")
-    private String buttonName;
+public class BackToPetMenuCommand extends AbstractCommand {
 
+    @Value("${buttonName.backButton}")
+    private String backButton;
 
-    @Override
-    public boolean isCommand(String message) {
-        return message.equals(buttonName);
-    }
+    @Value("${buttonName.backToPetMenuButton}")
+    private String backToPetMenuButton;
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.ADOPTION;
+        State state = State.PET_REPORT;
         user.setState(state);
         userService.save(user);
-        //todo какие то действия
-        String answerMessage = "Список животных " + animalService.findAll().stream()
-                .map(animal -> animal.getName()).reduce((str1, str2) -> str1 + ", " + str2)
-                .orElse("Животных нет!");
-        SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
+        String answerMessage = "Вы вернулись в меню 'Прислать отчёт о питомце'";
+        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
-        sendMessages.add(addMenu(startTextCommand, state));
+        sendMessages.add(addMenu(sendMessage, state));
         return MessageToTelegram.builder()
                 .sendMessages(sendMessages)
                 .build();
     }
+
+    @Override
+    public boolean isCommand(String message) {
+        return message.equals(backButton) || message.equals(backToPetMenuButton);
+    }
+
 }

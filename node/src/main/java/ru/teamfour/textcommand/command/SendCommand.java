@@ -31,7 +31,14 @@ public class SendCommand extends AbstractCommand {
         user.setState(state);
         userService.save(user);
 
-        String answerMessage = "Answer: " + buttonName;
+        String dailyReport = null;
+        String answerMessage = dailyReport == null ?
+                "Ежедневный отчет не заполнен\n" +
+                        "В ежедневный отчет входит следующая информация:\n" +
+                        "Рацион животного:\n" +
+                        "Общее самочувствие и привыкание к новому месту:\n" +
+                        "Изменения в поведении: отказ от старых привычек, приобретение новых. ":
+                "Спасибо, что заботитесь о своём питомце!";
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
