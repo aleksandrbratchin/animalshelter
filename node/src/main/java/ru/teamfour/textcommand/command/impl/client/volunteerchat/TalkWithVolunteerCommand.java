@@ -1,10 +1,10 @@
-package ru.teamfour.textcommand.command;
+package ru.teamfour.textcommand.command.impl.client.volunteerchat;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
@@ -13,22 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Кнопка "Позвать волонтера" в главном меню
+ * Формирует сообщение в чат клиента от волонтера
  */
 @Component
-public class VolunteerCommand extends AbstractCommand {
-    @Value("${buttonName.volunteer}")
-    private String buttonName;
+public class TalkWithVolunteerCommand extends AbstractCommand {
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.CONTACT_VOLUNTEER_MENU;
+        State state = State.VOLUNTEER_CHAT;
+        String answerMessage = update.getMessage().getText();
 
-        userService.updateState(user, state);
-        String answerMessage = "Выберите предпочитаемый способ связи с волонтером.";
-        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+        SendMessage sendMessage = messageUtils.generateSendMessageWithText(user.getChat().getActiveChat(), answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
         return MessageToTelegram.builder()
@@ -38,6 +35,6 @@ public class VolunteerCommand extends AbstractCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals(buttonName);
+        return true;
     }
 }

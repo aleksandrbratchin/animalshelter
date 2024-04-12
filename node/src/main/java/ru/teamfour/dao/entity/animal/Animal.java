@@ -1,7 +1,10 @@
 package ru.teamfour.dao.entity.animal;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.teamfour.dao.entity.ParentUUIDEntity;
 import ru.teamfour.dao.entity.shelter.Shelter;
 
@@ -20,15 +23,31 @@ public class Animal extends ParentUUIDEntity {
     @Column(name = "type_of_animal")
     @Enumerated(EnumType.STRING)
     private TypeAnimal typeOfAnimal;
+    /***
+     * кличка
+     */
     @Column(name = "name")
     private String name;
+    /***
+     * возраст
+     */
     @Column(name = "age")
     private Double age;
-    @Column(name = "breed")  //порода
+    /***
+     * порода
+     */
+    @Column(name = "breed")
     private String breed;
-    @Column(name = "habits")  //привычки
+    /***
+     * привычки
+     */
+    @Column(name = "habits")
     private String habits;
-    @Column(name = "adopted")  //усыновление
+    /***
+     * Отметка об усыновлении
+     * 1 - усыновлен, 0 - неусыновлен
+     */
+    @Column(name = "adopted")
     private boolean adopted;
     /**
      * Приют к которому относится животное
