@@ -36,7 +36,7 @@ public class ListAnimalsCommand extends AbstractCommand {
         State state = State.ADOPTION;
         user.setState(state);
         userService.save(user);
-        String answerMessage = service.findAllAnimals(user.getShelter().getId());
+        String answerMessage = service.findAllAnimals(user.getShelter().getId()); //todo не усыновленные дивотные
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(startTextCommand, state));
