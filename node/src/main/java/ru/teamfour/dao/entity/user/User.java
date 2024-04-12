@@ -6,9 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.teamfour.dao.entity.AuditEntity;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionAnimal;
+import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.textcommand.command.api.State;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -53,17 +57,27 @@ public class User extends AuditEntity {
     @JoinColumn(name = "shelter_id")
     private Shelter shelter;
 
+    /***
+     * Усыновления
+     */
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<AdoptionAnimal> adoptions = new ArrayList<>();
+
     @Builder
-    public User(UUID id, Long chatId, RoleUser role, State state, UserInfo userInfo, Shelter shelter) {
+    public User(UUID id, Long chatId, RoleUser role, State state, UserInfo userInfo, VolunteerParam volunteerParam, Chat chat, Shelter shelter, List<AdoptionAnimal> adoptions) {
         super(id);
         this.chatId = chatId;
         this.role = role;
         this.state = state;
         this.userInfo = userInfo;
-        this.volunteerParam = new VolunteerParam();
-        this.chat = new Chat();
+        this.volunteerParam = volunteerParam;
+        this.chat = chat;
         this.shelter = shelter;
-
+        this.adoptions = adoptions;
     }
 
 }

@@ -1,4 +1,5 @@
 package ru.teamfour.service.impl.shelter;
+
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,7 @@ public class ShelterServiceImpl implements ShelterService {
 
     /**
      * метод находит объект {@link Shelter} в БД по названию приюта
+     *
      * @param name название приюта
      * @return {@link Shelter} с названием {@code name}
      */
