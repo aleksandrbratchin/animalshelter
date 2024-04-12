@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface InfoForAdoptionRepository extends JpaRepository<InfoForAdoption, UUID> {
     Optional<InfoForAdoption> findInfoForAdoptionByTypeOfAnimal(TypeAnimal typeOfAnimal);
+
 }

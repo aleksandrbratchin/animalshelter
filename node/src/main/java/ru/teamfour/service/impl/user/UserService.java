@@ -25,6 +25,7 @@ public class UserService implements UserServiceApi {
     public User findByChatId(Long chatId) {
         return repository.findByChatId(chatId).orElse(null);//todo
     }
+
     @Override
     public User save(User client) {
         return repository.save(client);
@@ -64,6 +65,7 @@ public class UserService implements UserServiceApi {
 
     /**
      * Находит пользователя в БД по {@code chatId}. Если пользователя нет, создает его.
+     *
      * @param update из телеграм {@link Update}
      * @return {@link User}
      */
@@ -96,17 +98,17 @@ public class UserService implements UserServiceApi {
     }
 
     @Override
-    public User getAvailableVolunteer(){
+    public User getAvailableVolunteer() {
         return repository.getAvailableVolunteer().orElse(null);//todo что делать если доступных волонтеров нет
     }
 
     @Override
-    public List<User> getVolunteersByNickNameIsNotNull(){
+    public List<User> getVolunteersByNickNameIsNotNull() {
         return repository.getVolunteersByNickNameIsNotNull();
     }
 
     @Override
-    public List<User> getVolunteersByPhoneNumberIsNotNull(){
+    public List<User> getVolunteersByPhoneNumberIsNotNull() {
         return repository.getVolunteersByPhoneNumberIsNotNull();
     }
 }
