@@ -1,7 +1,9 @@
 package ru.teamfour.service.impl.shelter;
+
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.shelter.ShelterService;
@@ -50,6 +52,7 @@ public class ShelterServiceImpl implements ShelterService {
 
     /**
      * метод находит объект {@link Shelter} в БД по названию приюта
+     *
      * @param name название приюта
      * @return {@link Shelter} с названием {@code name}
      */
@@ -74,5 +77,8 @@ public class ShelterServiceImpl implements ShelterService {
     public Shelter change(UUID id, Shelter shelter) {
         return shelterRepository.save(shelter);
 
+    }
+    public String findAllAnimals(UUID id){
+        return shelterRepository.getReferenceById(id).getAnimals().toString();
     }
 }
