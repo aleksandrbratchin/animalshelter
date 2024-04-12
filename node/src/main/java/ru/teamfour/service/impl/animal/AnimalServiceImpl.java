@@ -7,6 +7,8 @@ import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.repositories.AnimalRepository;
 import ru.teamfour.service.api.animal.AnimalService;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 

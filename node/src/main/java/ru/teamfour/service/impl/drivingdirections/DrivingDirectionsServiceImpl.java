@@ -1,10 +1,10 @@
-package ru.teamfour.service.impl.drivingDirections;
+package ru.teamfour.service.impl.drivingdirections;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import ru.teamfour.dao.entity.drivingDirections.DrivingDirections;
+import ru.teamfour.dao.entity.drivingdirections.DrivingDirections;
 import ru.teamfour.repositories.DrivingDirectionsRepository;
-import ru.teamfour.service.api.drivingDirections.DrivingDirectionsService;
+import ru.teamfour.service.api.drivingdirections.DrivingDirectionsService;
 
 import java.util.UUID;
 

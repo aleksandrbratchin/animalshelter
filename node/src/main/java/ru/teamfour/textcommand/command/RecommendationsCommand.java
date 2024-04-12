@@ -28,6 +28,7 @@ public class RecommendationsCommand extends AbstractCommand {
         State state = State.RECOMMENDATIONS;
         user.setState(state);
         userService.save(user);
+        userService.updateState(user, state);
 
         String answerMessage = "информация о усыновлении из приюта \"" + user.getShelter().getName() + "\"";
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);

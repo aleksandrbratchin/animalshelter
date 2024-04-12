@@ -31,8 +31,7 @@ public class ListAnimalsCommand extends AbstractCommand {
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        //State state = State.PET_REPORT;//todo нужно еще проверок навесить
-        State state = State.ADOPTION; //LIST_ANIMALS_MENU;//todo заглушка пока не реализовано
+        State state = State.ADOPTION;
         user.setState(state);
         userService.save(user);
         //todo какие то действия

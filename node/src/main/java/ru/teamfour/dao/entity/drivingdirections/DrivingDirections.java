@@ -1,4 +1,4 @@
-package ru.teamfour.dao.entity.drivingDirections;
+package ru.teamfour.dao.entity.drivingdirections;
 
 import jakarta.persistence.*;
 import lombok.*;

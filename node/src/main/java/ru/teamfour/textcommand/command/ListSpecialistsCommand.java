@@ -5,8 +5,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.service.impl.infoForAdoption.InfoForAdoptionServiceImpl;
-import ru.teamfour.textcommand.command.CommandContext;
+import ru.teamfour.service.impl.infoforadoption.InfoForAdoptionServiceImpl;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
@@ -15,16 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class HomeImprovementForPuppyCommand  extends AbstractCommand {
-    @Value("${buttonName.homeImprovementForPuppy}")
+public class ListSpecialistsCommand extends AbstractCommand {
+    @Value("${buttonName.listSpecialists}")
     private String buttonName;
-
-    public HomeImprovementForPuppyCommand(InfoForAdoptionServiceImpl service) {
+    private final InfoForAdoptionServiceImpl service;
+    public ListSpecialistsCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;
     }
-
-    private InfoForAdoptionServiceImpl service;
-
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
@@ -32,8 +28,8 @@ public class HomeImprovementForPuppyCommand  extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage = "Советы по обустройству дома для щенка: \n" +
-                service.findInfoForAdoptionById(7).getInformation();
+        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+                user.getShelter().getTypeOfAnimal()).getListSpecialists();
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
@@ -47,5 +43,5 @@ public class HomeImprovementForPuppyCommand  extends AbstractCommand {
     public boolean isCommand(String message) {
         return message.equals(buttonName);
     }
-}
 
+}
