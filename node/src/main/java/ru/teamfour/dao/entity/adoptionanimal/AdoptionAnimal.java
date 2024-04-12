@@ -24,10 +24,15 @@ import java.util.UUID;
 @Table(name = "adoption_animal")
 public class AdoptionAnimal extends AuditEntity {
 
+    /**
+     * Клиент который усыновляет животное
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
+    /**
+     * Животное которое усыновляют
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id")
     private Animal animal;
@@ -40,7 +45,7 @@ public class AdoptionAnimal extends AuditEntity {
     private AdoptionStatus adoptionStatus;
 
     /***
-     * Усыновления
+     * Ежедневные отчеты
      */
     @OneToMany(
             mappedBy = "adoptionAnimal",

@@ -7,6 +7,9 @@ import ru.teamfour.dao.entity.shelter.Shelter;
 
 import java.util.UUID;
 
+/***
+ * Схема проезда к приюту (фото)
+ */
 @Getter
 @Setter
 @NoArgsConstructor
