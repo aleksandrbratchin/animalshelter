@@ -17,13 +17,9 @@ import java.util.List;
 
 @Component
 public class ShelterInformationCommand extends AbstractCommand {
+
     @Value("${buttonName.shelterInformation}")
     private String buttonName;
-
-    private final ShelterServiceImpl shelterService;
-    public ShelterInformationCommand(ShelterServiceImpl shelterService) {
-        this.shelterService = shelterService;
-    }
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {

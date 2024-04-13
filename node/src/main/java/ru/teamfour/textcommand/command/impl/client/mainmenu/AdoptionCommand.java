@@ -25,9 +25,8 @@ public class AdoptionCommand extends AbstractCommand {
         State state = State.ADOPTION;
         user.setState(state);
         userService.save(user);
-        userService.updateState(user, state);
 
-        String answerMessage = "Answer: " + buttonName;
+        String answerMessage = "Здесь можно получить информацию о том как взять животное из приюта";
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
