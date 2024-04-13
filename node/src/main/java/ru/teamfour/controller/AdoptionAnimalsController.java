@@ -2,29 +2,23 @@ package ru.teamfour.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.teamfour.dao.entity.animal.Animal;
-import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionAnimal;
 
 @RestController
 public class AdoptionAnimalsController {
 
-    @GetMapping("{adoptionAnimalsId}")
-    public ResponseEntity<AdoptionAnimals> getAdoptionAnimals(@PathVariable Long adoptionAnimalsId) {
+    @GetMapping("{adoptionAnimalId}")
+    public ResponseEntity<AdoptionAnimal> getAdoptionAnimal(@PathVariable Long adoptionAnimalId) {
         return null;
     }
 
     @PostMapping
-    public ResponseEntity<AdoptionAnimals> createAdoptionAnimals(@RequestBody AdoptionAnimals adoptionAnimals) {
+    public ResponseEntity<AdoptionAnimal> createAdoptionAnimals(@RequestBody AdoptionAnimal adoptionAnimal) {
         return null;
     }
 
-    @DeleteMapping("{adoptionAnimalsId}")
-    public ResponseEntity<AdoptionAnimals> deleteAdoptionAnimals(@PathVariable Long AdoptionAnimalsId) {
-        return null;
-    }
-
-    @GetMapping("{adoptionAnimalsId}")
-    public ResponseEntity<AdoptionAnimals> getAdoptionAnimals(@PathVariable Long adoptionAnimalsId) {
+    @DeleteMapping("{adoptionAnimalId}")
+    public ResponseEntity<AdoptionAnimal> deleteAdoptionAnimal(@PathVariable Long AdoptionAnimalId) {
         return null;
     }
 
