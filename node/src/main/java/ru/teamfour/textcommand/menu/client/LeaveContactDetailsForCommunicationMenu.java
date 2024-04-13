@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.menu;
+package ru.teamfour.textcommand.menu.client;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
