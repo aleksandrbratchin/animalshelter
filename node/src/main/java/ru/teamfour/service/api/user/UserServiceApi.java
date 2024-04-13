@@ -6,6 +6,7 @@ import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public interface UserServiceApi {
@@ -65,4 +66,9 @@ public interface UserServiceApi {
      * @return список волонтеров
      */
     List<User> getVolunteersByPhoneNumberIsNotNull();
+    /**
+     * Получает список пользователей по уникальному идентификатору
+     * @return список пользователей
+     */
+    User getUser (UUID id);
 }
