@@ -1,14 +1,17 @@
 package ru.teamfour.dao.entity.animal;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.teamfour.dao.entity.ParentUUIDEntity;
 import ru.teamfour.dao.entity.shelter.Shelter;
 
 import java.util.UUID;
 
 /**
- *класс для сущности животное, в котором создается сущность по типу животного
+ * класс для сущности животное, в котором создается сущность по типу животного
  * имени, возрасту, породе, привычкам, усыновление, id приюта
  */
 @Getter
@@ -17,18 +20,34 @@ import java.util.UUID;
 @Entity
 @Table(name = "animals")
 public class Animal extends ParentUUIDEntity {
-    @Column(name="type_of_animal")
+    @Column(name = "type_of_animal")
     @Enumerated(EnumType.STRING)
     private TypeAnimal typeOfAnimal;
+    /***
+     * кличка
+     */
     @Column(name = "name")
     private String name;
-    @Column(name="age")
+    /***
+     * возраст
+     */
+    @Column(name = "age")
     private Double age;
-    @Column(name="breed")  //порода
+    /***
+     * порода
+     */
+    @Column(name = "breed")
     private String breed;
-    @Column(name="habits")  //привычки
+    /***
+     * привычки
+     */
+    @Column(name = "habits")
     private String habits;
-    @Column(name="adopted")  //усыновление
+    /***
+     * Отметка об усыновлении
+     * 1 - усыновлен, 0 - неусыновлен
+     */
+    @Column(name = "adopted")
     private boolean adopted;
     /**
      * Приют к которому относится животное
@@ -36,6 +55,7 @@ public class Animal extends ParentUUIDEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shelter_id")
     private Shelter shelter;
+
     @Builder
     public Animal(UUID id, TypeAnimal typeOfAnimal, String name, Double age, String breed, String habits, boolean adopted, Shelter shelter) {
         super(id);
@@ -52,10 +72,10 @@ public class Animal extends ParentUUIDEntity {
     public String toString() {
         return
                 " кличка - " + name + ", " +
-                " возраст - " + age + ", " +
-                " порода - " + breed + ", " +
-                " особенности поведения - " + habits +
-                "\n"
+                        " возраст - " + age + ", " +
+                        " порода - " + breed + ", " +
+                        " особенности поведения - " + habits +
+                        "\n"
                 ;
     }
 }

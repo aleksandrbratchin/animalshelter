@@ -24,7 +24,7 @@ public class VolunteerCommand extends AbstractCommand {
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.VOLUNTEER_MENU;
+        State state = State.CONTACT_VOLUNTEER_MENU;
 
         userService.updateState(user, state);
         String answerMessage = "Выберите предпочитаемый способ связи с волонтером.";

@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface ShelterRepository extends JpaRepository<Shelter, UUID> {
 
     Optional<Shelter> findByName(String name);
+
 }

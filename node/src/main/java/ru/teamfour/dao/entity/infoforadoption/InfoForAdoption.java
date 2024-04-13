@@ -24,63 +24,53 @@ public class InfoForAdoption extends ParentUUIDEntity {
     @Enumerated(EnumType.STRING)
     private TypeAnimal typeOfAnimal;
     /**
-     * /**
      * Причины отказа в усыновлении
      */
-    @Column(name = "reasons_for_refusal_of_adoption", nullable = false)
+    @Column(name = "reasons_for_refusal_of_adoption", nullable = false, columnDefinition = "TEXT")
     private String reasonsForRefusalOfAdoption;
     /**
      * Транспортировка животного
      */
-    @Column(name = "transportation", nullable = false)
+    @Column(name = "transportation", nullable = false, columnDefinition = "TEXT")
     private String transportation;
     /**
      * Обустройство дома для взрослого животного
      */
-    @Column(name = " homeImprovementForAdultAnimal", nullable = false)
+    @Column(name = " homeImprovementForAdultAnimal", nullable = false, columnDefinition = "TEXT")
     private String homeImprovementForAdultAnimal;
     /**
      * Обустройство дома для молодого животного
      */
-    @Column(name = "homeImprovementForYoungAnimal", nullable = false)
+    @Column(name = "homeImprovementForYoungAnimal", nullable = false, columnDefinition = "TEXT")
     private String homeImprovementForYoungAnimal;
     /**
      * советы специалиста
      */
-    @Column(name = "tipsFromSpecialist", nullable = false)
+    @Column(name = "tipsFromSpecialist", nullable = false, columnDefinition = "TEXT")
     private String tipsFromSpecialist;
     /**
      * Обустройство дома для животного с ограниченными возможностями
      */
-    @Column(name = " homeImprovementForAnimalWithDisabilities", nullable = false)
+    @Column(name = " homeImprovementForAnimalWithDisabilities", nullable = false, columnDefinition = "TEXT")
     private String homeImprovementForAnimalWithDisabilities;
     /**
      * список специалистов
      */
-    @Column(name = "list_specialists", nullable = false)
+    @Column(name = "list_specialists", nullable = false, columnDefinition = "TEXT")
     private String listSpecialists;
     /**
      * Правила знакомства с животным
      */
-    @Column(name = "rules_animals", nullable = false)
+    @Column(name = "rules_animals", nullable = false, columnDefinition = "TEXT")
     private String rulesAnimals;
     /**
      * Список документов для усыновления
      */
-    @Column(name = " list_documents", nullable = false)
+    @Column(name = " list_documents", nullable = false, columnDefinition = "TEXT")
     private String listDocuments;
-    //@Builder
+    @Builder
 
-    public InfoForAdoption(UUID id, TypeAnimal typeOfAnimal,
-                           String reasonsForRefusalOfAdoption,
-                           String transportation,
-                           String homeImprovementForAdultAnimal,
-                           String homeImprovementForYoungAnimal,
-                           String tipsFromSpecialist,
-                           String homeImprovementForAnimalWithDisabilities,
-                           String listSpecialists,
-                           String rulesAnimals,
-                           String listDocuments) {
+    public InfoForAdoption(UUID id, TypeAnimal typeOfAnimal, String reasonsForRefusalOfAdoption, String transportation, String homeImprovementForAdultAnimal, String homeImprovementForYoungAnimal, String tipsFromSpecialist, String homeImprovementForAnimalWithDisabilities, String listSpecialists, String rulesAnimals, String listDocuments) {
         super(id);
         this.typeOfAnimal = typeOfAnimal;
         this.reasonsForRefusalOfAdoption = reasonsForRefusalOfAdoption;
