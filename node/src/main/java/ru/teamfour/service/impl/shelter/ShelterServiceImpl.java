@@ -10,6 +10,7 @@ import ru.teamfour.service.api.shelter.ShelterService;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -78,7 +79,18 @@ public class ShelterServiceImpl implements ShelterService {
         return shelterRepository.save(shelter);
 
     }
-    public String findAllAnimals(UUID id){
-        return shelterRepository.getReferenceById(id).getAnimals().toString();
+
+    /**
+     * метод возвращает список неусыновленных животных приюта
+     * @param id id приюта
+     * @return список в формате строки
+     */
+    @Override
+    public String findAllAnimalsNotAdoption(UUID id){
+        return shelterRepository.getReferenceById(id).getAnimals()
+                .stream()
+                .filter(animal -> !animal.isAdopted())
+                .collect(Collectors.toList())
+                .toString();
     }
 }
