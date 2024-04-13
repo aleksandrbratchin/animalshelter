@@ -1,16 +1,19 @@
 package ru.teamfour.service.impl.user;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.RoleUser;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.dao.entity.user.UserInfo;
+import ru.teamfour.exception.BadRequestException;
 import ru.teamfour.repositories.UserRepository;
 import ru.teamfour.service.api.user.UserServiceApi;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -111,4 +114,13 @@ public class UserService implements UserServiceApi {
     public List<User> getVolunteersByPhoneNumberIsNotNull() {
         return repository.getVolunteersByPhoneNumberIsNotNull();
     }
+
+
+    public User getUser(UUID id) {
+        if (id == null) {
+            return repository.findById(id).orElseThrow(() -> new BadRequestException("Отсутствует Id пользователя"));
+        }
+        return null;
+    }
+
 }

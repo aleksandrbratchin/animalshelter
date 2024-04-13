@@ -12,6 +12,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByChatId(Long chatId);
 
+    @Override
+    Optional<User> findById(UUID uuid);
+
     /**
      * Получает наименее загруженного волонтера
      * @return наименее загруженный волонтер
