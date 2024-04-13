@@ -79,5 +79,3 @@ public class Animal extends ParentUUIDEntity {
                 ;
     }
 }
-
-

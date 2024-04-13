@@ -80,28 +80,24 @@ public class Shelter extends ParentUUIDEntity {
     }
 
     public String getAboutShelter() {
-        return replace(aboutShelter);
+        return aboutShelter;
     }
 
     public String getAddress() {
-        return replace(address);
+        return address;
     }
 
     public String getWorkSchedule() {
-        return replace(workSchedule);
+        return workSchedule;
     }
 
     public String getSafetyMeasures() {
-        return replace(safetyMeasures);
+        return safetyMeasures;
     }
 
     public String getSecurityData() {
-        return replace(securityData);
+        return securityData;
     }
 
-    //todo возможно заменить на post processor
-    private String replace(String str) {
-        return str.replaceAll("<br>", "\n").replaceAll("<tab>", "    ");
-    }
 
 }

@@ -17,4 +17,5 @@ public interface ShelterService {
     List<Shelter> findAll();
 
     Shelter change(UUID id, Shelter shelter);
+    String findAllAnimalsNotAdoption(UUID id);
 }
