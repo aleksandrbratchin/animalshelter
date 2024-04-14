@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.handler.impl.client.handlerButton;
+package ru.teamfour.textcommand.handler.impl.client.handlerButton.back;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -7,9 +7,9 @@ import ru.teamfour.textcommand.command.api.Command;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class DailyReportMenuHandler extends AbstractHandler {
+public class BackToPetMenuHandler extends AbstractHandler {
 
-    public DailyReportMenuHandler(@Qualifier("dailyReportMenuCommand") Command command) {
+    public BackToPetMenuHandler(@Qualifier("backToPetMenuCommand") Command command) {
         this.command = command;
     }
 

@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.handler.impl.client.handlerbutton;
+package ru.teamfour.textcommand.handler.impl.client.handlerButton.petreportmenu;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

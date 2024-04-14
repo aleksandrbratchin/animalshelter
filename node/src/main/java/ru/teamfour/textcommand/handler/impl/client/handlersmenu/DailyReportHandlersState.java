@@ -13,7 +13,7 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
  */
 @Component
 @RoleUserQualifier(RoleUser.CLIENT)
-public class DailyReportMenuHandlersState implements HandlersState {
+public class DailyReportHandlersState implements HandlersState {
 
     public final Handler petReportHandler;
     public final Handler backToPetMenuHandler;
@@ -21,7 +21,7 @@ public class DailyReportMenuHandlersState implements HandlersState {
 
 
 
-    public DailyReportMenuHandlersState(
+    public DailyReportHandlersState(
             @Qualifier("petReportHandler") Handler petReportHandler,
             @Qualifier("backToMainMenuHandler") Handler  backToPetMenuHandler,
             @Qualifier("sendTextHandler") Handler sendTextHandler
