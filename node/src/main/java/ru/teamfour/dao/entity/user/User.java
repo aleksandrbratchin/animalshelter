@@ -74,7 +74,7 @@ public class User extends AuditEntity {
         this.role = role;
         this.state = state;
         this.userInfo = userInfo;
-        this.volunteerParam = volunteerParam;
+        this.volunteerParam = VolunteerParam.builder().workload(0).build();
         this.chat = chat;
         this.shelter = shelter;
         this.adoptions = adoptions;
