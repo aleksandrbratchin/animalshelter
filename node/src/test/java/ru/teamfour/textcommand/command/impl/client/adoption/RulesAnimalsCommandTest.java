@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.command.impl.client.recommendations;
+package ru.teamfour.textcommand.command.impl.client.adoption;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -44,15 +44,15 @@ import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")
-public class TipsFromSpecialistCommandTest {
-    @Value("${buttonName.tipsFromSpecialist}")
+public class RulesAnimalsCommandTest {
+    @Value("${buttonName.rulesAnimals}")
     private String buttonName;
 
-    @Value("${buttonName.listSpecialists}")
+    @Value("${buttonName.recommendations}")
     private String checkButton;
 
     @InjectMocks
-    private TipsFromSpecialistCommand testingCommand;
+    private RulesAnimalsCommand testingCommand;
 
     @MockBean
     private UserService userService;
@@ -95,21 +95,22 @@ public class TipsFromSpecialistCommandTest {
                                 .build())
                 .build();
         UUID id = UUID.randomUUID();
-        InfoForAdoption info = new InfoForAdoption(id, DOG,
+        InfoForAdoption info1 = new InfoForAdoption(id, DOG,
                 "причины отказа - тест",
                 "транспортировка-тест",
                 "обустройство для взрослого - тест",
                 "обустройство для молодого -тест",
                 "советы специалиста -тест",
                 "oбустройство для больного - тест",
-                "список специалистов -тест",
-                "правило знакомства - тест",
+                "список специалистов -тест1",
+                "правила знакомства - тест",
                 "список документов - тест");
         when(commandContext.getUser()).thenReturn(user);
         when(commandContext.getUpdate()).thenReturn(update);
         when(repository
                 .findInfoForAdoptionByTypeOfAnimal(any(TypeAnimal.class)))
-                .thenReturn(Optional.of(info));
+                .thenReturn(Optional.of(info1));
+        // when(serviceInfo.findInfoForAdoptionByTypeAnimal(DOG)).thenReturn(info);
 
         // Act
         MessageToTelegram result = testingCommand.execute(commandContext);
@@ -118,7 +119,7 @@ public class TipsFromSpecialistCommandTest {
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("советы специалиста -тест");
+        assertThat(first.getText()).contains("правила знакомства - тест");
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
         assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
         List<String> nameButtons = replyMarkup.getKeyboard()
@@ -126,7 +127,7 @@ public class TipsFromSpecialistCommandTest {
                 .flatMap(Collection::stream)
                 .map(KeyboardButton::getText)
                 .toList();
-        assertThat(nameButtons).hasSize(7);
+        assertThat(nameButtons).hasSize(8);
         assertThat(nameButtons).contains(checkButton);
 
 
@@ -164,5 +165,4 @@ public class TipsFromSpecialistCommandTest {
             }
         }
     }
-
 }

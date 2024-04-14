@@ -37,22 +37,20 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")
-public class TipsFromSpecialistCommandTest {
-    @Value("${buttonName.tipsFromSpecialist}")
+public class HomeImprovementForAdultAnimalCommandTest {
+    @Value("${buttonName.homeImprovementForAdultAnimal}")
     private String buttonName;
 
     @Value("${buttonName.listSpecialists}")
     private String checkButton;
 
     @InjectMocks
-    private TipsFromSpecialistCommand testingCommand;
+    private HomeImprovementForAdultAnimalCommand testingCommand;
 
     @MockBean
     private UserService userService;
@@ -71,7 +69,6 @@ public class TipsFromSpecialistCommandTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         ReflectionTestUtils.setField(testingCommand, "buttonName", buttonName);
-        ReflectionTestUtils.setField(testingCommand, "service", serviceInfo);
     }
 
     @Test
@@ -118,7 +115,7 @@ public class TipsFromSpecialistCommandTest {
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("советы специалиста -тест");
+        assertThat(first.getText()).contains("обустройство для взрослого - тест");
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
         assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
         List<String> nameButtons = replyMarkup.getKeyboard()
