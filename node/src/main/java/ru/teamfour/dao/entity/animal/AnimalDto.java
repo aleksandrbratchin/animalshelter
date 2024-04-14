@@ -2,6 +2,7 @@ package ru.teamfour.dao.entity.animal;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import ru.teamfour.validators.roleuser.ValidRoleUser;
 
@@ -20,10 +21,10 @@ public class AnimalDto {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private TypeAnimal typeAnimal;
 
-    @NotBlank
+    @Positive
     private Double age;
 
     @NotBlank
@@ -33,6 +34,6 @@ public class AnimalDto {
     private String habits;
 
     @NotBlank
-    private String adopted;
+    private boolean adopted;
 
 }

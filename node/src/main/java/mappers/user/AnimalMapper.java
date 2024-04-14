@@ -12,10 +12,10 @@ public class AnimalMapper {
                 .id(animal.getId())
                 .name(animal.getName())
                 .typeAnimal(animal.getTypeOfAnimal())
-                .age(Double.valueOf(String.valueOf(animal.getAge())))
+                .age(animal.getAge())
                 .breed(animal.getBreed())
                 .habits(animal.getHabits())
-                .adopted(String.valueOf(animal.isAdopted()))
+                .adopted(animal.isAdopted())
                 .build();
     }
 
@@ -26,7 +26,7 @@ public class AnimalMapper {
                 .age(animalDto.getAge())
                 .breed(animalDto.getBreed())
                 .habits(animalDto.getHabits())
-                .adopted(Boolean.parseBoolean(animalDto.getAdopted()))
+                .adopted(animalDto.isAdopted())
                 .build();
     }
 
