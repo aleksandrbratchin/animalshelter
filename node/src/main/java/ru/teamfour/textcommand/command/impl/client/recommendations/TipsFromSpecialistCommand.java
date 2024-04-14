@@ -13,11 +13,14 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class TipsFromSpecialistCommand extends AbstractCommand {
+
     @Value("${buttonName.tipsFromSpecialist}")
     private String buttonName;
+
     private final InfoForAdoptionServiceImpl service;
 
     public TipsFromSpecialistCommand(InfoForAdoptionServiceImpl service) {
@@ -30,8 +33,9 @@ public class TipsFromSpecialistCommand extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
 
-        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+        String info = service.findInfoForAdoptionByTypeAnimal(
                 user.getShelter().getTypeOfAnimal()).getTipsFromSpecialist();
+        String answerMessage = Optional.ofNullable(info).orElse("Нет информации");
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();

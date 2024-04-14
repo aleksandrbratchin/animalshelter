@@ -12,24 +12,20 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 @RoleUserQualifier(RoleUser.VOLUNTEER)
 public class ClientChatState implements HandlersState {
 
-    public final Handler startHandler;
     public final Handler contactVolunteerEndChatHandler;
     public final Handler talkWithVolunteerHandler;
 
     public ClientChatState(
-            @Qualifier("startVolunteerHandler") Handler startHandler,
             @Qualifier("endChatClientHandler") Handler contactVolunteerEndChatHandler,
             @Qualifier("talkWithClientHandler") Handler talkWithVolunteerHandler) {
-        this.startHandler = startHandler;
         this.contactVolunteerEndChatHandler = contactVolunteerEndChatHandler;
         this.talkWithVolunteerHandler = talkWithVolunteerHandler;
     }
 
     @Override
     public Handler getHandler() {
-        startHandler.setNext(contactVolunteerEndChatHandler);
         contactVolunteerEndChatHandler.setNext(talkWithVolunteerHandler);
-        return startHandler;
+        return contactVolunteerEndChatHandler;
     }
 
     @Override

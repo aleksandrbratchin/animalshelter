@@ -1,6 +1,5 @@
 package ru.teamfour.textcommand.command.impl.client.initmenu;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -19,10 +18,13 @@ import java.util.List;
  * Выбор приюта
  */
 @Component
-public class ChooseShelter extends AbstractCommand {
+public class ChooseShelterCommand extends AbstractCommand {
 
-    @Autowired
-    private ShelterService shelterService;
+    private final ShelterService shelterService;
+
+    public ChooseShelterCommand(ShelterService shelterService) {
+        this.shelterService = shelterService;
+    }
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
