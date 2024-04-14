@@ -44,15 +44,15 @@ import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")
-public class TipsFromSpecialistCommandTest {
-    @Value("${buttonName.tipsFromSpecialist}")
+public class HomeImprovementForYoungAnimalCommandTest {
+    @Value("${buttonName.homeImprovementForYoungAnimal}")
     private String buttonName;
 
     @Value("${buttonName.listSpecialists}")
     private String checkButton;
 
     @InjectMocks
-    private TipsFromSpecialistCommand testingCommand;
+    private HomeImprovementForYoungAnimalCommand testingCommand;
 
     @MockBean
     private UserService userService;
@@ -71,7 +71,6 @@ public class TipsFromSpecialistCommandTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         ReflectionTestUtils.setField(testingCommand, "buttonName", buttonName);
-        ReflectionTestUtils.setField(testingCommand, "service", serviceInfo);
     }
 
     @Test
@@ -118,7 +117,7 @@ public class TipsFromSpecialistCommandTest {
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("советы специалиста -тест");
+        assertThat(first.getText()).contains("обустройство для молодого -тест");
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
         assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
         List<String> nameButtons = replyMarkup.getKeyboard()

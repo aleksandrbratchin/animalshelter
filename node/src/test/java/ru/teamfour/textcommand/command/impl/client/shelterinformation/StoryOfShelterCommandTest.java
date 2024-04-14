@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.command.impl.client.recommendations;
+package ru.teamfour.textcommand.command.impl.client.shelterinformation;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -17,13 +17,9 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import ru.teamfour.dao.entity.animal.TypeAnimal;
-import ru.teamfour.dao.entity.infoforadoption.InfoForAdoption;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.myutils.MessageUtils;
-import ru.teamfour.repositories.InfoForAdoptionRepository;
-import ru.teamfour.service.impl.infoforadoption.InfoForAdoptionServiceImpl;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
@@ -31,38 +27,31 @@ import ru.teamfour.textcommand.menu.MenuButtonFactory;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")
-public class TipsFromSpecialistCommandTest {
-    @Value("${buttonName.tipsFromSpecialist}")
+public class StoryOfShelterCommandTest {
+    @Value("${buttonName.storyOfShelter}")
     private String buttonName;
 
-    @Value("${buttonName.listSpecialists}")
+    @Value("${buttonName.safetyMeasuresInShelter}")
     private String checkButton;
 
     @InjectMocks
-    private TipsFromSpecialistCommand testingCommand;
+    private StoryOfShelterCommand testingCommand;
 
     @MockBean
     private UserService userService;
-    @MockBean
-    private InfoForAdoptionRepository repository;
 
     @SpyBean
     private MessageUtils messageUtils;
-    @SpyBean
-    private InfoForAdoptionServiceImpl serviceInfo;
+
 
     @SpyBean
     private MenuButtonFactory menuFactory;
@@ -71,7 +60,6 @@ public class TipsFromSpecialistCommandTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         ReflectionTestUtils.setField(testingCommand, "buttonName", buttonName);
-        ReflectionTestUtils.setField(testingCommand, "service", serviceInfo);
     }
 
     @Test
@@ -91,25 +79,11 @@ public class TipsFromSpecialistCommandTest {
                 .shelter(
                         Shelter.builder()
                                 .name(shelterName)
-                                .typeOfAnimal(DOG)
-                                .build())
-                .build();
-        UUID id = UUID.randomUUID();
-        InfoForAdoption info = new InfoForAdoption(id, DOG,
-                "причины отказа - тест",
-                "транспортировка-тест",
-                "обустройство для взрослого - тест",
-                "обустройство для молодого -тест",
-                "советы специалиста -тест",
-                "oбустройство для больного - тест",
-                "список специалистов -тест",
-                "правило знакомства - тест",
-                "список документов - тест");
+                                .aboutShelter("Это очень хороший приют")
+                                .build()).build();
+
         when(commandContext.getUser()).thenReturn(user);
         when(commandContext.getUpdate()).thenReturn(update);
-        when(repository
-                .findInfoForAdoptionByTypeOfAnimal(any(TypeAnimal.class)))
-                .thenReturn(Optional.of(info));
 
         // Act
         MessageToTelegram result = testingCommand.execute(commandContext);
@@ -118,15 +92,15 @@ public class TipsFromSpecialistCommandTest {
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("советы специалиста -тест");
+        assertThat(first.getText()).contains("Это очень хороший приют");
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
-        assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
+        assertThat(replyMarkup.getKeyboard().size()).isEqualTo(5);
         List<String> nameButtons = replyMarkup.getKeyboard()
                 .stream()
                 .flatMap(Collection::stream)
                 .map(KeyboardButton::getText)
                 .toList();
-        assertThat(nameButtons).hasSize(7);
+        assertThat(nameButtons).hasSize(9);
         assertThat(nameButtons).contains(checkButton);
 
 

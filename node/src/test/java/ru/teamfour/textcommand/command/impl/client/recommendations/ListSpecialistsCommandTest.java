@@ -38,21 +38,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")
-public class TipsFromSpecialistCommandTest {
-    @Value("${buttonName.tipsFromSpecialist}")
+public class ListSpecialistsCommandTest {
+    @Value("${buttonName.listSpecialists}")
     private String buttonName;
 
-    @Value("${buttonName.listSpecialists}")
+    @Value("${buttonName.homeImprovementForAdultAnimal}")
     private String checkButton;
 
     @InjectMocks
-    private TipsFromSpecialistCommand testingCommand;
+    private ListSpecialistsCommand testingCommand;
 
     @MockBean
     private UserService userService;
@@ -107,6 +106,7 @@ public class TipsFromSpecialistCommandTest {
                 "список документов - тест");
         when(commandContext.getUser()).thenReturn(user);
         when(commandContext.getUpdate()).thenReturn(update);
+
         when(repository
                 .findInfoForAdoptionByTypeOfAnimal(any(TypeAnimal.class)))
                 .thenReturn(Optional.of(info));
@@ -118,7 +118,7 @@ public class TipsFromSpecialistCommandTest {
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("советы специалиста -тест");
+        assertThat(first.getText()).contains("список специалистов -тест");
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
         assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
         List<String> nameButtons = replyMarkup.getKeyboard()
