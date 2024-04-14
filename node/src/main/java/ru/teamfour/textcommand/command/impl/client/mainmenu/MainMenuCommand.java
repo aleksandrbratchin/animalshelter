@@ -13,9 +13,6 @@ import ru.teamfour.textcommand.command.api.State;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Возвращает пользователя в главное меню
- */
 @Component
 public class MainMenuCommand extends AbstractCommand {
 

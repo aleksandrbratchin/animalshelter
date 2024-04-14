@@ -17,8 +17,10 @@ import java.util.Optional;
 
 @Component
 public class TipsFromSpecialistCommand extends AbstractCommand {
+
     @Value("${buttonName.tipsFromSpecialist}")
     private String buttonName;
+
     private final InfoForAdoptionServiceImpl service;
 
     public TipsFromSpecialistCommand(InfoForAdoptionServiceImpl service) {
