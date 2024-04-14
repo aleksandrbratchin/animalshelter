@@ -21,7 +21,7 @@ public class AdoptionAnimalsController {
 
     @GetMapping("{adoptionAnimalId}")
     public AdoptionAnimal getAdoptionAnimal(@PathVariable UUID id) {
-        return adoptionAnimalService.getAdoptionAnimal(id);
+        return adoptionAnimalService.findById(id);
 
     }
 
