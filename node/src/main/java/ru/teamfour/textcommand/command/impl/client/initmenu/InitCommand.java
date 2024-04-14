@@ -50,7 +50,7 @@ public class InitCommand extends AbstractCommand {
                     .sendMessages(sendMessages)
                     .build();
         } else {
-            //делаем меню
+
             ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
             keyboardMarkup.setSelective(true);
             keyboardMarkup.setResizeKeyboard(true);

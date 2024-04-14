@@ -9,7 +9,7 @@ import ru.teamfour.textcommand.handler.api.AbstractHandler;
 @Component
 public class ChooseShelterHandler extends AbstractHandler {
 
-    public ChooseShelterHandler(@Qualifier("chooseShelter") Command command) {
+    public ChooseShelterHandler(@Qualifier("chooseShelterCommand") Command command) {
         this.command = command;
     }
 
