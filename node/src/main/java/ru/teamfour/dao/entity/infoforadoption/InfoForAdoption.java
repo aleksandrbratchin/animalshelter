@@ -68,18 +68,9 @@ public class InfoForAdoption extends ParentUUIDEntity {
      */
     @Column(name = " list_documents", nullable = false, columnDefinition = "TEXT")
     private String listDocuments;
-    //@Builder
+    @Builder
 
-    public InfoForAdoption(UUID id, TypeAnimal typeOfAnimal,
-                           String reasonsForRefusalOfAdoption,
-                           String transportation,
-                           String homeImprovementForAdultAnimal,
-                           String homeImprovementForYoungAnimal,
-                           String tipsFromSpecialist,
-                           String homeImprovementForAnimalWithDisabilities,
-                           String listSpecialists,
-                           String rulesAnimals,
-                           String listDocuments) {
+    public InfoForAdoption(UUID id, TypeAnimal typeOfAnimal, String reasonsForRefusalOfAdoption, String transportation, String homeImprovementForAdultAnimal, String homeImprovementForYoungAnimal, String tipsFromSpecialist, String homeImprovementForAnimalWithDisabilities, String listSpecialists, String rulesAnimals, String listDocuments) {
         super(id);
         this.typeOfAnimal = typeOfAnimal;
         this.reasonsForRefusalOfAdoption = reasonsForRefusalOfAdoption;
