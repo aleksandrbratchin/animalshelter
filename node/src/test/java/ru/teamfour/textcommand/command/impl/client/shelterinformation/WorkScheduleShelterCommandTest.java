@@ -103,7 +103,6 @@ public class WorkScheduleShelterCommandTest {
         assertThat(nameButtons).hasSize(9);
         assertThat(nameButtons).contains(checkButton);
 
-
     }
 
     @Nested
