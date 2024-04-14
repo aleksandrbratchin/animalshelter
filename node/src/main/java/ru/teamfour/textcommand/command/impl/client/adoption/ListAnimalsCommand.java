@@ -1,12 +1,12 @@
-package ru.teamfour.textcommand.command;
+package ru.teamfour.textcommand.command.impl.client.adoption;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.service.impl.animal.AnimalServiceImpl;
+import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
+import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
@@ -18,9 +18,9 @@ import java.util.List;
 public class ListAnimalsCommand extends AbstractCommand {
     @Value("${buttonName.listAnimals}")
     private String buttonName;
-    private final AnimalServiceImpl service;
+    private final ShelterServiceImpl service;
 
-    public ListAnimalsCommand(AnimalServiceImpl service) {
+    public ListAnimalsCommand(ShelterServiceImpl service) {
         this.service = service;
     }
 
@@ -37,7 +37,7 @@ public class ListAnimalsCommand extends AbstractCommand {
         State state = State.ADOPTION;
         user.setState(state);
         userService.save(user);
-        String answerMessage = service.findAllByAdopted(false).toString();
+        String answerMessage = service.findAllAnimals(user.getShelter().getId()); //todo не усыновленные дивотные
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(startTextCommand, state));
