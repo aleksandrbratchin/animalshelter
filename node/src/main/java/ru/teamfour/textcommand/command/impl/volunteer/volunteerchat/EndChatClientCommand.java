@@ -19,8 +19,9 @@ import java.util.List;
  */
 @Component
 public class EndChatClientCommand extends AbstractCommand {
+
     @Value("${buttonName.endChatWithClient}")
-    private String endChatWithVolunteer;
+    private String endChatWithClient;
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
@@ -50,6 +51,6 @@ public class EndChatClientCommand extends AbstractCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals(endChatWithVolunteer);
+        return message.equals(endChatWithClient);
     }
 }

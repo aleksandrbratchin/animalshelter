@@ -12,22 +12,36 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 
 @Component
 public abstract class AbstractCommand implements Command {
-    @Autowired
+
     protected MessageUtils messageUtils;
-    @Autowired
     protected MenuButtonFactory menuFactory;
-    @Autowired
-    @Qualifier("userService")
+
     protected UserServiceApi userService;
 
     /**
      * Метод который добавляет к {@link SendMessage} меню {@link ButtonMenu} в зависимости от {@link State}
+     *
      * @param sendMessage сообшение пользователю
-     * @param state название меню {@link State}
+     * @param state       название меню {@link State}
      * @return {@link SendMessage} с меню {@link ReplyKeyboardMarkup}
      */
     protected SendMessage addMenu(SendMessage sendMessage, State state) {
         sendMessage.setReplyMarkup(menuFactory.getButtonMenu(state).getMenu());
         return sendMessage;
+    }
+
+    @Autowired
+    public void setMessageUtils(MessageUtils messageUtils) {
+        this.messageUtils = messageUtils;
+    }
+
+    @Autowired
+    public void setMenuFactory(MenuButtonFactory menuFactory) {
+        this.menuFactory = menuFactory;
+    }
+
+    @Autowired
+    public void setUserService(@Qualifier("userService") UserServiceApi userService) {
+        this.userService = userService;
     }
 }

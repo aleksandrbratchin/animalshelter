@@ -13,9 +13,10 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
-public class HomeImprovementForAdultAnimalCommand  extends AbstractCommand {
+public class HomeImprovementForAdultAnimalCommand extends AbstractCommand {
     @Value("${buttonName.homeImprovementForAdultAnimal}")
     private String buttonName;
 
@@ -30,9 +31,10 @@ public class HomeImprovementForAdultAnimalCommand  extends AbstractCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.RECOMMENDATIONS;
-
-        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+        String info = service.findInfoForAdoptionByTypeAnimal(
                 user.getShelter().getTypeOfAnimal()).getHomeImprovementForAdultAnimal();
+
+        String answerMessage = Optional.ofNullable(info).orElse("Нет информации");
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
@@ -40,7 +42,6 @@ public class HomeImprovementForAdultAnimalCommand  extends AbstractCommand {
                 .sendMessages(sendMessages)
                 .build();
     }
-
 
 
     @Override

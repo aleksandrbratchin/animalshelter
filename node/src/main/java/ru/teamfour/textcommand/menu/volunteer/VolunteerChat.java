@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.menu;
+package ru.teamfour.textcommand.menu.volunteer;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ClientChat extends ButtonAbstractMenu {
+public class VolunteerChat extends ButtonAbstractMenu {
 
-    @Value("${buttonName.endChatWithVolunteer}")
+    @Value("${buttonName.endChatWithClient}")
     private String endChatWithVolunteer;
 
     public ReplyKeyboardMarkup getMenu() {
@@ -32,7 +32,7 @@ public class ClientChat extends ButtonAbstractMenu {
 
     @Override
     public boolean isMenu(State state) {
-        return state == State.CLIENT_CHAT;
+        return state == State.VOLUNTEER_CHAT;
     }
 
 }

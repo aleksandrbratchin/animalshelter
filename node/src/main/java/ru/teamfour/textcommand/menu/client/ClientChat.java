@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.menu;
+package ru.teamfour.textcommand.menu.client;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,16 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ContactVolunteerMenu extends ButtonAbstractMenu {
+public class ClientChat extends ButtonAbstractMenu {
 
-    @Value("${buttonName.contactVolunteersByNickname}")
-    private String contactVolunteersByNickname;
-
-    @Value("${buttonName.contactVolunteersByPhoneNumber}")
-    private String contactVolunteersByPhoneNumber;
-
-    @Value("${buttonName.startChatWithVolunteer}")
-    private String startChatWithVolunteer;
+    @Value("${buttonName.endChatWithVolunteer}")
+    private String endChatWithVolunteer;
 
     public ReplyKeyboardMarkup getMenu() {
         keyboardMarkup = new ReplyKeyboardMarkup();
@@ -30,19 +24,15 @@ public class ContactVolunteerMenu extends ButtonAbstractMenu {
 
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row1 = new KeyboardRow();
-        row1.add(contactVolunteersByNickname);
-        row1.add(contactVolunteersByPhoneNumber);
+        row1.add(endChatWithVolunteer);
         keyboard.add(row1);
-        KeyboardRow row2 = new KeyboardRow();
-        row2.add(startChatWithVolunteer);
-        keyboard.add(row2);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
     }
 
     @Override
     public boolean isMenu(State state) {
-        return state == State.CONTACT_VOLUNTEER_MENU;
+        return state == State.CLIENT_CHAT;
     }
 
 }

@@ -22,7 +22,7 @@ import java.util.UUID;
 public class Animal extends ParentUUIDEntity {
     @Column(name = "type_of_animal")
     @Enumerated(EnumType.STRING)
-    private TypeAnimal typeOfAnimal;
+    private TypeAnimal typeAnimal;
     /***
      * кличка
      */
@@ -48,7 +48,8 @@ public class Animal extends ParentUUIDEntity {
      * 1 - усыновлен, 0 - неусыновлен
      */
     @Column(name = "adopted")
-    private boolean adopted;
+    @Enumerated(EnumType.STRING)
+    private AdoptionAnimalState adopted;
     /**
      * Приют к которому относится животное
      */
@@ -57,9 +58,9 @@ public class Animal extends ParentUUIDEntity {
     private Shelter shelter;
 
     @Builder
-    public Animal(UUID id, TypeAnimal typeOfAnimal, String name, Double age, String breed, String habits, boolean adopted, Shelter shelter) {
+    public Animal(UUID id, TypeAnimal typeAnimal, String name, Double age, String breed, String habits, AdoptionAnimalState adopted, Shelter shelter) {
         super(id);
-        this.typeOfAnimal = typeOfAnimal;
+        this.typeAnimal = typeAnimal;
         this.name = name;
         this.age = age;
         this.breed = breed;
@@ -79,5 +80,3 @@ public class Animal extends ParentUUIDEntity {
                 ;
     }
 }
-
-

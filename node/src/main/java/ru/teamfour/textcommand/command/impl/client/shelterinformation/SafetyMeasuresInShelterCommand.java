@@ -12,6 +12,7 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class SafetyMeasuresInShelterCommand extends AbstractCommand {
@@ -25,8 +26,9 @@ public class SafetyMeasuresInShelterCommand extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.INFO_SHELTER;
 
-        String answerMessage = "Техника безопасности на территории приюта: \n" +
+        String info = "Техника безопасности на территории приюта: \n" +
                 user.getShelter().getSafetyMeasures();
+        String answerMessage = Optional.ofNullable(info).orElse("Нет информации");
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
