@@ -1,10 +1,11 @@
-package ru.teamfour.dao.entity.shelter;
+package ru.teamfour.dto.animal;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
+import ru.teamfour.validators.roleuser.ValidRoleUser;
 
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ShelterDto {
+public class AnimalDto {
 
     @NotNull(message = "UUID cannot be null")
     private UUID id;
@@ -25,18 +26,15 @@ public class ShelterDto {
     private TypeAnimal typeAnimal;
 
     @Positive
-    private String aboutShelter;
+    private Double age;
 
     @NotBlank
-    private String address;
+    private String breed;
 
     @NotBlank
-    private String workSchedule;
+    private String habits;
 
     @NotBlank
-    private String safetyMeasures;
-
-    @NotBlank
-    private String securityData;
+    private boolean adopted;
 
 }
