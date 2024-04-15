@@ -13,6 +13,7 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class RecommendationsCommand extends AbstractCommand {
@@ -31,7 +32,8 @@ public class RecommendationsCommand extends AbstractCommand {
         userService.save(user);
         userService.updateState(user, state);
 
-        String answerMessage = "информация о усыновлении из приюта \"" + user.getShelter().getName() + "\"";
+        String info = "информация о усыновлении из приюта \"" + user.getShelter().getName() + "\"";
+        String answerMessage = Optional.ofNullable(info).orElse("Нет информации");
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

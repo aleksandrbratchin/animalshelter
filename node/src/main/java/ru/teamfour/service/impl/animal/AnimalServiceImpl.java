@@ -78,7 +78,7 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     /**
-     * @param type тип животного, например: собака
+     * @param type тип животного, например: DOG
      * @return возвращает список животных по указанному типу
      */
     @Override
