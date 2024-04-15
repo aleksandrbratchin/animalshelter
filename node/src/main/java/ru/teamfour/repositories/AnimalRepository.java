@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface AnimalRepository extends JpaRepository<Animal, UUID> {
     List<Animal> findAnimalByAdopted(boolean b);
 
-    List<Animal> findAnimalByTypeOfAnimal(TypeAnimal type);
+    List<Animal> findAnimalByTypeAnimal(TypeAnimal type);
 
     void deleteAnimalById(UUID id); //todo удалить если не понадобится
 

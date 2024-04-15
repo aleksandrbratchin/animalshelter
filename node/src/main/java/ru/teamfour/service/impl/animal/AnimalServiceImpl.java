@@ -83,6 +83,6 @@ public class AnimalServiceImpl implements AnimalService {
      */
     @Override
     public List<Animal> findAllByType(TypeAnimal type) {
-        return repository.findAnimalByTypeOfAnimal(type);
+        return repository.findAnimalByTypeAnimal(type);
     }
 }
