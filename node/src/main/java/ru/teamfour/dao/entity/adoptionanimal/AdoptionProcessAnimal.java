@@ -10,6 +10,7 @@ import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.dailyreport.DailyReport;
 import ru.teamfour.dao.entity.user.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -21,8 +22,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "adoption_animal")
-public class AdoptionAnimal extends AuditEntity {
+@Table(name = "adoption_process_animal")
+public class AdoptionProcessAnimal extends AuditEntity {
 
     /**
      * Клиент который усыновляет животное
@@ -38,28 +39,34 @@ public class AdoptionAnimal extends AuditEntity {
     private Animal animal;
 
     /**
-     * adoptionStatus - статус усыновления {@link AdoptionStatus}
+     * Дата окончания проверки
      */
-    @Column(name = "adoption_status", nullable = false)
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
+
+    /**
+     * adoptionStatus - статус усыновления {@link AdoptionProcessStatus}
+     */
+
     @Enumerated(EnumType.STRING)
-    private AdoptionStatus adoptionStatus;
+    private AdoptionProcessStatus adoptionProcessStatus;
 
     /***
      * Ежедневные отчеты
      */
     @OneToMany(
-            mappedBy = "adoptionAnimal",
+            mappedBy = "adoptionProcessAnimal",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<DailyReport> adoptions = new ArrayList<>();
 
     @Builder
-    public AdoptionAnimal(UUID id, User user, Animal animal, AdoptionStatus adoptionStatus, List<DailyReport> adoptions) {
+    public AdoptionProcessAnimal(UUID id, User user, Animal animal, AdoptionProcessStatus adoptionProcessStatus, List<DailyReport> adoptions) {
         super(id);
         this.user = user;
         this.animal = animal;
-        this.adoptionStatus = adoptionStatus;
+        this.adoptionProcessStatus = adoptionProcessStatus;
         this.adoptions = adoptions;
     }
 }

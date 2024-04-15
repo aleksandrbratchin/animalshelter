@@ -17,6 +17,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.infoforadoption.InfoForAdoption;
@@ -89,13 +90,25 @@ public class ListAnimalsCommandTest {
         UUID id = UUID.randomUUID();
         Animal animal1 = Animal.builder()
                 .id(id)
+                .adopted(AdoptionAnimalState.NOT_ADOPTED)
                 .name("Жучка")
                 .build();
         Animal animal2 = Animal.builder()
                 .id(id)
+                .adopted(AdoptionAnimalState.NOT_ADOPTED)
                 .name("Барбос")
                 .build();
-        List<Animal> animals = new ArrayList<>(List.of(animal1, animal2));
+        Animal animal3 = Animal.builder()
+                .id(id)
+                .adopted(AdoptionAnimalState.ADOPTED)
+                .name("Рекс")
+                .build();
+        Animal animal4 = Animal.builder()
+                .id(id)
+                .adopted(AdoptionAnimalState.PROCESS_OF_ADOPTION)
+                .name("Чарльз")
+                .build();
+        List<Animal> animals = new ArrayList<>(List.of(animal1, animal2, animal3, animal4));
         Shelter shelter1 = Shelter.builder()
                 .id(id)
                 .name(shelterName)
@@ -110,8 +123,8 @@ public class ListAnimalsCommandTest {
         when(commandContext.getUser()).thenReturn(user);
         when(commandContext.getUpdate()).thenReturn(update);
         when(repository
-                .getReferenceById(any(UUID.class)))
-                .thenReturn(shelter1);
+                .findById(any(UUID.class)))
+                .thenReturn(Optional.of(shelter1));
 
         // Act
         MessageToTelegram result = testingCommand.execute(commandContext);
@@ -120,8 +133,10 @@ public class ListAnimalsCommandTest {
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("Жучка");
-        assertThat(first.getText()).contains("Барбос");
+        assertThat(first.getText()).contains(animal1.getName());
+        assertThat(first.getText()).contains(animal2.getName());
+        assertThat(first.getText()).doesNotContain(animal3.getName());
+        assertThat(first.getText()).doesNotContain(animal4.getName());
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
         assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
         List<String> nameButtons = replyMarkup.getKeyboard()

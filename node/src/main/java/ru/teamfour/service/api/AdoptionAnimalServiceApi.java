@@ -1,11 +1,11 @@
 package ru.teamfour.service.api;
 
-import ru.teamfour.dao.entity.adoptionanimal.AdoptionAnimal;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 
 import java.util.UUID;
 
 public interface AdoptionAnimalServiceApi {
 
 
-    AdoptionAnimal findById(UUID id);
+    AdoptionProcessAnimal findById(UUID id);
 }

@@ -15,6 +15,7 @@ import ru.teamfour.mappers.animal.AnimalMapper;
 @Setter
 @NoArgsConstructor
 public abstract class ShelterDtoMapper {
+
     @Autowired
     protected AnimalMapper animalMapper;
 
