@@ -16,4 +16,10 @@ public enum State {
     RECOMMENDATIONS, //меню  рекомендаций для усыновителей
 
     LEAVE_CONTACT_DETAILS_FOR_COMMUNICATION_MENU, CLIENT_CHAT, LIST_ANIMALS_MENU // Меню, которое выводит список животных для усыновления
+    ,
+    DAILY_REPORT_MENU, //Меню, которое выводит меню с отчётом о питомце
+
+
 }
+
+
