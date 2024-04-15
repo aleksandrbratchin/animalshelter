@@ -10,4 +10,6 @@ public interface ShelterRepository extends JpaRepository<Shelter, UUID> {
 
     Optional<Shelter> findByName(String name);
 
+    void deleteByName(String name);
+
 }

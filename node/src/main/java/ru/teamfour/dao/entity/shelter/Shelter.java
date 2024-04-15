@@ -1,5 +1,6 @@
 package ru.teamfour.dao.entity.shelter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -59,6 +60,7 @@ public class Shelter extends ParentUUIDEntity {
     /**
      * животные в приюте
      */
+    @JsonIgnore
     @OneToMany(
             mappedBy = "shelter",
             cascade = CascadeType.ALL,

@@ -3,7 +3,9 @@ package ru.teamfour.service.impl.shelter;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.teamfour.dao.entity.animal.Animal;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.shelter.ShelterService;
@@ -31,6 +33,40 @@ public class ShelterServiceImpl implements ShelterService {
     }
 
     /**
+     * Метод создает объект класса {@link Shelter}
+     * по введенным параметрам
+     *
+     * @param name
+     * @param typeAnimal
+     * @param aboutShelter
+     * @param address
+     * @param safetyMeasures
+     * @param securityData
+     * @param workSchedule
+     * @return возвращает созданный объект
+     */
+
+    @Override
+    public Shelter add(String name,
+                       TypeAnimal typeAnimal,
+                       String aboutShelter,
+                       String address,
+                       String safetyMeasures,
+                       String securityData,
+                       String workSchedule) {
+
+        Shelter shelter = Shelter.builder()
+                .name(name)
+                .typeOfAnimal(typeAnimal)
+                .aboutShelter(aboutShelter)
+                .address(address)
+                .workSchedule(workSchedule)
+                .safetyMeasures(safetyMeasures)
+                .securityData(securityData).build();
+        return shelterRepository.save(shelter);
+    }
+
+    /**
      * метод удаляет из БД объект {@link Shelter} по UUID
      *
      * @param id принимет UUID удаляемого объекта
@@ -38,6 +74,18 @@ public class ShelterServiceImpl implements ShelterService {
     @Override
     public void remove(UUID id) {
         shelterRepository.deleteById(id);
+    }
+
+    /**
+     * метод удаляет из БД объект {@link Shelter} по имени
+     *
+     * @param name принимет имя удаляемого объекта
+     */
+
+    @Override
+    public void removeByName(String name) {
+        shelterRepository.deleteByName(name);
+
     }
 
     /**
@@ -59,7 +107,7 @@ public class ShelterServiceImpl implements ShelterService {
      */
     @Override
     public Shelter findByName(String name) {
-        return shelterRepository.findByName(name).orElseThrow(RuntimeException::new);//todo
+        return shelterRepository.findByName(name).orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -83,11 +131,12 @@ public class ShelterServiceImpl implements ShelterService {
 
     /**
      * метод возвращает список неусыновленных животных приюта
+     *
      * @param id id приюта
      * @return список в формате строки
      */
     @Override
-    public String findAllAnimalsNotAdoption(UUID id){
+    public String findAllAnimalsNotAdoption(UUID id) {
         return shelterRepository.getReferenceById(id).getAnimals()
                 .stream()
                 .filter(animal -> !animal.isAdopted())
