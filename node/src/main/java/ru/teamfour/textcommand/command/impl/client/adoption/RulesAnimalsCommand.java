@@ -13,6 +13,7 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class RulesAnimalsCommand extends AbstractCommand {
@@ -30,8 +31,9 @@ public class RulesAnimalsCommand extends AbstractCommand {
         State state = State.ADOPTION;
 
 
-        String answerMessage = service.findInfoForAdoptionByTypeAnimal(
+        String info = service.findInfoForAdoptionByTypeAnimal(
                 user.getShelter().getTypeOfAnimal()).getRulesAnimals();
+        String answerMessage = Optional.ofNullable(info).orElse("Нет информации");
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(startTextCommand, state));
