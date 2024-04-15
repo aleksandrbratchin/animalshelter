@@ -121,6 +121,7 @@ public class ListAnimalsCommandTest {
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
         assertThat(first.getText()).contains("Жучка");
+        assertThat(first.getText()).contains("Барбос");
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
         assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
         List<String> nameButtons = replyMarkup.getKeyboard()
