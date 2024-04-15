@@ -1,7 +1,7 @@
 package ru.teamfour.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.teamfour.dao.entity.adoptionanimal.AdoptionAnimal;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.AdoptionAnimalService;
 import ru.teamfour.service.impl.user.UserService;
@@ -21,7 +21,7 @@ public class AdoptionAnimalsController {
     }
 
     @GetMapping("/{adoptionAnimalId}")
-    public AdoptionAnimal getAdoptionAnimal(@PathVariable(value = "adoptionAnimalId") UUID id) {
+    public AdoptionProcessAnimal getAdoptionAnimal(@PathVariable(value = "adoptionAnimalId") UUID id) {
         return adoptionAnimalService.findById(id);
 
     }

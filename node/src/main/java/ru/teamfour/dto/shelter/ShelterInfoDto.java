@@ -5,7 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
+import ru.teamfour.dto.animal.AnimalDto;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -13,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ShelterDto {
+public class ShelterInfoDto {
 
     @NotNull(message = "UUID cannot be null")
     private UUID id;
@@ -38,5 +40,7 @@ public class ShelterDto {
 
     @NotBlank
     private String securityData;
+
+    private List<AnimalDto> animals;
 
 }

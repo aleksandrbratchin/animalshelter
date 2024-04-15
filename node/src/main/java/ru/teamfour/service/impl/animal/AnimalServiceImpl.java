@@ -2,6 +2,7 @@ package ru.teamfour.service.impl.animal;
 
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
+import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.repositories.AnimalRepository;
@@ -67,14 +68,10 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     /**
-     * метод по поиску усыновленных или неусыновленных животных
-     *
-     * @param b true или false
-     * @return возвращает список всех животных усыновленных или неусыновленных
+     * метод для поиска животных по статусу
      */
-    @Override
-    public List<Animal> findAllByAdopted(boolean b) {
-        return repository.findAnimalByAdopted(b);
+    public List<Animal> findByAdopted(AdoptionAnimalState adoptionAnimalState) {
+        return repository.findByAdopted(adoptionAnimalState);
     }
 
     /**
@@ -83,6 +80,6 @@ public class AnimalServiceImpl implements AnimalService {
      */
     @Override
     public List<Animal> findAllByType(TypeAnimal type) {
-        return repository.findAnimalByTypeOfAnimal(type);
+        return repository.findAnimalByTypeAnimal(type);
     }
 }
