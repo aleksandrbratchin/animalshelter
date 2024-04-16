@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.handler.impl.client.handlerButton.dailyreportmenu;
+package ru.teamfour.textcommand.handler.impl.client.handlerbutton.dailyreportmenu;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -7,9 +7,9 @@ import ru.teamfour.textcommand.command.api.Command;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
 
 @Component
-public class ChangeTextForSendDailyReportHandler extends AbstractHandler {
+public class SaveTextDailyReportHandler extends AbstractHandler {
 
-    public ChangeTextForSendDailyReportHandler(@Qualifier("changeTextForSendDailyReportCommand") Command command) {
+    public SaveTextDailyReportHandler(@Qualifier("saveTextDailyReportCommand") Command command) {
         this.command = command;
     }
 

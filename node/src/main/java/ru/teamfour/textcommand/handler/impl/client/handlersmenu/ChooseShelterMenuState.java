@@ -10,26 +10,30 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 
 @Component
 @RoleUserQualifier(RoleUser.CLIENT)
-public class InitMenuHandlersState implements HandlersState {
+public class ChooseShelterMenuState implements HandlersState {
 
     public final Handler initHandler;
-    public final Handler chooseShelterMenuHandler;
+    public final Handler chooseShelterHandler;
+    public final Handler backToTypeAnimalMenuHandler;
 
-    public InitMenuHandlersState(
+    public ChooseShelterMenuState(
             @Qualifier("initHandler") Handler initHandler,
-            @Qualifier("chooseShelterMenuHandler") Handler chooseShelterMenuHandler) {
+            @Qualifier("chooseShelterHandler") Handler chooseShelterHandler,
+            @Qualifier("backToTypeAnimalMenuHandler") Handler backToTypeAnimalMenuHandler) {
         this.initHandler = initHandler;
-        this.chooseShelterMenuHandler = chooseShelterMenuHandler;
+        this.chooseShelterHandler = chooseShelterHandler;
+        this.backToTypeAnimalMenuHandler = backToTypeAnimalMenuHandler;
     }
 
     @Override
     public Handler getHandler() {
-        initHandler.setNext(chooseShelterMenuHandler);
+        initHandler.setNext(chooseShelterHandler);
+        chooseShelterHandler.setNext(backToTypeAnimalMenuHandler);
         return initHandler;
     }
 
     @Override
     public boolean isState(State state) {
-        return state == State.INIT_MENU;
+        return state == State.CHOOSE_SHELTER_MENU;
     }
 }

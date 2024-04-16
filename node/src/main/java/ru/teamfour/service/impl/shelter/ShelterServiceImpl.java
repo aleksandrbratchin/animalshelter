@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.shelter.ShelterService;
@@ -94,5 +95,16 @@ public class ShelterServiceImpl implements ShelterService {
     public List<Animal> findAllAnimalsNotAdoption(UUID id) { //todo переписать на SQL
         Shelter shelter = shelterRepository.findById(id).orElseThrow(() -> new RuntimeException()); //todo написать свое
         return shelter.getAnimals().stream().filter(animal -> animal.getAdopted().equals(AdoptionAnimalState.NOT_ADOPTED)).toList();
+    }
+
+    /**
+     * метод возвращает список приютов по типу животного {@link TypeAnimal}
+     *
+     * @param {@link TypeAnimal}
+     * @return {@link List<Shelter>}
+     */
+    @Override
+    public List<Shelter> findByTypeAnimal(TypeAnimal typeAnimal) {
+        return shelterRepository.findByTypeOfAnimal(typeAnimal);
     }
 }

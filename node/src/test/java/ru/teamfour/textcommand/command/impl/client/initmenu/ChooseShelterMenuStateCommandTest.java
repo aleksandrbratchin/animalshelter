@@ -40,13 +40,13 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")
-class InitCommandTest {
+class ChooseShelterMenuStateCommandTest {
 
     @Value("${buttonName.initCommand}")
     private String buttonName;
 
     @InjectMocks
-    private InitCommand testingCommand;
+    private ChooseShelterMenuCommand testingCommand;
 
     @MockBean
     private UserService userService;
