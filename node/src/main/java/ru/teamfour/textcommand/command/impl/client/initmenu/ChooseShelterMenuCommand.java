@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.api.shelter.ShelterService;
@@ -20,13 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Меню выбора типа животного
+ * Меню выбора приютов
  */
 @Component
-public class InitCommand extends AbstractCommand {
-
-    @Value("${buttonName.initCommand}")
-    private String buttonName;
+public class ChooseShelterMenuCommand extends AbstractCommand {
 
     @Value("${buttonName.dogShelter}")
     private String dogShelter;
@@ -41,10 +39,17 @@ public class InitCommand extends AbstractCommand {
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.INIT_MENU;
+        String message = commandContext.getUpdate().getMessage().getText();
+        State state = State.CHOOSE_SHELTER_MENU;
         user.setState(state);
         userService.save(user);
-        List<Shelter> all = shelterService.findAll();
+
+        List<Shelter> all = new ArrayList<>();
+        if(dogShelter.equals(message)){
+            all = shelterService.findByTypeAnimal(TypeAnimal.DOG);
+        } else if(catShelter.equals(message)) {
+            all = shelterService.findByTypeAnimal(TypeAnimal.CAT);
+        }
 
         if(all.size() == 0){
             String answerMessage =  "Нет приютов(";
@@ -64,11 +69,16 @@ public class InitCommand extends AbstractCommand {
 
             List<KeyboardRow> keyboard = new ArrayList<>();
             KeyboardRow row = new KeyboardRow();
-            row.add(dogShelter);
-            row.add(catShelter);
+            for (int i = 0; i < all.size(); i++) {
+                row.add(all.get(i).getName());
+                if ((i + 1) % 2 == 0) {
+                    keyboard.add(row);
+                    row = new KeyboardRow();
+                }
+            }
             keyboard.add(row);
             keyboardMarkup.setKeyboard(keyboard);
-            String answerMessage = "Приют для каких животных вас интересует?";
+            String answerMessage = "Выберите приют";
             SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
             sendMessage.setReplyMarkup(keyboardMarkup);
             List<SendMessage> sendMessages = new ArrayList<>();
@@ -82,7 +92,7 @@ public class InitCommand extends AbstractCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return message.equals("/start") || message.equals(buttonName);
+        return message.equals(dogShelter) || message.equals(catShelter);
     }
 
 }
