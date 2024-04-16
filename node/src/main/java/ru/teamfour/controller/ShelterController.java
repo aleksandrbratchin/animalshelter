@@ -142,5 +142,6 @@ public class ShelterController {
         } else ResponseEntity.status(HttpStatus.SC_BAD_REQUEST).build();
         return ResponseEntity.ok(service.findByName(name));
     }
+
 }
 
