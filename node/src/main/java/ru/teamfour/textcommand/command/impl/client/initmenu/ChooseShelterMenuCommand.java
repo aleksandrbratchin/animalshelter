@@ -32,6 +32,9 @@ public class ChooseShelterMenuCommand extends AbstractCommand {
     @Value("${buttonName.catShelter}")
     private String catShelter;
 
+    @Value("${buttonName.backButton}")
+    private String backButton;
+
     @Autowired
     private ShelterService shelterService;
 
@@ -51,12 +54,24 @@ public class ChooseShelterMenuCommand extends AbstractCommand {
             all = shelterService.findByTypeAnimal(TypeAnimal.CAT);
         }
 
-        if(all.size() == 0){
-            String answerMessage =  "Нет приютов(";
+        if(all.size() == 0) {
+            String answerMessage = "Нет приютов(";
             SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
-            sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
+
+            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+            keyboardMarkup.setSelective(true);
+            keyboardMarkup.setResizeKeyboard(true);
+            keyboardMarkup.setOneTimeKeyboard(false);
+
+            List<KeyboardRow> keyboard = new ArrayList<>();
+            KeyboardRow row = new KeyboardRow();
+            row.add(backButton);
+            keyboard.add(row);
+            keyboardMarkup.setKeyboard(keyboard);
+
             List<SendMessage> sendMessages = new ArrayList<>();
             sendMessages.add(sendMessage);
+            sendMessage.setReplyMarkup(keyboardMarkup);
             return MessageToTelegram.builder()
                     .sendMessages(sendMessages)
                     .build();
@@ -77,6 +92,9 @@ public class ChooseShelterMenuCommand extends AbstractCommand {
                 }
             }
             keyboard.add(row);
+            KeyboardRow row2 = new KeyboardRow();
+            row2.add(backButton);
+            keyboard.add(row2);
             keyboardMarkup.setKeyboard(keyboard);
             String answerMessage = "Выберите приют";
             SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);

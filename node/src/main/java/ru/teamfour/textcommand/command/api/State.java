@@ -21,7 +21,7 @@ public enum State {
     DAILY_REPORT_MENU, //Меню, которое выводит меню с отчётом о питомце
 
     WAITING_FOR_PHOTOS_FOR_DAILY_REPORT, //ожидание фото для ежедневного отчета
-    CHOOSE_SHELTER_MENU, //меню выбора приютов
+    CHOOSE_SHELTER_MENU, WAITING_TEXT_FOR_DAILY_REPORT, //меню выбора приютов
 }
 
 

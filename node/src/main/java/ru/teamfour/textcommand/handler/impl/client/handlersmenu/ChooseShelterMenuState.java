@@ -14,17 +14,21 @@ public class ChooseShelterMenuState implements HandlersState {
 
     public final Handler initHandler;
     public final Handler chooseShelterHandler;
+    public final Handler backToTypeAnimalMenuHandler;
 
     public ChooseShelterMenuState(
             @Qualifier("initHandler") Handler initHandler,
-            @Qualifier("chooseShelterMenuHandler") Handler chooseShelterHandler) {
+            @Qualifier("chooseShelterHandler") Handler chooseShelterHandler,
+            @Qualifier("backToTypeAnimalMenuHandler") Handler backToTypeAnimalMenuHandler) {
         this.initHandler = initHandler;
         this.chooseShelterHandler = chooseShelterHandler;
+        this.backToTypeAnimalMenuHandler = backToTypeAnimalMenuHandler;
     }
 
     @Override
     public Handler getHandler() {
         initHandler.setNext(chooseShelterHandler);
+        chooseShelterHandler.setNext(backToTypeAnimalMenuHandler);
         return initHandler;
     }
 
