@@ -20,7 +20,7 @@ class RoleUserValidatorTest {
     private RoleUserValidator roleUserValidator;
 
     @Nested
-    class ValidRoleUser {
+    class RoleUserValid {
         @Test
         void testClient() {
             String validRole = RoleUser.CLIENT.name();

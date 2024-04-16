@@ -1,20 +1,20 @@
-package ru.teamfour.validators.roleuser;
+package ru.teamfour.validators.typeanimal;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import ru.teamfour.dao.entity.user.RoleUser;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
 
-public class RoleUserValidator implements ConstraintValidator<RoleUserValid, String> {
+public class TypeAnimalValidator implements ConstraintValidator<TypeAnimalValid, String> {
 
     @Override
-    public void initialize(RoleUserValid constraintAnnotation) {
+    public void initialize(TypeAnimalValid typeAnimalValid) {
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         boolean correct = true;
         try {
-            RoleUser.valueOf(value);
+            TypeAnimal.valueOf(value);
         } catch (IllegalArgumentException e) {
             correct = false;
         }
