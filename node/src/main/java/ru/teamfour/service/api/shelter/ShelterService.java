@@ -29,4 +29,22 @@ public interface ShelterService {
 
     Shelter change(UUID id, Shelter shelter);
     String findAllAnimalsNotAdoption(UUID id);
+
+    Shelter changeAboutShelter(String name,
+                               String aboutShelter);
+
+    Shelter changeSecurity(String name,
+                           String security);
+
+    Shelter changeSafetyMeasures(String name,
+                                 String safety);
+
+    Shelter changeAddress(String name,
+                          String address);
+
+    Shelter changeTypeAnimal(String name,
+                             TypeAnimal typeAnimal);
+
+    Shelter changeWorkSchedule(String name,
+                               String work);
 }
