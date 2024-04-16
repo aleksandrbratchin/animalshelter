@@ -28,11 +28,11 @@ public class SendPhotoCommand extends AbstractCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
 
-        State state = State.PET_REPORT;
+        State state = State.WAITING_FOR_PHOTOS_FOR_DAILY_REPORT;
         user.setState(state);
         userService.save(user);
 
-        String answerMessage = "Answer: " + buttonName;
+        String answerMessage = "Пришлите фото вашего питомца";
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

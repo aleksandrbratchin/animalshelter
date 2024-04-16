@@ -8,6 +8,7 @@ import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.repositories.AnimalRepository;
 import ru.teamfour.service.api.animal.AnimalService;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,6 +71,7 @@ public class AnimalServiceImpl implements AnimalService {
     /**
      * метод для поиска животных по статусу
      */
+    @Override
     public List<Animal> findByAdopted(AdoptionAnimalState adoptionAnimalState) {
         return repository.findByAdopted(adoptionAnimalState);
     }
@@ -82,4 +84,5 @@ public class AnimalServiceImpl implements AnimalService {
     public List<Animal> findAllByType(TypeAnimal type) {
         return repository.findAnimalByTypeAnimal(type);
     }
+
 }
