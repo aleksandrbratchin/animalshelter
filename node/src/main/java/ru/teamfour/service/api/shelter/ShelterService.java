@@ -4,6 +4,8 @@ package ru.teamfour.service.api.shelter;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
+import ru.teamfour.dto.shelter.ShelterAddDto;
+import ru.teamfour.dto.shelter.ShelterInfoDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -55,5 +57,13 @@ public interface ShelterService {
     List<Animal> findAllAnimalsNotAdoption(UUID id);
 
     List<Shelter> findByTypeAnimal(TypeAnimal typeAnimal);
+
+    Shelter create(ShelterAddDto shelterDto);
+
+    Shelter update(UUID id, ShelterAddDto shelterDto);
+
+    List<ShelterInfoDto> findAllDto();
+
+    ShelterInfoDto findByNameDto(String name);
 
 }

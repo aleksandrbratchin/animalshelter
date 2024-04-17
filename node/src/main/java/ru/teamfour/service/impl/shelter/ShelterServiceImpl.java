@@ -1,22 +1,29 @@
 package ru.teamfour.service.impl.shelter;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import org.springframework.validation.annotation.Validated;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
+import ru.teamfour.dto.shelter.ShelterAddDto;
+import ru.teamfour.dto.shelter.ShelterInfoDto;
+import ru.teamfour.mappers.shelter.ShelterAddDtoMapper;
+import ru.teamfour.mappers.shelter.ShelterDtoMapper;
 import ru.teamfour.repositories.AnimalRepository;
 import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.shelter.ShelterService;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
+@Validated
 @Transactional
 @AllArgsConstructor
 public class ShelterServiceImpl implements ShelterService {
@@ -24,6 +31,8 @@ public class ShelterServiceImpl implements ShelterService {
 
     private final ShelterRepository shelterRepository;
     private final AnimalRepository animalRepository;
+    private final ShelterAddDtoMapper shelterAddDtoMapper;
+    private final ShelterDtoMapper shelterDtoMapper;
 
     /**
      * метод добавляет в БД объект {@link Shelter}
@@ -113,7 +122,7 @@ public class ShelterServiceImpl implements ShelterService {
      */
     @Override
     public Shelter findByName(String name) {
-        return shelterRepository.findByName(name).orElseThrow(RuntimeException::new);
+        return shelterRepository.findByName(name).orElseThrow(RuntimeException::new); //todo свое исключение кидать
     }
 
     /**
@@ -267,4 +276,39 @@ public class ShelterServiceImpl implements ShelterService {
     public List<Shelter> findByTypeAnimal(TypeAnimal typeAnimal) {
         return shelterRepository.findByTypeOfAnimal(typeAnimal);
     }
+
+    /***
+     * Методы Александра
+     */
+    @Override
+    public Shelter create(@Valid ShelterAddDto shelterDto) {
+        return shelterRepository.save(shelterAddDtoMapper.toShelter(shelterDto));
+    }
+
+    @Override
+    public Shelter update(UUID id, @Valid ShelterAddDto shelterDto) {
+        Shelter shelter = shelterRepository.findById(id).orElseThrow(); //todo обработать исключение
+        Shelter newData = shelterAddDtoMapper.toShelter(shelterDto);
+        shelter.setAboutShelter(newData.getAboutShelter());
+        shelter.setSecurityData(newData.getSecurityData());
+        shelter.setAddress(newData.getAddress());
+        shelter.setWorkSchedule(newData.getWorkSchedule());
+        shelter.setName(newData.getName());
+        shelter.setTypeOfAnimal(newData.getTypeOfAnimal());
+        shelter.setSafetyMeasures(newData.getSafetyMeasures());
+        return shelter;
+    }
+
+    @Override
+    public List<ShelterInfoDto> findAllDto() {
+        return shelterRepository.findAll().stream()
+                .map(shelterDtoMapper::toShelterDto)
+                .toList();
+    }
+
+    @Override
+    public ShelterInfoDto findByNameDto(@NotBlank String name) {
+        return shelterDtoMapper.toShelterDto(shelterRepository.findByName(name).orElseThrow(RuntimeException::new)); //todo свое исключение кидать;
+    }
+
 }
