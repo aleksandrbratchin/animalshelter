@@ -1,6 +1,8 @@
 package ru.teamfour.service.api.shelter;
 
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
@@ -58,12 +60,12 @@ public interface ShelterService {
 
     List<Shelter> findByTypeAnimal(TypeAnimal typeAnimal);
 
-    Shelter create(ShelterAddDto shelterDto);
+    Shelter create(@Valid ShelterAddDto shelterDto);
 
-    Shelter update(UUID id, ShelterAddDto shelterDto);
+    Shelter update(UUID id, @Valid ShelterAddDto shelterDto);
 
     List<ShelterInfoDto> findAllDto();
 
-    ShelterInfoDto findByNameDto(String name);
+    ShelterInfoDto findByNameDto(@NotBlank String name);
 
 }
