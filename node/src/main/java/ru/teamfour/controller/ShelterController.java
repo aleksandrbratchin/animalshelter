@@ -29,7 +29,7 @@ public class ShelterController {
             summary = "ПОИСК ПРИЮТА ПО ИМЕНИ ПРИЮТА",
             responses = {@ApiResponse(
                     responseCode = "200",
-                    description = "найденный приют приют",
+                    description = "найденный приют ",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE
                     )
