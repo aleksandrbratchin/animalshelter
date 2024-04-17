@@ -83,11 +83,11 @@ public class Shelter2Controller {
     @PutMapping("{id}")
     public ResponseEntity<?> update(
             @PathVariable("id") UUID id,
-            @RequestBody ShelterAddDto student
+            @RequestBody ShelterAddDto shelterAddDto
     ) {
         try {
             return ResponseEntity.ok(
-                    service.update(id, student)
+                    service.update(id, shelterAddDto)
             );
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
