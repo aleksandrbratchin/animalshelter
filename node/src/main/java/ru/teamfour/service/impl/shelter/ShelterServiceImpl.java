@@ -132,7 +132,6 @@ public class ShelterServiceImpl implements ShelterService {
      */
     @Override
     public List<Shelter> findAll() {
-
         return shelterRepository.findAll();
     }
 
