@@ -10,6 +10,9 @@ import transfer.TransferByteObject;
 
 import java.util.List;
 
+/***
+ * Данные которые нужно отправить в телеграм
+ */
 @Getter
 @Setter
 @AllArgsConstructor

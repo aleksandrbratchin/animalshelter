@@ -1,9 +1,11 @@
 package ru.teamfour.service.api.animal;
 
 import org.springframework.stereotype.Service;
+import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +22,9 @@ public interface AnimalService {
 
     List<Animal> findAll();
 
-    List<Animal> findAllByAdopted(boolean b);
+    List<Animal> findByAdopted(AdoptionAnimalState adoptionAnimalState);
 
     List<Animal> findAllByType(TypeAnimal type);
+
+
 }

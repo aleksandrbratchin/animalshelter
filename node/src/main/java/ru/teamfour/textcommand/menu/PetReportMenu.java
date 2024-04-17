@@ -22,6 +22,9 @@ public class PetReportMenu extends ButtonAbstractMenu {
     @Value("${buttonName.volunteer}")
     private String volunteer;
 
+    @Value("${buttonName.backToMainMenuButton}")
+    private String backToMainMenuButton;
+
     /***
      * Обрисовка меню "Послать отчет о питомце"
      */
@@ -38,6 +41,7 @@ public class PetReportMenu extends ButtonAbstractMenu {
         keyboard.add(row1);
         KeyboardRow row2 = new KeyboardRow();
         row2.add(volunteer);
+        row2.add(backToMainMenuButton);
         keyboard.add(row2);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;

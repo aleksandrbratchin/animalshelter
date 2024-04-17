@@ -4,21 +4,21 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import ru.teamfour.dao.entity.user.RoleUser;
 
-public class RoleUserValidator implements ConstraintValidator<ValidRoleUser, String> {
+public class RoleUserValidator implements ConstraintValidator<RoleUserValid, String> {
 
     @Override
-    public void initialize(ValidRoleUser constraintAnnotation) {
+    public void initialize(RoleUserValid constraintAnnotation) {
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        boolean hasRole = true;
+        boolean correct = true;
         try {
-            RoleUser roleUser = RoleUser.valueOf(value);
+            RoleUser.valueOf(value);
         } catch (IllegalArgumentException e) {
-            hasRole = false;
+            correct = false;
         }
-        return hasRole;
+        return correct;
     }
 
 }

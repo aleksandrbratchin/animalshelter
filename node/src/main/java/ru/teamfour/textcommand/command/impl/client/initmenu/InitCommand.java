@@ -20,13 +20,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Меню выбора приютов
+ * Меню выбора типа животного
  */
 @Component
 public class InitCommand extends AbstractCommand {
 
     @Value("${buttonName.initCommand}")
     private String buttonName;
+
+    @Value("${buttonName.dogShelter}")
+    private String dogShelter;
+
+    @Value("${buttonName.catShelter}")
+    private String catShelter;
 
     @Autowired
     private ShelterService shelterService;
@@ -58,16 +64,11 @@ public class InitCommand extends AbstractCommand {
 
             List<KeyboardRow> keyboard = new ArrayList<>();
             KeyboardRow row = new KeyboardRow();
-            for (int i = 0; i < all.size(); i++) {
-                row.add(all.get(i).getName());
-                if ((i + 1) % 2 == 0) {
-                    keyboard.add(row);
-                    row = new KeyboardRow();
-                }
-            }
+            row.add(dogShelter);
+            row.add(catShelter);
             keyboard.add(row);
             keyboardMarkup.setKeyboard(keyboard);
-            String answerMessage = "Выберите приют";
+            String answerMessage = "Приют для каких животных вас интересует?";
             SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
             sendMessage.setReplyMarkup(keyboardMarkup);
             List<SendMessage> sendMessages = new ArrayList<>();

@@ -27,6 +27,9 @@ rabbitQueue:
     answer:
       PHOTO: ${rabbitConfig.messages.answer.PHOTO}
       TEXT: ${rabbitConfig.messages.answer.TEXT}
+springdoc:
+  swagger-ui:
+    path: swagger
 buttonName:
   shelterInformation: Информация о приюте
   mainMenu: Главное меню
@@ -51,8 +54,10 @@ buttonName:
   startChatWithVolunteer: Начать чат с волонтером
   storyOfShelter: Рассказ о приюте
   sendPhoto: Отправить фото
-  sendText: Отправить текст
+  sendText: Отправить отчёт о питомце
   initCommand: Изменить приют
+  dogShelter: Приюты для собак
+  catShelter: Приюты для кошек
   backButton: Назад
 
   reasonsForRefusalOfAdoption: Причины отказа в усыновлении
@@ -64,4 +69,5 @@ buttonName:
   listSpecialists: список специалистов
   backToMainMenuButton: Вернуться в главное меню
   backToAdoption: Вернуться в предыдущее меню
+  backToPetMenuButton: Вернуться в меню с ежедневным отчётом
 

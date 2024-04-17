@@ -3,7 +3,7 @@ package ru.teamfour.dto.user;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import ru.teamfour.validators.roleuser.ValidRoleUser;
+import ru.teamfour.validators.roleuser.RoleUserValid;
 
 import java.util.UUID;
 
@@ -20,7 +20,7 @@ public class UserInfoDto {
     @NotNull(message = "ChatId cannot be null")
     private Long chatId;
 
-    @ValidRoleUser
+    @RoleUserValid
     private String role;
 
     @NotBlank

@@ -18,16 +18,19 @@ public class PetReportHandlersState implements HandlersState {
     public final Handler sendPhotoHandler;
     public final Handler sendTextHandler;
     public final Handler volunteerHandler;
+    public final Handler backToMainMenuHandler;
 
     public PetReportHandlersState(
             @Qualifier("mainMenuHandler") Handler mainMenuHandler,
             @Qualifier("sendPhotoHandler") Handler sendPhotoHandler,
             @Qualifier("sendTextHandler") Handler sendTextHandler,
-            @Qualifier("volunteerHandler") Handler volunteerHandler) {
+            @Qualifier("volunteerHandler") Handler volunteerHandler,
+            @Qualifier("backToMainMenuHandler") Handler backToMainMenuHandler) {
         this.mainMenuHandler = mainMenuHandler;
         this.sendPhotoHandler = sendPhotoHandler;
         this.sendTextHandler = sendTextHandler;
         this.volunteerHandler = volunteerHandler;
+        this.backToMainMenuHandler = backToMainMenuHandler;
     }
 
     /***
@@ -39,6 +42,7 @@ public class PetReportHandlersState implements HandlersState {
         mainMenuHandler.setNext(sendPhotoHandler);
         sendPhotoHandler.setNext(sendTextHandler);
         sendTextHandler.setNext(volunteerHandler);
+        volunteerHandler.setNext(backToMainMenuHandler);
         return mainMenuHandler;
     }
 

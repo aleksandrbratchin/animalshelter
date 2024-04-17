@@ -3,7 +3,8 @@ package ru.teamfour.service.impl.shelter;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 @Transactional
 @AllArgsConstructor
 public class ShelterServiceImpl implements ShelterService {
+
+
     private final ShelterRepository shelterRepository;
     private final AnimalRepository animalRepository;
 
@@ -249,11 +252,19 @@ public class ShelterServiceImpl implements ShelterService {
      * @return список в формате строки
      */
     @Override
-    public String findAllAnimalsNotAdoption(UUID id) {
-        return shelterRepository.getReferenceById(id).getAnimals()
-                .stream()
-                .filter(animal -> !animal.isAdopted())
-                .collect(Collectors.toList())
-                .toString();
+    public List<Animal> findAllAnimalsNotAdoption(UUID id) { //todo переписать на SQL
+        Shelter shelter = shelterRepository.findById(id).orElseThrow(() -> new RuntimeException()); //todo написать свое
+        return shelter.getAnimals().stream().filter(animal -> animal.getAdopted().equals(AdoptionAnimalState.NOT_ADOPTED)).toList();
+    }
+
+    /**
+     * метод возвращает список приютов по типу животного {@link TypeAnimal}
+     *
+     * @param {@link TypeAnimal}
+     * @return {@link List<Shelter>}
+     */
+    @Override
+    public List<Shelter> findByTypeAnimal(TypeAnimal typeAnimal) {
+        return shelterRepository.findByTypeOfAnimal(typeAnimal);
     }
 }
