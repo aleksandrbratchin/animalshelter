@@ -13,7 +13,6 @@ import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dto.shelter.ShelterAddDto;
 import ru.teamfour.dto.shelter.ShelterInfoDto;
 import ru.teamfour.service.api.shelter.ShelterService;
-import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 
 import java.util.List;
 import java.util.UUID;
@@ -43,13 +42,9 @@ public class ShelterController {
     public ResponseEntity<?> add(
             @RequestBody ShelterAddDto shelterDto
     ) {
-        try {
-            return ResponseEntity.ok(
-                    service.create(shelterDto)
-            );
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(
+                service.create(shelterDto)
+        );
     }
 
     @Operation(
@@ -64,14 +59,9 @@ public class ShelterController {
     public ResponseEntity<?> delete(
             @PathVariable("id") UUID id
     ) {
-        try {
-            service.remove(id);
-            return ResponseEntity.ok(
-                    "Приют удален!"
-            );
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(
+                "Приют удален!"
+        );
     }
 
     @Operation(
@@ -90,13 +80,9 @@ public class ShelterController {
             @PathVariable("id") UUID id,
             @RequestBody ShelterAddDto shelterAddDto
     ) {
-        try {
-            return ResponseEntity.ok(
-                    service.update(id, shelterAddDto)
-            );
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(
+                service.update(id, shelterAddDto)
+        );
     }
 
     @Operation(
