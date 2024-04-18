@@ -1,13 +1,13 @@
 package ru.teamfour.service.impl.user;
 
-import org.springframework.http.ResponseEntity;
+import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.RoleUser;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.dao.entity.user.UserInfo;
-import ru.teamfour.exception.BadRequestException;
 import ru.teamfour.repositories.UserRepository;
 import ru.teamfour.service.api.user.UserServiceApi;
 import ru.teamfour.textcommand.command.api.State;
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Validated
 @Transactional
 public class UserService implements UserServiceApi {
     private final UserRepository repository;
@@ -25,8 +26,9 @@ public class UserService implements UserServiceApi {
     }
 
     @Override
-    public User findByChatId(Long chatId) {
-        return repository.findByChatId(chatId).orElse(null);//todo
+    public User findByChatId(@NotNull Long chatId) {
+        return repository.findByChatId(chatId)
+                .orElseThrow(() -> new IllegalArgumentException("Отсутствует пользователь с chatId = " + chatId.toString()));
     }
 
     @Override
@@ -102,7 +104,7 @@ public class UserService implements UserServiceApi {
 
     @Override
     public User getAvailableVolunteer() {
-        return repository.getAvailableVolunteer().orElse(null);//todo что делать если доступных волонтеров нет
+        return repository.getAvailableVolunteer().orElse(null);
     }
 
     @Override
@@ -115,12 +117,9 @@ public class UserService implements UserServiceApi {
         return repository.getVolunteersByPhoneNumberIsNotNull();
     }
 
-
-    public User getUser(UUID id) {
-        if (id == null) {
-            return repository.findById(id).orElseThrow(() -> new BadRequestException("Отсутствует Id пользователя"));
-        }
-        return null;
+    @Override
+    public User getUser(@NotNull UUID id) {
+        return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Отсутствует пользователь с id = " + id));
     }
 
 }

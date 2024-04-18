@@ -1,5 +1,6 @@
 package ru.teamfour.repositories;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.teamfour.dao.entity.user.User;
