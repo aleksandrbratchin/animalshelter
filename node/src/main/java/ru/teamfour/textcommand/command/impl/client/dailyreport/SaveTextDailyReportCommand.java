@@ -1,10 +1,12 @@
 package ru.teamfour.textcommand.command.impl.client.dailyreport;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.dailyreport.DailyReport;
+import ru.teamfour.dao.entity.dailyreport.DailyReportStatus;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.api.dailyreport.DailyReportService;
 import ru.teamfour.textcommand.command.CommandContext;
@@ -30,18 +32,23 @@ public class SaveTextDailyReportCommand extends AbstractCommand {
     }
 
     @Override
+    @Transactional
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
         State state = State.PET_REPORT;
         user.setState(state);
-        userService.save(user);
+
 
         AdoptionProcessAnimal activeAdoptionProcess = user.getActiveAdoptionProcess();
         DailyReport lastDailyReport = activeAdoptionProcess.getLastDailyReport(LocalDate.now());
-        DailyReport dailyReport = Optional.ofNullable(lastDailyReport).orElseGet(() -> DailyReport.builder().adoptionProcessAnimal(activeAdoptionProcess).build());
+        DailyReport dailyReport = Optional.ofNullable(lastDailyReport)
+                .orElseGet(() -> DailyReport.builder()
+                        .adoptionProcessAnimal(activeAdoptionProcess)
+                        .build());
         dailyReport.setReportText(update.getMessage().getText());
         dailyReportService.save(dailyReport);
+        userService.save(user);
         //todo сохранить текст отчета
 
         String answerMessage = "Отчет отправлен!";

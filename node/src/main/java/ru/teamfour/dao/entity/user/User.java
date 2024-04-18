@@ -65,6 +65,7 @@ public class User extends AuditEntity {
      * Усыновления
      */
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
