@@ -26,9 +26,12 @@ public class WorkScheduleShelterCommand extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.INFO_SHELTER;
 
-        String info = "Расписание работы приюта: \n" +
-                user.getShelter().getWorkSchedule();
-        String answerMessage = Optional.ofNullable(info).orElse("Нет информации");
+        String workSchedule = user.getShelter().getWorkSchedule();
+        String answerMessage = "Нет информации";
+        if (workSchedule != null) {
+            answerMessage = "Расписание работы приюта: \n" + workSchedule;
+        }
+
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

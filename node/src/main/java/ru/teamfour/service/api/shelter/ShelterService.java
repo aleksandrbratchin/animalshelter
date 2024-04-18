@@ -3,6 +3,7 @@ package ru.teamfour.service.api.shelter;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
@@ -23,17 +24,17 @@ public interface ShelterService {
                 String securityData,
                 String workSchedule);
 
-    void remove(UUID id);
+    void remove(@NotNull UUID id);
 
     void removeByName(String name);
 
-    Shelter find(UUID id);
+    Shelter findById(@NotNull UUID id);
 
     Shelter findByName(String name);
 
     List<Shelter> findAll();
 
-    Shelter change(UUID id, Shelter shelter);
+    Shelter change(@NotNull UUID id, Shelter shelter);
 
 
 
@@ -56,13 +57,13 @@ public interface ShelterService {
                                String work);
 
 
-    List<Animal> findAllAnimalsNotAdoption(UUID id);
+    List<Animal> findAllAnimalsNotAdoption(@NotNull UUID id);
 
     List<Shelter> findByTypeAnimal(TypeAnimal typeAnimal);
 
     Shelter create(@Valid ShelterAddDto shelterDto);
 
-    Shelter update(UUID id, @Valid ShelterAddDto shelterDto);
+    Shelter update(@NotNull UUID id, @Valid ShelterAddDto shelterDto);
 
     List<ShelterInfoDto> findAllDto();
 

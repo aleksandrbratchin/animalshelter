@@ -3,9 +3,9 @@ package ru.teamfour.service.impl.shelter;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import org.springframework.validation.annotation.Validated;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
@@ -15,7 +15,6 @@ import ru.teamfour.dto.shelter.ShelterAddDto;
 import ru.teamfour.dto.shelter.ShelterInfoDto;
 import ru.teamfour.mappers.shelter.ShelterAddDtoMapper;
 import ru.teamfour.mappers.shelter.ShelterDtoMapper;
-import ru.teamfour.repositories.AnimalRepository;
 import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.shelter.ShelterService;
 
@@ -30,7 +29,6 @@ public class ShelterServiceImpl implements ShelterService {
 
 
     private final ShelterRepository shelterRepository;
-    private final AnimalRepository animalRepository;
     private final ShelterAddDtoMapper shelterAddDtoMapper;
     private final ShelterDtoMapper shelterDtoMapper;
 
@@ -86,7 +84,7 @@ public class ShelterServiceImpl implements ShelterService {
      * @param id принимет UUID удаляемого объекта
      */
     @Override
-    public void remove(UUID id) {
+    public void remove(@NotNull UUID id) {
         shelterRepository.deleteById(id);
     }
 
@@ -110,8 +108,8 @@ public class ShelterServiceImpl implements ShelterService {
      * @return возвращает найденный объект
      */
     @Override
-    public Shelter find(UUID id) {
-        return shelterRepository.findById(id).orElseThrow(RuntimeException::new);//todo
+    public Shelter findById(@NotNull UUID id) {
+        return shelterRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Нет приюта с id = " + id));
     }
 
     /**
@@ -143,7 +141,7 @@ public class ShelterServiceImpl implements ShelterService {
      * @return возвращает переданный объект
      */
     @Override
-    public Shelter change(UUID id, Shelter shelter) {
+    public Shelter change(@NotNull UUID id, Shelter shelter) {
         return shelterRepository.save(shelter);
 
     }
@@ -260,8 +258,8 @@ public class ShelterServiceImpl implements ShelterService {
      * @return список в формате строки
      */
     @Override
-    public List<Animal> findAllAnimalsNotAdoption(UUID id) { //todo переписать на SQL
-        Shelter shelter = shelterRepository.findById(id).orElseThrow(() -> new RuntimeException()); //todo написать свое
+    public List<Animal> findAllAnimalsNotAdoption(@NotNull UUID id) { //todo переписать на SQL
+        Shelter shelter = findById(id);
         return shelter.getAnimals().stream().filter(animal -> animal.getAdopted().equals(AdoptionAnimalState.NOT_ADOPTED)).toList();
     }
 
@@ -285,7 +283,7 @@ public class ShelterServiceImpl implements ShelterService {
     }
 
     @Override
-    public Shelter update(UUID id, @Valid ShelterAddDto shelterDto) {
+    public Shelter update(@NotNull UUID id, @Valid ShelterAddDto shelterDto) {
         Shelter shelter = shelterRepository.findById(id).orElseThrow(); //todo обработать исключение
         Shelter newData = shelterAddDtoMapper.toShelter(shelterDto);
         shelter.setAboutShelter(newData.getAboutShelter());
@@ -307,7 +305,7 @@ public class ShelterServiceImpl implements ShelterService {
 
     @Override
     public ShelterInfoDto findByNameDto(@NotBlank String name) {
-        return shelterDtoMapper.toShelterDto(shelterRepository.findByName(name).orElseThrow(RuntimeException::new)); //todo свое исключение кидать;
+        return shelterDtoMapper.toShelterDto(shelterRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException("Нет приютов с названием " + name)));
     }
 
 }

@@ -1,5 +1,6 @@
 package ru.teamfour.service.api.animal;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
@@ -16,9 +17,9 @@ public interface AnimalService {
 
     Animal put(Animal animal);
 
-    void delete(UUID id);
+    void delete(@NotNull UUID id);
 
-    Animal findById(UUID id);
+    Animal findById(@NotNull UUID id);
 
     List<Animal> findAll();
 

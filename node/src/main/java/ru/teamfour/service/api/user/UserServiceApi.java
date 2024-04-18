@@ -1,5 +1,6 @@
 package ru.teamfour.service.api.user;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.user.User;
@@ -70,5 +71,5 @@ public interface UserServiceApi {
      * Получает список пользователей по уникальному идентификатору
      * @return список пользователей
      */
-    User getUser (UUID id);
+    User getUser (@NotNull UUID id);
 }
