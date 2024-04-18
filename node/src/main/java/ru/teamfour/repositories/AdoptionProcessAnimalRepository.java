@@ -6,7 +6,7 @@ import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import java.util.List;
 import java.util.UUID;
 
-public interface AdoptionAnimalRepository extends JpaRepository<AdoptionProcessAnimal, UUID> {
+public interface AdoptionProcessAnimalRepository extends JpaRepository<AdoptionProcessAnimal, UUID> {
 
     List<AdoptionProcessAnimal> findAdoptionAnimalById(AdoptionProcessAnimal adoptionProcessAnimal);
 
