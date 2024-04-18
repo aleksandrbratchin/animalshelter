@@ -27,7 +27,6 @@ import ru.teamfour.service.impl.infoforadoption.InfoForAdoptionServiceImpl;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
-import ru.teamfour.textcommand.command.impl.client.recommendations.HomeImprovementForAdultAnimalCommand;
 import ru.teamfour.textcommand.menu.MenuButtonFactory;
 
 import java.util.Collection;

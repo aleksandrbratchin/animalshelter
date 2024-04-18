@@ -15,7 +15,7 @@ public abstract class AbstractHandler implements Handler{
 
     /**
      * Если цепочка завершена ({@code nextHandler == null}) возврацает {@link UnknownCommand}
-     * @param update
+     * @param update {@link Update}
      * @return {@link Command}
      */
     @Override

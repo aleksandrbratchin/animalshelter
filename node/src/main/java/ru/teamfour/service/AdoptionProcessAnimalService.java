@@ -26,5 +26,4 @@ public class AdoptionProcessAnimalService implements AdoptionProcessAnimalServic
         return adoptionProcessAnimalRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
-
 }

@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 /**
  * Классс родитель для entity. Добавляет id поле типа {@code long}
  */

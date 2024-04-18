@@ -6,7 +6,6 @@ import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 

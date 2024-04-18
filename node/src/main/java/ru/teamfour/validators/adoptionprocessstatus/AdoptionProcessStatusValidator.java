@@ -3,7 +3,6 @@ package ru.teamfour.validators.adoptionprocessstatus;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
-import ru.teamfour.dao.entity.user.RoleUser;
 
 public class AdoptionProcessStatusValidator implements ConstraintValidator<AdoptionProcessStatusValid, AdoptionProcessStatus> {
 

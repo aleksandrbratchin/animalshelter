@@ -8,7 +8,6 @@ import ru.teamfour.dao.entity.photoreport.PhotoReport;
 import ru.teamfour.dao.entity.user.User;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.UUID;
 
 /**

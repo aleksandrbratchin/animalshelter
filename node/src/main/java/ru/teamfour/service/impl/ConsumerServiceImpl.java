@@ -20,6 +20,9 @@ import ru.teamfour.textcommand.handler.api.HandlersStateFactory;
 import ru.teamfour.textcommand.handler.impl.HandlersRoleFactory;
 import transfer.TransferByteObject;
 
+/**
+ * Принамает сообщения из брокера и выполняет действия в зависимости от входящего сообщения
+ */
 @Log4j2
 @Service
 public class ConsumerServiceImpl implements ConsumerService {
@@ -36,6 +39,10 @@ public class ConsumerServiceImpl implements ConsumerService {
         this.savePhotoDailyReportCommand = savePhotoDailyReportCommand;
     }
 
+    /**
+     * Обрабатывает сообщения из очереди текстовых сообщений
+     * @param update {@link Update}
+     */
     @Override
     @RabbitListener(queues = "${rabbitQueue.messages.update.TEXT}")
     public void consumerTextMessageUpdates(Update update) {
@@ -43,10 +50,6 @@ public class ConsumerServiceImpl implements ConsumerService {
 
         HandlersStateFactory handlersStateFactory = handlersRoleFactory.getHandlers(user.getRole());
         HandlersState handlers = handlersStateFactory.getHandlers(user.getState());
-        if (handlers == null) {
-            log.error("Не удалось получить меню " + user.getState());
-            return;
-        }
         Handler handler = handlers.getHandler();
         Command command = handler.handleRequest(update);
 
@@ -54,6 +57,10 @@ public class ConsumerServiceImpl implements ConsumerService {
         sendMessage(messageToTelegram);
     }
 
+    /**
+     * Обрабатывает сообщения из очереди фото сообщений
+     * @param transferByteObject {@link TransferByteObject}
+     */
     //todo не лучшая реализация. просто чтобы быстро работало. будет время переделать
     @Override
     @RabbitListener(queues = "${rabbitQueue.messages.update.PHOTO}")
