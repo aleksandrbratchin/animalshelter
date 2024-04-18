@@ -71,7 +71,7 @@ public class AnimalController {
     }
 
     @Operation(
-            summary = "Изменение данных о животном ",
+            summary = "Изменение данных о животном",
             responses = {@ApiResponse(
                     responseCode = "200",
                     description = "Животное с измененными данными",
