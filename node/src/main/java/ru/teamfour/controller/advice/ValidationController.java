@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+/***
+ * Обработка всех ошибок валидации в RestController_ах
+ */
 @RestControllerAdvice
 public class ValidationController {
 
