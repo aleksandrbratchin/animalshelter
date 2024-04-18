@@ -38,6 +38,6 @@ public class AnimalDto {
     private AdoptionAnimalState adopted;
 
     @NotNull
-    private UUID id_shelter;
+    private UUID idShelter;
 
 }
