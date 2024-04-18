@@ -12,7 +12,6 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ShelterAddressCommand extends AbstractCommand {
@@ -25,9 +24,12 @@ public class ShelterAddressCommand extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.INFO_SHELTER;
 
-        String info = "Адрес: \n" +
-                user.getShelter().getAddress();
-        String answerMessage = Optional.ofNullable(info).orElse("Нет информации");
+        String address = user.getShelter().getAddress();
+        String answerMessage = "Нет информации";
+        if (address != null) {
+            answerMessage = "Адрес: \n" + address;
+        }
+
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

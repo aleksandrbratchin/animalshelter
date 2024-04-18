@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
-import ru.teamfour.validators.roleuser.ValidRoleUser;
 
 import java.util.UUID;
 
@@ -37,5 +36,8 @@ public class AnimalDto {
 
     @NotBlank
     private AdoptionAnimalState adopted;
+
+    @NotNull
+    private UUID idShelter;
 
 }

@@ -1,7 +1,10 @@
 package ru.teamfour.service.impl.animal;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
@@ -12,6 +15,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
+@Validated
 public class AnimalServiceImpl implements AnimalService {
     private final AnimalRepository repository;
 
@@ -44,7 +49,7 @@ public class AnimalServiceImpl implements AnimalService {
      * @param id тип UUID
      */
     @Override
-    public void delete(UUID id) {
+    public void delete(@NotNull UUID id) {
         repository.deleteById(id);
 
     }
@@ -55,7 +60,7 @@ public class AnimalServiceImpl implements AnimalService {
      * @param id тип UUID
      */
     @Override
-    public Animal findById(UUID id) {
+    public Animal findById(@NotNull UUID id) {
         return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
@@ -70,6 +75,7 @@ public class AnimalServiceImpl implements AnimalService {
     /**
      * метод для поиска животных по статусу
      */
+    @Override
     public List<Animal> findByAdopted(AdoptionAnimalState adoptionAnimalState) {
         return repository.findByAdopted(adoptionAnimalState);
     }
@@ -82,4 +88,5 @@ public class AnimalServiceImpl implements AnimalService {
     public List<Animal> findAllByType(TypeAnimal type) {
         return repository.findAnimalByTypeAnimal(type);
     }
+
 }

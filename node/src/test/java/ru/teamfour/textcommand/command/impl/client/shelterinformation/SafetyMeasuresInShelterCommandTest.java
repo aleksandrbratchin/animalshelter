@@ -17,31 +17,22 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import ru.teamfour.dao.entity.animal.TypeAnimal;
-import ru.teamfour.dao.entity.infoforadoption.InfoForAdoption;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.myutils.MessageUtils;
-import ru.teamfour.repositories.InfoForAdoptionRepository;
-import ru.teamfour.service.impl.infoforadoption.InfoForAdoptionServiceImpl;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
-import ru.teamfour.textcommand.command.impl.client.recommendations.TipsFromSpecialistCommand;
 import ru.teamfour.textcommand.menu.MenuButtonFactory;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")

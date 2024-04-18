@@ -28,7 +28,7 @@ public class SendTextCommand extends AbstractCommand {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
 
-        State state = State.PET_REPORT;
+        State state = State.WAITING_TEXT_FOR_DAILY_REPORT;
         user.setState(state);
         userService.save(user);
 

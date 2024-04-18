@@ -20,7 +20,7 @@ public class HomeImprovementForAdultAnimalCommand extends AbstractCommand {
     @Value("${buttonName.homeImprovementForAdultAnimal}")
     private String buttonName;
 
-    private InfoForAdoptionServiceImpl service;
+    private final InfoForAdoptionServiceImpl service;
 
     public HomeImprovementForAdultAnimalCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;

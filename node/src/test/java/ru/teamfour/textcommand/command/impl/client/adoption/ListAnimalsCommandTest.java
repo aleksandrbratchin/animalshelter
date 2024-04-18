@@ -19,14 +19,10 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
-import ru.teamfour.dao.entity.animal.TypeAnimal;
-import ru.teamfour.dao.entity.infoforadoption.InfoForAdoption;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.myutils.MessageUtils;
-import ru.teamfour.repositories.InfoForAdoptionRepository;
 import ru.teamfour.repositories.ShelterRepository;
-import ru.teamfour.service.impl.infoforadoption.InfoForAdoptionServiceImpl;
 import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;

@@ -56,6 +56,8 @@ buttonName:
   sendPhoto: Отправить фото
   sendText: Отправить отчёт о питомце
   initCommand: Изменить приют
+  dogShelter: Приюты для собак
+  catShelter: Приюты для кошек
   backButton: Назад
 
   reasonsForRefusalOfAdoption: Причины отказа в усыновлении
