@@ -50,6 +50,7 @@ public class Animal extends ParentUUIDEntity {
     @Column(name = "adopted")
     @Enumerated(EnumType.STRING)
     private AdoptionAnimalState adopted;
+
     /**
      * Приют к которому относится животное
      */
@@ -69,14 +70,4 @@ public class Animal extends ParentUUIDEntity {
         this.shelter = shelter;
     }
 
-    @Override
-    public String toString() {
-        return
-                " кличка - " + name + ", " +
-                        " возраст - " + age + ", " +
-                        " порода - " + breed + ", " +
-                        " особенности поведения - " + habits +
-                        "\n"
-                ;
-    }
 }
