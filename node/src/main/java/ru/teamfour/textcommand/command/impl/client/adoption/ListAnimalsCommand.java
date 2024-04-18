@@ -13,8 +13,6 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class ListAnimalsCommand extends AbstractCommand {
@@ -39,15 +37,7 @@ public class ListAnimalsCommand extends AbstractCommand {
         State state = State.ADOPTION;
         user.setState(state);
         userService.save(user);
-        String answerMessage = "Список животных:\n" + service.findAllAnimalsNotAdoption(user.getShelter().getId()).stream()
-                .map(animal -> new StringBuilder(
-                                " Кличка - " + animal.getName() + ", " +
-                                        " возраст - " + animal.getAge() + ", " +
-                                        " порода - " + animal.getBreed() + ", " +
-                                        " особенности поведения - " + animal.getHabits()
-                        )
-                )
-                .collect(Collectors.joining("\n"));
+        String answerMessage = service.findAllAnimals(user.getShelter().getId()); //todo не усыновленные дивотные
         SendMessage startTextCommand = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(startTextCommand, state));

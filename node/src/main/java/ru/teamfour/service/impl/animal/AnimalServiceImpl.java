@@ -34,6 +34,7 @@ public class AnimalServiceImpl implements AnimalService {
         return repository.save(animal);
     }
 
+
     /**
      * метод заменяет сущность  {@link Animal},
      * которая уже есть в БД с таким же UUID
