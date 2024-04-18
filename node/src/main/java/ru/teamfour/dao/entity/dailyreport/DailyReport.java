@@ -1,13 +1,15 @@
 package ru.teamfour.dao.entity.dailyreport;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.teamfour.dao.entity.AuditEntity;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.photoreport.PhotoReport;
 import ru.teamfour.dao.entity.user.User;
+
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.UUID;
 
 /**
  * Ежедневные отчеты о том как происходит процесс усыновления
@@ -17,7 +19,7 @@ import ru.teamfour.dao.entity.user.User;
 @NoArgsConstructor
 @Entity
 @Table(name = "daily_report")
-public class DailyReport extends AuditEntity {
+public class DailyReport extends AuditEntity implements Comparable<DailyReport> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "adoption_animal_id")
@@ -47,4 +49,24 @@ public class DailyReport extends AuditEntity {
     @JoinColumn(name = "photo_report_id", referencedColumnName = "id")
     private PhotoReport photoReport;
 
+    /**
+     * дата отчета
+     */
+    @Column(name = "date_report", nullable = false)
+    private LocalDate date_report = LocalDate.now();
+
+    @Builder
+    public DailyReport(UUID id, AdoptionProcessAnimal adoptionProcessAnimal, User volunteer, DailyReportStatus reportStatus, String reportText, PhotoReport photoReport) {
+        super(id);
+        this.adoptionProcessAnimal = adoptionProcessAnimal;
+        this.volunteer = volunteer;
+        this.reportStatus = reportStatus;
+        this.reportText = reportText;
+        this.photoReport = photoReport;
+    }
+
+    @Override
+    public int compareTo(DailyReport o) {
+        return this.getDate_report().compareTo(o.date_report);
+    }
 }

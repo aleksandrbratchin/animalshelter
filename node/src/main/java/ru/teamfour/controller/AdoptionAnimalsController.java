@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.service.AdoptionAnimalService;
+import ru.teamfour.service.AdoptionProcessAnimalService;
 import ru.teamfour.service.impl.user.UserService;
 
 import java.util.UUID;
@@ -15,10 +15,10 @@ import java.util.UUID;
 @RequestMapping("adoptionanimal")
 public class AdoptionAnimalsController {
 
-    private final AdoptionAnimalService adoptionAnimalService;
+    private final AdoptionProcessAnimalService adoptionAnimalService;
     private final UserService userService;
 
-    public AdoptionAnimalsController(AdoptionAnimalService adoptionAnimalService, UserService userService) {
+    public AdoptionAnimalsController(AdoptionProcessAnimalService adoptionAnimalService, UserService userService) {
         this.adoptionAnimalService = adoptionAnimalService;
         this.userService = userService;
     }

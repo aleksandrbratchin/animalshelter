@@ -5,7 +5,7 @@ import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 
 import java.util.UUID;
 
-public interface AdoptionAnimalServiceApi {
+public interface AdoptionProcessAnimalServiceApi {
 
 
     AdoptionProcessAnimal findById(@NotNull UUID id);

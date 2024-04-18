@@ -275,7 +275,7 @@ public class ShelterServiceImpl implements ShelterService {
     }
 
     /***
-     * Методы Александра
+     * Сохранение приюта
      */
     @Override
     public Shelter create(@Valid ShelterAddDto shelterDto) {
