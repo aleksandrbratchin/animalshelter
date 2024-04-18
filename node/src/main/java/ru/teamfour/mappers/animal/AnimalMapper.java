@@ -16,12 +16,12 @@ import ru.teamfour.service.api.shelter.ShelterService;
 @NoArgsConstructor
 public abstract class AnimalMapper {
 
-    @Autowired
-    private ShelterService shelterService;
+    /*@Autowired
+    private ShelterService shelterService;*/
 
-    @Mapping(target = "id_shelter", source = "shelter.id")
+    //@Mapping(target = "idShelter", source = "shelter.id")
     public abstract AnimalDto toAnimalDto(Animal animal);
 
-    @Mapping(target = "shelter", expression = "java(shelterService.findById(animalDto.getId_shelter()))")
+    //@Mapping(target = "shelter", expression = "java(shelterService.findById(animalDto.getIdShelter()))")
     public abstract Animal toAnimal(AnimalDto animalDto);
 }
