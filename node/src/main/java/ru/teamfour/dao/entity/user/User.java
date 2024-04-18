@@ -25,8 +25,12 @@ import java.util.UUID;
 @Table(name = "users")
 public class User extends AuditEntity {
 
+    /**
+     * id чата в телеграм
+     */
     @Column(name = "chat_id", unique = true, nullable = false)
     Long chatId;
+
     /**
      * role - роль пользователя {@link RoleUser}
      */

@@ -2,7 +2,6 @@ package ru.teamfour.validators.roleuser;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.user.RoleUser;
 
 public class RoleUserValidator implements ConstraintValidator<RoleUserValid, RoleUser> {

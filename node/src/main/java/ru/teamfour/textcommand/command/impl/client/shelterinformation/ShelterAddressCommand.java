@@ -12,7 +12,6 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ShelterAddressCommand extends AbstractCommand {

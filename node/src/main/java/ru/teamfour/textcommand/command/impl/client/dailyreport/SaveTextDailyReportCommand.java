@@ -5,7 +5,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.dailyreport.DailyReport;
-import ru.teamfour.dao.entity.photoreport.PhotoReport;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.api.dailyreport.DailyReportService;
 import ru.teamfour.textcommand.command.CommandContext;

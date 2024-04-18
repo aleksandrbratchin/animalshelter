@@ -32,79 +32,11 @@ public class ShelterServiceImpl implements ShelterService {
     private final ShelterAddDtoMapper shelterAddDtoMapper;
     private final ShelterDtoMapper shelterDtoMapper;
 
-    /**
-     * метод добавляет в БД объект {@link Shelter}
-     *
-     * @param shelter метод принимает в качестве параметра объект Shelter
-     * @return метод возвращает объект, записанный в БД
-     */
-    @Override
-    public Shelter add(Shelter shelter) {
-
-        return shelterRepository.save(shelter);
-    }
-
-    /**
-     * Метод создает объект класса {@link Shelter}
-     * по введенным параметрам
-     *
-     * @param name
-     * @param typeAnimal
-     * @param aboutShelter
-     * @param address
-     * @param safetyMeasures
-     * @param securityData
-     * @param workSchedule
-     * @return возвращает созданный объект
-     */
-
-    @Override
-    public Shelter add(String name,
-                       TypeAnimal typeAnimal,
-                       String aboutShelter,
-                       String address,
-                       String safetyMeasures,
-                       String securityData,
-                       String workSchedule) {
-
-        Shelter shelter = Shelter.builder()
-                .name(name)
-                .typeOfAnimal(typeAnimal)
-                .aboutShelter(aboutShelter)
-                .address(address)
-                .workSchedule(workSchedule)
-                .safetyMeasures(safetyMeasures)
-                .securityData(securityData).build();
-        return shelterRepository.save(shelter);
-    }
-
-    /**
-     * метод удаляет из БД объект {@link Shelter} по UUID
-     *
-     * @param id принимет UUID удаляемого объекта
-     */
-    @Override
-    public void remove(@NotNull UUID id) {
-        shelterRepository.deleteById(id);
-    }
-
-    /**
-     * метод удаляет из БД объект {@link Shelter} по имени
-     *
-     * @param name принимет имя удаляемого объекта
-     */
-
-    @Override
-    public void removeByName(String name) {
-        // UUID idShelter = findByName(name).getId();
-        shelterRepository.deleteByName(name);
-
-    }
 
     /**
      * метод находит объект {@link Shelter} в БД по UUID
      *
-     * @param id UUID
+     * @param id {@link UUID}
      * @return возвращает найденный объект
      */
     @Override
@@ -134,124 +66,6 @@ public class ShelterServiceImpl implements ShelterService {
     }
 
     /**
-     * метод заменяет объект в БД на переданный в параметре
-     *
-     * @param id      тип UUID
-     * @param shelter объект класса {@link Shelter}
-     * @return возвращает переданный объект
-     */
-    @Override
-    public Shelter change(@NotNull UUID id, Shelter shelter) {
-        return shelterRepository.save(shelter);
-
-    }
-
-    /**
-     * метод меняет значение поля aboutShelter в сущности {@link Shelter}
-     *
-     * @param name
-     * @param aboutShelter
-     * @return возвращает обновленную сущность
-     */
-    @Override
-    public Shelter changeAboutShelter(String name,
-                                      String aboutShelter) {
-
-        Shelter shelter = findByName(name);
-        shelter.setAboutShelter(aboutShelter);
-
-        return shelterRepository.save(shelter);
-    }
-
-    /**
-     * метод меняет значение поля typeOfAnimal в сущности {@link Shelter}
-     *
-     * @param name
-     * @param typeAnimal
-     * @return возвращает обновленную сущность
-     */
-    @Override
-    public Shelter changeTypeAnimal(String name,
-                                    TypeAnimal typeAnimal) {
-
-        Shelter shelter = findByName(name);
-        shelter.setTypeOfAnimal(typeAnimal);
-
-        return shelterRepository.save(shelter);
-    }
-
-    /**
-     * метод меняет значение поля workSchedule в сущности {@link Shelter}
-     *
-     * @param name
-     * @param work
-     * @return возвращает обновленную сущность
-     */
-    @Override
-    public Shelter changeWorkSchedule(String name,
-                                      String work) {
-
-        Shelter shelter = findByName(name);
-        shelter.setWorkSchedule(work);
-
-        return shelterRepository.save(shelter);
-    }
-
-    /**
-     * метод меняет значение поля securityData в сущности {@link Shelter}
-     *
-     * @param name
-     * @param security
-     * @return возвращает обновленную сущность
-     */
-    @Override
-    public Shelter changeSecurity(String name,
-                                  String security) {
-
-        Shelter shelter = findByName(name);
-
-        shelter.setSecurityData(security);
-
-        return shelterRepository.save(shelter);
-    }
-
-    /**
-     * метод меняет значение поля address в сущности {@link Shelter}
-     *
-     * @param name
-     * @param address
-     * @return возвращает обновленную сущность
-     */
-    @Override
-    public Shelter changeAddress(String name,
-                                 String address) {
-
-        Shelter shelter = findByName(name);
-
-        shelter.setAddress(address);
-
-        return shelterRepository.save(shelter);
-    }
-
-    /**
-     * метод меняет значение поля safetyMeasures в сущности {@link Shelter}
-     *
-     * @param name
-     * @param safety
-     * @return возвращает обновленную сущность
-     */
-    @Override
-    public Shelter changeSafetyMeasures(String name,
-                                        String safety) {
-
-        Shelter shelter = findByName(name);
-
-        shelter.setSafetyMeasures(safety);
-
-        return shelterRepository.save(shelter);
-    }
-
-    /**
      * метод возвращает список неусыновленных животных приюта
      *
      * @param id id приюта
@@ -266,7 +80,7 @@ public class ShelterServiceImpl implements ShelterService {
     /**
      * метод возвращает список приютов по типу животного {@link TypeAnimal}
      *
-     * @param {@link TypeAnimal}
+     * @param typeAnimal {@link TypeAnimal}
      * @return {@link List<Shelter>}
      */
     @Override

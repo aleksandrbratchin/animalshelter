@@ -23,7 +23,6 @@ import ru.teamfour.myutils.MessageUtils;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
-import ru.teamfour.textcommand.command.impl.client.mainmenu.ShelterInformationCommand;
 import ru.teamfour.textcommand.menu.MenuButtonFactory;
 
 import java.util.Collection;
