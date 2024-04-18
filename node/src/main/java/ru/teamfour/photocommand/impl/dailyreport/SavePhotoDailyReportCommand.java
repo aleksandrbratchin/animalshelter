@@ -25,6 +25,7 @@ public class SavePhotoDailyReportCommand extends AbstractPhotoCommand {
         user.setState(state);
         userService.save(user);
 
+
         //todo обработать и сохранить фото
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(
