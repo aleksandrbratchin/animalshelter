@@ -27,6 +27,9 @@ rabbitQueue:
     answer:
       PHOTO: ${rabbitConfig.messages.answer.PHOTO}
       TEXT: ${rabbitConfig.messages.answer.TEXT}
+springdoc:
+  swagger-ui:
+    path: swagger
 buttonName:
   shelterInformation: Информация о приюте
   mainMenu: Главное меню

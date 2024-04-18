@@ -3,6 +3,7 @@ package ru.teamfour.service.impl.shelter;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.repositories.ShelterRepository;
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 @Transactional
 @AllArgsConstructor
 public class ShelterServiceImpl implements ShelterService {
+
+
     private final ShelterRepository shelterRepository;
 
     /**
@@ -83,15 +86,13 @@ public class ShelterServiceImpl implements ShelterService {
 
     /**
      * метод возвращает список неусыновленных животных приюта
+     *
      * @param id id приюта
      * @return список в формате строки
      */
     @Override
-    public String findAllAnimalsNotAdoption(UUID id){
-        return shelterRepository.getReferenceById(id).getAnimals()
-                .stream()
-                .filter(animal -> !animal.isAdopted())
-                .collect(Collectors.toList())
-                .toString();
+    public List<Animal> findAllAnimalsNotAdoption(UUID id) { //todo переписать на SQL
+        Shelter shelter = shelterRepository.findById(id).orElseThrow(() -> new RuntimeException()); //todo написать свое
+        return shelter.getAnimals().stream().filter(animal -> animal.getAdopted().equals(AdoptionAnimalState.NOT_ADOPTED)).toList();
     }
 }

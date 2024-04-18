@@ -1,5 +1,6 @@
 package ru.teamfour.service.api.shelter;
 
+import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.shelter.Shelter;
 
 import java.util.List;
@@ -17,5 +18,6 @@ public interface ShelterService {
     List<Shelter> findAll();
 
     Shelter change(UUID id, Shelter shelter);
-    String findAllAnimalsNotAdoption(UUID id);
+
+    List<Animal> findAllAnimalsNotAdoption(UUID id);
 }

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.teamfour.dao.entity.AuditEntity;
-import ru.teamfour.dao.entity.adoptionanimal.AdoptionAnimal;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.photoreport.PhotoReport;
 import ru.teamfour.dao.entity.user.User;
 
@@ -21,7 +21,7 @@ public class DailyReport extends AuditEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "adoption_animal_id")
-    private AdoptionAnimal adoptionAnimal;
+    private AdoptionProcessAnimal adoptionProcessAnimal;
 
     /**
      * Волонтер который изменил статус отчета

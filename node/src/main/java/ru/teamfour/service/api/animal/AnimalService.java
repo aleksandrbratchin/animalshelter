@@ -20,7 +20,5 @@ public interface AnimalService {
 
     List<Animal> findAll();
 
-    List<Animal> findAllByAdopted(boolean b);
-
     List<Animal> findAllByType(TypeAnimal type);
 }
