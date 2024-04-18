@@ -63,6 +63,7 @@ public class AdoptionProcessAnimal extends AuditEntity {
      * Ежедневные отчеты
      */
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "adoptionProcessAnimal",
             cascade = CascadeType.ALL,
             orphanRemoval = true
