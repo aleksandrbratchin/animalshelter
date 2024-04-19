@@ -1,11 +1,7 @@
 package ru.teamfour.dto.adoptionanimal;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
-import ru.teamfour.dao.entity.user.User;
 
 import java.util.UUID;
 
@@ -25,13 +21,13 @@ public class AdoptionProcessAnimalCreateDto {
     /**
      * id пользователя
      */
-    @NotNull
+    @NotNull //todo можно проверять что у пользователя нет усыновления в этом приюте
     private UUID idUser;
 
     /**
      * id животного которое усыновляют
      */
-    @NotNull
+    @NotNull //todo можно проверять что животное в доступном статусе
     private UUID idAnimal;
 
 }

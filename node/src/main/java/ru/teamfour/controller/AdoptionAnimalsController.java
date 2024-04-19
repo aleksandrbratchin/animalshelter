@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
-import ru.teamfour.dto.shelter.ShelterAddDto;
+import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
 import ru.teamfour.service.impl.adoptionanimal.AdoptionProcessAnimalService;
 import ru.teamfour.service.impl.user.UserService;
 
@@ -42,20 +42,59 @@ public class AdoptionAnimalsController {
             summary = "СОЗДАТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
             responses = {@ApiResponse(
                     responseCode = "200",
-                    description = "", //todo
+                    description = "Информация о усыновлении",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE
                     )
             )},
             tags = "Процесс усыновления"
     )
-    @PostMapping()
-    public ResponseEntity<?> add(
+    @PostMapping
+    public ResponseEntity<AdoptionProcessAnimalInfoDto> add(
             @RequestBody AdoptionProcessAnimalCreateDto adoptionProcessAnimalCreateDto
     ) {
-        adoptionAnimalService.createAdoption(adoptionProcessAnimalCreateDto);
         return ResponseEntity.ok(
-                "Начат процесс усыновления!"
+                adoptionAnimalService.createAdoption(adoptionProcessAnimalCreateDto)
+        );
+    }
+
+    @Operation(
+            summary = "ПРОДЛИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ НА 14 ДНЕЙ",
+            responses = {@ApiResponse(
+                    responseCode = "200",
+                    description = "Информация о усыновлении",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
+            )},
+            tags = "Процесс усыновления"
+    )
+    @GetMapping("/addfourteendays/{adoptionAnimalId}")
+    public ResponseEntity<AdoptionProcessAnimalInfoDto> addfourteendays(
+            @PathVariable(value = "adoptionAnimalId") UUID id
+    ) {
+        return ResponseEntity.ok(
+                adoptionAnimalService.addfourteendays(id)
+        );
+    }
+
+    @Operation(
+            summary = "ПРОДЛИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ НА 30 ДНЕЙ",
+            responses = {@ApiResponse(
+                    responseCode = "200",
+                    description = "Информация о усыновлении",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
+            )},
+            tags = "Процесс усыновления"
+    )
+    @GetMapping("/addthirtydays/{adoptionAnimalId}")
+    public ResponseEntity<AdoptionProcessAnimalInfoDto> addthirtydays(
+            @PathVariable(value = "adoptionAnimalId") UUID id
+    ) {
+        return ResponseEntity.ok(
+                adoptionAnimalService.addthirtydays(id)
         );
     }
 

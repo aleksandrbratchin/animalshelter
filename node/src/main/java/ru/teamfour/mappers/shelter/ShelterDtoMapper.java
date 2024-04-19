@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dto.shelter.ShelterInfoDto;
 import ru.teamfour.mappers.animal.AnimalMapper;
@@ -18,6 +17,7 @@ import ru.teamfour.mappers.animal.AnimalMapper;
 public abstract class ShelterDtoMapper {
 
     protected AnimalMapper animalMapper;
+
     @Mappings({
             @Mapping(target = "animals", expression = "java(shelterInfoDto.getAnimals().stream().map(animalDto -> animalMapper.toAnimal(animalDto)).toList())"),
             @Mapping(target = "typeOfAnimal", source = "typeAnimal")

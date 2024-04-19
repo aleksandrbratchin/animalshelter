@@ -6,7 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
+import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
+import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
+import ru.teamfour.mappers.adoptionanimal.AdoptionProcessAnimalInfoMapper;
 import ru.teamfour.mappers.adoptionanimal.AdoptionProcessAnimalMapper;
 import ru.teamfour.repositories.AdoptionProcessAnimalRepository;
 import ru.teamfour.service.api.adoptionanimal.AdoptionProcessAnimalServiceApi;
@@ -21,10 +24,12 @@ public class AdoptionProcessAnimalService implements AdoptionProcessAnimalServic
 
     private final AdoptionProcessAnimalRepository adoptionProcessAnimalRepository;
     private final AdoptionProcessAnimalMapper adoptionProcessAnimalMapper;
+    private final AdoptionProcessAnimalInfoMapper adoptionProcessAnimalInfoMapper;
 
-    public AdoptionProcessAnimalService(AdoptionProcessAnimalRepository adoptionProcessAnimalRepository, AdoptionProcessAnimalMapper adoptionProcessAnimalMapper) {
+    public AdoptionProcessAnimalService(AdoptionProcessAnimalRepository adoptionProcessAnimalRepository, AdoptionProcessAnimalMapper adoptionProcessAnimalMapper, AdoptionProcessAnimalInfoMapper adoptionProcessAnimalInfoMapper) {
         this.adoptionProcessAnimalRepository = adoptionProcessAnimalRepository;
         this.adoptionProcessAnimalMapper = adoptionProcessAnimalMapper;
+        this.adoptionProcessAnimalInfoMapper = adoptionProcessAnimalInfoMapper;
     }
 
     @Override
@@ -33,10 +38,25 @@ public class AdoptionProcessAnimalService implements AdoptionProcessAnimalServic
     }
 
     @Override
-    public AdoptionProcessAnimal createAdoption(@Valid AdoptionProcessAnimalCreateDto adoptionProcessAnimalCreateDto) {
+    public AdoptionProcessAnimalInfoDto createAdoption(@Valid AdoptionProcessAnimalCreateDto adoptionProcessAnimalCreateDto) {
         AdoptionProcessAnimal adoptionProcessAnimal = adoptionProcessAnimalMapper.toAnimal(adoptionProcessAnimalCreateDto);
         adoptionProcessAnimal.setDate(LocalDate.now().plusDays(AdoptionProcessAnimal.AUDIT_DAYS));
-        return adoptionProcessAnimalRepository.save(adoptionProcessAnimal);
+        adoptionProcessAnimal.getAnimal().setAdopted(AdoptionAnimalState.PROCESS_OF_ADOPTION);
+        return adoptionProcessAnimalInfoMapper.toDto(adoptionProcessAnimalRepository.save(adoptionProcessAnimal));
+    }
+
+    @Override
+    public AdoptionProcessAnimalInfoDto addfourteendays(@NotNull UUID id) {
+        AdoptionProcessAnimal processAnimal = findById(id);
+        processAnimal.setDate(processAnimal.getDate().plusDays(14));
+        return adoptionProcessAnimalInfoMapper.toDto(adoptionProcessAnimalRepository.save(processAnimal));
+    }
+
+    @Override
+    public AdoptionProcessAnimalInfoDto addthirtydays(@NotNull UUID id) {
+        AdoptionProcessAnimal processAnimal = findById(id);
+        processAnimal.setDate(processAnimal.getDate().plusDays(30));
+        return adoptionProcessAnimalInfoMapper.toDto(adoptionProcessAnimalRepository.save(processAnimal));
     }
 
 }
