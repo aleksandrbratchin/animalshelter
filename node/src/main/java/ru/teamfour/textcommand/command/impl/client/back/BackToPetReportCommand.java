@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
-import ru.teamfour.textcommand.command.impl.client.initmenu.InitCommand;
 import ru.teamfour.textcommand.command.impl.client.mainmenu.PetReportCommand;
 
 /**

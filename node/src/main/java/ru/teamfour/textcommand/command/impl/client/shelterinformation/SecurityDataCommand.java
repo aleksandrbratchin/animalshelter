@@ -12,7 +12,6 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 
@@ -27,9 +26,12 @@ public class SecurityDataCommand extends AbstractCommand {
         Update update = commandContext.getUpdate();
         State state = State.INFO_SHELTER;
 
-        String info = "Данные охраны для оформления пропуска на машину: \n" +
-                user.getShelter().getSecurityData();
-        String answerMessage = Optional.ofNullable(info).orElse("Нет информации");
+        String securityData = user.getShelter().getSecurityData();
+        String answerMessage = "Нет информации";
+        if (securityData != null) {
+            answerMessage = "Данные охраны для оформления пропуска на машину: \n" + securityData;
+        }
+
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

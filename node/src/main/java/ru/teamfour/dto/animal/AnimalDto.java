@@ -37,4 +37,7 @@ public class AnimalDto {
     @NotBlank
     private AdoptionAnimalState adopted;
 
+    @NotNull
+    private UUID idShelter;
+
 }

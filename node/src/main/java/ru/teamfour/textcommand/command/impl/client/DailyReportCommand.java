@@ -29,7 +29,16 @@ public class DailyReportCommand extends AbstractCommand {
         State state = State.DAILY_REPORT_MENU;
         user.setState(state);
         userService.save(user);
-        String textDailyReport = null;
+
+        String answerMessage =
+                """
+                        Как заполнить ежедневный отчёт
+                        В ежедневный отчет входит следующая информация:
+                        "Рацион животного":
+                        "Общее самочувствие и привыкание к новому месту:"
+                        "Изменения в поведении: отказ от старых привычек, приобретение новых.\"""";
+//todo что тут подразумевалось?
+/*        String textDailyReport = null;
         String answerMessage = textDailyReport == null ?
                 "Как заполнить ежедневный отчёт " +
                         "\"В ежедневный отчет входит следующая информация:\\n\" +\n" +
@@ -40,7 +49,8 @@ public class DailyReportCommand extends AbstractCommand {
                         "\"В ежедневный отчет входит следующая информация:\\n\" +\n" +
                         "                \"Рацион животного:\\n\" +\n" +
                         "                \"Общее самочувствие и привыкание к новому месту:\\n\" +\n" +
-                        "                \"Изменения в поведении: отказ от старых привычек, приобретение новых.\"";
+                        "                \"Изменения в поведении: отказ от старых привычек, приобретение новых.\"";*/
+
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));

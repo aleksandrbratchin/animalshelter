@@ -1,15 +1,13 @@
-package ru.teamfour.textcommand.handler.impl.client.handlerButton.back;
+package ru.teamfour.textcommand.handler.impl.client.handlerbutton.petreportmenu;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.textcommand.command.api.Command;
 import ru.teamfour.textcommand.handler.api.AbstractHandler;
-
 @Component
-public class BackToPetMenuHandler extends AbstractHandler {
-
-    public BackToPetMenuHandler(@Qualifier("backToPetMenuCommand") Command command) {
+public class SendPhotoHandler extends AbstractHandler {
+    public SendPhotoHandler(@Qualifier("sendPhotoCommand") Command command) {
         this.command = command;
     }
 
@@ -21,4 +19,5 @@ public class BackToPetMenuHandler extends AbstractHandler {
             return super.handleRequest(update);
         }
     }
+
 }

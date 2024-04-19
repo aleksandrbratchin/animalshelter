@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.handler.impl.client.handlersMenu;
+package ru.teamfour.textcommand.handler.impl.client.handlersmenu;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

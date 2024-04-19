@@ -2,10 +2,10 @@ package ru.teamfour.dto.shelter;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.*;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dto.animal.AnimalDto;
+import ru.teamfour.validators.typeanimal.TypeAnimalValid;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,10 +23,10 @@ public class ShelterInfoDto {
     @NotBlank
     private String name;
 
-    @NotNull
+    @TypeAnimalValid
     private TypeAnimal typeAnimal;
 
-    @Positive
+    @NotBlank
     private String aboutShelter;
 
     @NotBlank

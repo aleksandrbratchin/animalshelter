@@ -4,17 +4,17 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 
-public class AdoptionAnimalStateValidator implements ConstraintValidator<AdoptionAnimalStateValid, String> {
+public class AdoptionAnimalStateValidator implements ConstraintValidator<AdoptionAnimalStateValid, AdoptionAnimalState> {
 
     @Override
     public void initialize(AdoptionAnimalStateValid constraintAnnotation) {
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
+    public boolean isValid(AdoptionAnimalState value, ConstraintValidatorContext context) {
         boolean correct = true;
         try {
-            AdoptionAnimalState.valueOf(value);
+            AdoptionAnimalState.valueOf(value.name());
         } catch (IllegalArgumentException e) {
             correct = false;
         }

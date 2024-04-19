@@ -19,7 +19,7 @@ import java.util.Optional;
 public class HomeImprovementForYoungAnimalCommand extends AbstractCommand {
     @Value("${buttonName.homeImprovementForYoungAnimal}")
     private String buttonName;
-    private InfoForAdoptionServiceImpl service;
+    private final InfoForAdoptionServiceImpl service;
 
     public HomeImprovementForYoungAnimalCommand(InfoForAdoptionServiceImpl service) {
         this.service = service;

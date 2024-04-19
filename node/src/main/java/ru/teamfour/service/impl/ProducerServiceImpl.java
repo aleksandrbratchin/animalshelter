@@ -10,6 +10,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.teamfour.service.api.ProducerService;
 import transfer.TransferByteObject;
 
+/***
+ * Отправляет сообщения в брокер
+ */
 @Log4j2
 @Service
 public class ProducerServiceImpl implements ProducerService {
