@@ -11,15 +11,13 @@ import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dto.shelter.ShelterInfoDto;
 import ru.teamfour.mappers.animal.AnimalMapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring"/*, uses = {AnimalMapper.class}*/)
 @Getter
 @Setter
 @NoArgsConstructor
 public abstract class ShelterDtoMapper {
 
-    @Autowired
     protected AnimalMapper animalMapper;
-
     @Mappings({
             @Mapping(target = "animals", expression = "java(shelterInfoDto.getAnimals().stream().map(animalDto -> animalMapper.toAnimal(animalDto)).toList())"),
             @Mapping(target = "typeOfAnimal", source = "typeAnimal")
@@ -32,4 +30,7 @@ public abstract class ShelterDtoMapper {
     })
     public abstract ShelterInfoDto toShelterDto(Shelter shelter);
 
+    public void register(AnimalMapper animalMapper) {
+        this.animalMapper = animalMapper;
+    }
 }
