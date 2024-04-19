@@ -8,6 +8,7 @@ import ru.teamfour.dao.entity.photoreport.PhotoReport;
 import ru.teamfour.dao.entity.user.User;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -44,7 +45,8 @@ public class DailyReport extends AuditEntity implements Comparable<DailyReport> 
     @Column(name = "report_text", columnDefinition = "TEXT")
     private String reportText;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY
+            , cascade = CascadeType.ALL)
     @JoinColumn(name = "photo_report_id", referencedColumnName = "id")
     private PhotoReport photoReport;
 
@@ -59,7 +61,7 @@ public class DailyReport extends AuditEntity implements Comparable<DailyReport> 
         super(id);
         this.adoptionProcessAnimal = adoptionProcessAnimal;
         this.volunteer = volunteer;
-        this.reportStatus = reportStatus;
+        this.reportStatus = Optional.ofNullable(reportStatus).orElse(DailyReportStatus.NOT_APPROVED);
         this.reportText = reportText;
         this.photoReport = photoReport;
     }

@@ -27,11 +27,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ShelterServiceImpl implements ShelterService {
 
+    protected final ShelterRepository shelterRepository;
 
-    private final ShelterRepository shelterRepository;
-    private final ShelterAddDtoMapper shelterAddDtoMapper;
-    private final ShelterDtoMapper shelterDtoMapper;
+    protected final ShelterAddDtoMapper shelterAddDtoMapper;
 
+    protected final ShelterDtoMapper shelterDtoMapper;
 
     /**
      * метод находит объект {@link Shelter} в БД по UUID

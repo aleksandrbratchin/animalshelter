@@ -12,7 +12,7 @@ import java.util.UUID;
 @Service
 public interface UserServiceApi {
 
-    User findByChatId(Long chatId);
+    User findByChatId(@NotNull Long chatId);
 
     User save(User client);
 

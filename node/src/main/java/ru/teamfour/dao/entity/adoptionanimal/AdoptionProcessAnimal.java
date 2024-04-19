@@ -14,6 +14,7 @@ import ru.teamfour.dao.entity.user.User;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -25,6 +26,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "adoption_process_animal")
 public class AdoptionProcessAnimal extends AuditEntity {
+
+    //todo можно потом переделать и брать из application.yml
+    public static final int AUDIT_DAYS = 30;
 
     /**
      * Клиент который усыновляет животное
@@ -51,23 +55,24 @@ public class AdoptionProcessAnimal extends AuditEntity {
      * Дата окончания проверки
      */
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private LocalDate date = LocalDate.now().plusDays(AdoptionProcessAnimal.AUDIT_DAYS);
 
     /**
      * adoptionStatus - статус усыновления {@link AdoptionProcessStatus}
      */
     @Enumerated(EnumType.STRING)
-    private AdoptionProcessStatus adoptionProcessStatus;
+    private AdoptionProcessStatus adoptionProcessStatus = AdoptionProcessStatus.PROCESS_ADOPTION;
 
     /***
      * Ежедневные отчеты
      */
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "adoptionProcessAnimal",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<DailyReport> dailyReports;
+    private List<DailyReport> dailyReports = new ArrayList<>();
 
     @Builder
     public AdoptionProcessAnimal(UUID id, User user, Shelter shelter, Animal animal, LocalDate date, AdoptionProcessStatus adoptionProcessStatus, List<DailyReport> dailyReports) {
@@ -75,7 +80,7 @@ public class AdoptionProcessAnimal extends AuditEntity {
         this.user = user;
         this.shelter = shelter;
         this.animal = animal;
-        this.date = date;
+        this.date = Optional.ofNullable(date).orElse(LocalDate.now().plusDays(AdoptionProcessAnimal.AUDIT_DAYS));
         this.adoptionProcessStatus = adoptionProcessStatus == null ? AdoptionProcessStatus.PROCESS_ADOPTION : adoptionProcessStatus;
         this.dailyReports = new ArrayList<>();
     }

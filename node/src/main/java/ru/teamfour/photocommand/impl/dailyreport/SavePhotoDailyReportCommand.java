@@ -1,9 +1,11 @@
 package ru.teamfour.photocommand.impl.dailyreport;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.dailyreport.DailyReport;
+import ru.teamfour.dao.entity.dailyreport.DailyReportStatus;
 import ru.teamfour.dao.entity.photoreport.PhotoReport;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.photocommand.CommandPhotoContext;
@@ -30,18 +32,22 @@ public class SavePhotoDailyReportCommand extends AbstractPhotoCommand {
     }
 
     @Override
+    @Transactional
     public MessageToTelegram execute(CommandPhotoContext commandContext) {
 
         User user = commandContext.getUser();
         State state = State.PET_REPORT;
         user.setState(state);
-        userService.save(user);
 
         AdoptionProcessAnimal activeAdoptionProcess = user.getActiveAdoptionProcess();
         DailyReport lastDailyReport = activeAdoptionProcess.getLastDailyReport(LocalDate.now());
-        DailyReport dailyReport = Optional.ofNullable(lastDailyReport).orElseGet(() -> DailyReport.builder().adoptionProcessAnimal(activeAdoptionProcess).build());
+        DailyReport dailyReport = Optional.ofNullable(lastDailyReport)
+                .orElseGet(() -> DailyReport.builder()
+                        .adoptionProcessAnimal(activeAdoptionProcess)
+                        .build());
         PhotoReport photoReport = new PhotoReport(commandContext.getTransferByteObject().getData());
         dailyReport.setPhotoReport(photoReport);
+        userService.save(user);
         dailyReportService.save(dailyReport);
 
         //todo обработать и сохранить фото
