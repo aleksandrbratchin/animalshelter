@@ -49,7 +49,7 @@ public class AnimalController {
             @RequestBody AnimalDto animalDto
     ){
         return ResponseEntity.ok(
-                service.create(animal)
+                service.create(animalDto)
         );
     }
 
@@ -87,7 +87,7 @@ public class AnimalController {
             @RequestBody AnimalDto animalDto
     ) {
         return ResponseEntity.ok(
-                service.put(id, animalDto)
+                service.update(id, animalDto)
         );
     }
 
