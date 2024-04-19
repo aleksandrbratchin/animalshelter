@@ -1,5 +1,6 @@
 package ru.teamfour.service.impl.animal;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,10 @@ import org.springframework.validation.annotation.Validated;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
+import ru.teamfour.dao.entity.shelter.Shelter;
+import ru.teamfour.dto.animal.AnimalDto;
+import ru.teamfour.dto.shelter.ShelterAddDto;
+import ru.teamfour.mappers.animal.AnimalMapper;
 import ru.teamfour.repositories.AnimalRepository;
 import ru.teamfour.service.api.animal.AnimalService;
 
@@ -19,10 +24,13 @@ import java.util.UUID;
 @Validated
 public class AnimalServiceImpl implements AnimalService {
     private final AnimalRepository repository;
-
-    public AnimalServiceImpl(AnimalRepository repository) {
+    protected final AnimalMapper animalMapper;
+    public AnimalServiceImpl(AnimalRepository repository, AnimalMapper animalMapper) {
         this.repository = repository;
+
+        this.animalMapper = animalMapper;
     }
+
 
     /**
      * метод создает сущность  {@link Animal}  и сохраняет ее в БД
@@ -33,6 +41,7 @@ public class AnimalServiceImpl implements AnimalService {
     public Animal create(Animal animal) {
         return repository.save(animal);
     }
+
 
     /**
      * метод заменяет сущность  {@link Animal},
@@ -88,5 +97,22 @@ public class AnimalServiceImpl implements AnimalService {
     public List<Animal> findAllByType(TypeAnimal type) {
         return repository.findAnimalByTypeAnimal(type);
     }
+
+    @Override
+    public Animal create(@Valid AnimalDto animalAddDto) {
+        return repository.save(animalMapper.toAnimal(animalAddDto));
+    }
+
+    @Override
+    public Animal update(UUID id,@Valid AnimalDto animalAddDto) {
+        Animal animal = repository.findById(id).get();
+        UUID id = animal.getId();
+        return repository.save(animalMapper.toAnimal(animalAddDto));
+
+    }
+
+
+
+
 
 }
