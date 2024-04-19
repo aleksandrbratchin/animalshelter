@@ -2,24 +2,83 @@ package ru.teamfour.service.impl.drivingdirections;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.teamfour.dao.entity.drivingdirections.DrivingDirections;
+import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.repositories.DrivingDirectionsRepository;
+import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.drivingdirections.DrivingDirectionsService;
 
+import java.io.*;
+import java.nio.file.Files;
 import java.util.UUID;
+
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
 public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
 
     private final DrivingDirectionsRepository drivingDirectionsRepository;
+    private final ShelterRepository shelterRepository;
 
-    public DrivingDirectionsServiceImpl(DrivingDirectionsRepository drivingDirectionsRepository) {
+    public DrivingDirectionsServiceImpl(DrivingDirectionsRepository drivingDirectionsRepository, ShelterRepository shelterRepository) {
         this.drivingDirectionsRepository = drivingDirectionsRepository;
+        this.shelterRepository = shelterRepository;
     }
 
+    /**
+     * нахождение объекта {@Link DrivingDirections} по id Shelter
+     *
+     * @param shelterId
+     * @return возвращает найденный объект
+     */
     @Override
     public DrivingDirections findByShelterId(UUID shelterId) {
-        return drivingDirectionsRepository.findByShelterId(shelterId).orElse(new DrivingDirections());
+        return drivingDirectionsRepository.findByShelterId(shelterId)
+                .orElse(new DrivingDirections());
     }
+
+    /**
+     * Создание схемы проезда и запись в БД
+     *
+     * @param shelterId Id приюта
+     * @param data      схема
+     * @throws IOException
+     */
+
+    public void createDrivingDirections(UUID shelterId, MultipartFile data) throws IOException {
+
+        Shelter shelter = shelterRepository.findById(shelterId).get();
+        DrivingDirections directions = findByShelterId(shelterId);
+        directions.setShelter(shelter);
+        directions.setData(data.getBytes());
+        drivingDirectionsRepository.save(directions);
+
+    }
+
+    /**
+     * удаление схемы проезда
+     *
+     * @param shelterId
+     */
+    public void deleteDrivingDirections(UUID shelterId) {
+
+        drivingDirectionsRepository.deleteByShelterId(shelterId);
+    }
+
+    /**
+     * Замена схемы проезда
+     *
+     * @param idShelter
+     * @param data
+     * @throws IOException
+     */
+    public void put(UUID idShelter, MultipartFile data) throws IOException {
+        DrivingDirections directions = drivingDirectionsRepository.findByShelterId(idShelter).get();
+        directions.setData(data.getBytes());
+        drivingDirectionsRepository.save(directions);
+
+    }
+
 }

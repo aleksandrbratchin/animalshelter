@@ -6,7 +6,9 @@ import ru.teamfour.dao.entity.drivingdirections.DrivingDirections;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface DrivingDirectionsRepository extends JpaRepository<DrivingDirections, Long> {
+public interface DrivingDirectionsRepository extends JpaRepository<DrivingDirections, UUID> {
     Optional<DrivingDirections> findByShelterId(UUID shelterId);
+
+    void deleteByShelterId(UUID shelterId);
 
 }
