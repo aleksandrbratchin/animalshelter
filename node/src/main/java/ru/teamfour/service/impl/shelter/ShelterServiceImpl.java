@@ -27,11 +27,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ShelterServiceImpl implements ShelterService {
 
+    protected final ShelterRepository shelterRepository;
 
-    private final ShelterRepository shelterRepository;
-    private final ShelterAddDtoMapper shelterAddDtoMapper;
-    private final ShelterDtoMapper shelterDtoMapper;
+    protected final ShelterAddDtoMapper shelterAddDtoMapper;
 
+    protected final ShelterDtoMapper shelterDtoMapper;
 
     /**
      * метод находит объект {@link Shelter} в БД по UUID
@@ -94,6 +94,16 @@ public class ShelterServiceImpl implements ShelterService {
     @Override
     public Shelter create(@Valid ShelterAddDto shelterDto) {
         return shelterRepository.save(shelterAddDtoMapper.toShelter(shelterDto));
+    }
+
+    /**
+     * метод удаляет из БД объект {@link Shelter} по UUID
+     *
+     * @param id принимет UUID удаляемого объекта
+     */
+    @Override
+    public void remove(@NotNull UUID id) {
+        shelterRepository.deleteById(id);
     }
 
     @Override
