@@ -1,5 +1,6 @@
 package ru.teamfour.dao.entity.drivingdirections;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.teamfour.dao.entity.ParentUUIDEntity;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "drivingDirections")
 public class DrivingDirections extends ParentUUIDEntity {
-
+    @JsonIgnore
     private byte[] data;
 
     @OneToOne(fetch = FetchType.LAZY)
