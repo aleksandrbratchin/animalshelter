@@ -14,13 +14,13 @@ import java.util.UUID;
 @Service
 public interface AnimalService {
 
-    Animal create(Animal animal);
+    Animal findById(@NotNull UUID id);
+
+/*    Animal create(Animal animal);
 
     Animal put(Animal animal);
 
     void delete(@NotNull UUID id);
-
-    Animal findById(@NotNull UUID id);
 
     List<Animal> findAll();
 
@@ -29,7 +29,7 @@ public interface AnimalService {
     List<Animal> findAllByType(TypeAnimal type);
 
     Animal create(@Valid AnimalDto animalAddDto);
-    Animal update(@Valid AnimalDto animalAddDto);
+    Animal update(@Valid AnimalDto animalAddDto);*/
 
 
 }

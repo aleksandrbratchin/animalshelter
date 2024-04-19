@@ -1,38 +1,20 @@
 package ru.teamfour.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import ru.teamfour.dao.entity.animal.Animal;
-import ru.teamfour.dao.entity.animal.TypeAnimal;
-import ru.teamfour.dao.entity.shelter.Shelter;
-import ru.teamfour.dto.animal.AnimalDto;
-import ru.teamfour.dto.shelter.ShelterAddDto;
-import ru.teamfour.dto.shelter.ShelterInfoDto;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.teamfour.service.api.animal.AnimalService;
-import ru.teamfour.service.impl.animal.AnimalServiceImpl;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/animal")
 public class AnimalController {
-    private final AnimalService service;
+    private final AnimalService animalService;
 
-    public AnimalController(@Qualifier("animalServiveIml") AnimalService service) {
-        this.service = service;
+    public AnimalController(@Qualifier("animalServiceImpl") AnimalService animalService) {
+        this.animalService = animalService;
     }
 
-    @Operation(
+   /* @Operation(
             summary = "Создание животного",
             responses = {@ApiResponse(
                     responseCode = "200",
@@ -143,10 +125,7 @@ public class AnimalController {
     @GetMapping("/AllType")
     public ResponseEntity<List<AnimalDto>> findAll(@PathVariable("type") String type) {
         return ResponseEntity.ok(service.findAllByType(type));
-    }
-
-
-
+    }*/
 
 
 }

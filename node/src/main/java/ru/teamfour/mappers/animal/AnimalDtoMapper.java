@@ -8,6 +8,6 @@ import ru.teamfour.dto.animal.AnimalDto;
 @Mapper(componentModel = "spring")
 public interface AnimalDtoMapper {
 
-    @Mapping(target = "typeAnimal", source = "typeOfAnimal")
+    @Mapping(target = "typeAnimal", source = "typeAnimal")
     AnimalDto toAnimalDto(Animal animal);
 }
