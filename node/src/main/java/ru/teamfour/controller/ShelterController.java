@@ -59,6 +59,7 @@ public class ShelterController {
     public ResponseEntity<?> delete(
             @PathVariable("id") UUID id
     ) {
+        service.remove(id);
         return ResponseEntity.ok(
                 "Приют удален!"
         );

@@ -96,6 +96,16 @@ public class ShelterServiceImpl implements ShelterService {
         return shelterRepository.save(shelterAddDtoMapper.toShelter(shelterDto));
     }
 
+    /**
+     * метод удаляет из БД объект {@link Shelter} по UUID
+     *
+     * @param id принимет UUID удаляемого объекта
+     */
+    @Override
+    public void remove(@NotNull UUID id) {
+        shelterRepository.deleteById(id);
+    }
+
     @Override
     public Shelter update(@NotNull UUID id, @Valid ShelterAddDto shelterDto) {
         Shelter shelter = shelterRepository.findById(id).orElseThrow(); //todo обработать исключение

@@ -27,6 +27,8 @@ public interface ShelterService {
 
     Shelter create(@Valid ShelterAddDto shelterDto);
 
+    void remove(@NotNull UUID id);
+
     Shelter update(@NotNull UUID id, @Valid ShelterAddDto shelterDto);
 
     List<ShelterInfoDto> findAllDto();
