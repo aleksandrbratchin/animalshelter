@@ -1,5 +1,9 @@
 package ru.teamfour.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
@@ -34,6 +38,17 @@ public class AdoptionAnimalsController {
     }
 
 
+    @Operation(
+            summary = "СОЗДАТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
+            responses = {@ApiResponse(
+                    responseCode = "200",
+                    description = "", //todo
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
+            )},
+            tags = "Процесс усыновления"
+    )
     @PostMapping()
     public ResponseEntity<?> add(
             @RequestBody AdoptionProcessAnimalCreateDto adoptionProcessAnimalCreateDto
