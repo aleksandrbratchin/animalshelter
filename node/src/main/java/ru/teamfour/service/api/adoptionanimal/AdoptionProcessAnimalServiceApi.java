@@ -14,7 +14,12 @@ public interface AdoptionProcessAnimalServiceApi {
     AdoptionProcessAnimalInfoDto createAdoption(@Valid AdoptionProcessAnimalCreateDto adoptionProcessAnimalCreateDto);
 
     AdoptionProcessAnimalInfoDto addfourteendays(@NotNull UUID id);
+
     AdoptionProcessAnimalInfoDto addthirtydays(@NotNull UUID id);
+
+    AdoptionProcessAnimalInfoDto approved(@NotNull UUID id);
+
+    AdoptionProcessAnimalInfoDto rejected(@NotNull UUID id);
 
     //AdoptionProcessAnimal findById(@NotNull UUID id);
 }

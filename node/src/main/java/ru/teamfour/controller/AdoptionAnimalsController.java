@@ -37,7 +37,6 @@ public class AdoptionAnimalsController {
         return userService.getUser(id);
     }
 
-
     @Operation(
             summary = "СОЗДАТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
             responses = {@ApiResponse(
@@ -89,8 +88,49 @@ public class AdoptionAnimalsController {
             )},
             tags = "Процесс усыновления"
     )
+
     @GetMapping("/addthirtydays/{adoptionAnimalId}")
     public ResponseEntity<AdoptionProcessAnimalInfoDto> addthirtydays(
+            @PathVariable(value = "adoptionAnimalId") UUID id
+    ) {
+        return ResponseEntity.ok(
+                adoptionAnimalService.addthirtydays(id)
+        );
+    }
+
+    @Operation(
+            summary = "ОДОБРИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
+            responses = {@ApiResponse(
+                    responseCode = "200",
+                    description = "Информация о усыновлении",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
+            )},
+            tags = "Процесс усыновления"
+    )
+    @GetMapping("/approved/{adoptionAnimalId}")
+    public ResponseEntity<AdoptionProcessAnimalInfoDto> approved(
+            @PathVariable(value = "adoptionAnimalId") UUID id
+    ) {
+        return ResponseEntity.ok(
+                adoptionAnimalService.approved(id)
+        );
+    }
+
+    @Operation(
+            summary = "ОТКЛОНИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
+            responses = {@ApiResponse(
+                    responseCode = "200",
+                    description = "Информация о усыновлении",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
+            )},
+            tags = "Процесс усыновления"
+    )
+    @GetMapping("/rejected/{adoptionAnimalId}")
+    public ResponseEntity<AdoptionProcessAnimalInfoDto> rejected(
             @PathVariable(value = "adoptionAnimalId") UUID id
     ) {
         return ResponseEntity.ok(
