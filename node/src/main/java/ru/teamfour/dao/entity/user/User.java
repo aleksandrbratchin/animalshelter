@@ -90,6 +90,7 @@ public class User extends AuditEntity {
      * @return {@link AdoptionProcessAnimal}
      */
     public AdoptionProcessAnimal getActiveAdoptionProcess() {
+        if (adoptions == null || adoptions.size() == 0) return null;
         List<AdoptionProcessAnimal> adoptionProcessAnimalStream = adoptions.stream().filter(
                 adoptionProcessAnimal ->
                         adoptionProcessAnimal.getShelter().getId().equals(shelter.getId()) &&
