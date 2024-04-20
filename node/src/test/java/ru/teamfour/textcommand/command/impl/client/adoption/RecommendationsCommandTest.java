@@ -89,7 +89,7 @@ public class RecommendationsCommandTest {
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("информация о усыновлении из приюта \"Тестовое название приюта\"");
+        assertThat(first.getText()).contains("Информация о усыновлении из приюта \"Тестовое название приюта\"");
         assertThat(first.getText()).contains(shelterName);
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
         assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);

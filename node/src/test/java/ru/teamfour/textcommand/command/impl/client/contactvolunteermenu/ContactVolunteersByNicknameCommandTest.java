@@ -35,8 +35,10 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")
 public class ContactVolunteersByNicknameCommandTest {
+
     @Value("${buttonName.contactVolunteersByNickname}")
     private String buttonName;
+
     @Value("${buttonName.contactVolunteersByPhoneNumber}")
     private String checkButton;
     @InjectMocks

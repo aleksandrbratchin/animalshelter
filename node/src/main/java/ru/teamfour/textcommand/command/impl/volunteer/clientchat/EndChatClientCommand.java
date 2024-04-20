@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.command.impl.volunteer.volunteerchat;
+package ru.teamfour.textcommand.command.impl.volunteer.clientchat;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

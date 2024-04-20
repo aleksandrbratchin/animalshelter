@@ -6,7 +6,6 @@ import lombok.*;
 import ru.teamfour.dto.animal.AnimalDto;
 import ru.teamfour.dto.shelter.ShelterInfoDto;
 import ru.teamfour.dto.user.UserInfoDto;
-import ru.teamfour.mappers.user.UserInfoMapper;
 
 import java.util.UUID;
 

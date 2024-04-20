@@ -1,8 +1,10 @@
-package ru.teamfour.textcommand.command.impl.volunteer.volunteerchat;
+package ru.teamfour.textcommand.command.impl.client;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
+import ru.teamfour.dao.entity.user.RoleUser;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
@@ -11,20 +13,23 @@ import ru.teamfour.textcommand.command.api.State;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * Формирует сообщение в чат волонтера от клиента
+ * Меняет роль пользователя на волонтера
  */
 @Component
-public class TalkWithClientCommand extends AbstractCommand {
+public class BecomeVolunteerCommand extends AbstractCommand {
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.CLIENT_CHAT;
-        String answerMessage = update.getMessage().getText();
-
-        SendMessage sendMessage = messageUtils.generateSendMessageWithText(user.getChat().getActiveChat(), answerMessage);
+        State state = State.VOLUNTEER_START_MENU;
+        user.setState(state);
+        user.setRole(RoleUser.VOLUNTEER);
+        userService.updateInfoAndState(user, update, state);
+        String answerMessage = "Вы стали волонтером!";
+        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
         sendMessages.add(addMenu(sendMessage, state));
         return MessageToTelegram.builder()
@@ -34,6 +39,7 @@ public class TalkWithClientCommand extends AbstractCommand {
 
     @Override
     public boolean isCommand(String message) {
-        return true;
+        return message.equals("/volunteer");
     }
+
 }

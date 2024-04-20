@@ -70,4 +70,6 @@ buttonName:
   backToMainMenuButton: Вернуться в главное меню
   backToAdoption: Вернуться в предыдущее меню
   backToPetMenuButton: Вернуться в меню с ежедневным отчётом
-
+  checkReport: Проверить отчет
+  acceptReport: Принять отчет
+  rejectReport: Отклонить  отчет

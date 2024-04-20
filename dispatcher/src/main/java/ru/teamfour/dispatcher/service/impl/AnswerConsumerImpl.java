@@ -36,7 +36,7 @@ public class AnswerConsumerImpl implements AnswerConsumer {
         try{
             ObjectMapper objectMapper = new ObjectMapper();
             TransferByteObject transferByteObject = objectMapper.readValue(json, TransferByteObject.class);
-            InputFile photo = new InputFile(new ByteArrayInputStream(transferByteObject.getData()), "file");
+            InputFile photo = new InputFile(new ByteArrayInputStream(transferByteObject.getData()), "file.png");
             updateController.sendToTelegramPhoto(new SendPhoto(transferByteObject.getChatId(), photo));
         } catch (Exception e){
             log.error("Не удалось десериализовать");
