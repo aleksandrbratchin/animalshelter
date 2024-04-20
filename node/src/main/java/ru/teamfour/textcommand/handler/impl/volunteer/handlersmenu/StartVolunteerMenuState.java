@@ -13,14 +13,18 @@ import ru.teamfour.textcommand.handler.api.HandlersState;
 public class StartVolunteerMenuState implements HandlersState {
 
     public final Handler startHandler;
+    public final Handler checkReportHandler;
 
     public StartVolunteerMenuState(
-            @Qualifier("startVolunteerHandler") Handler startHandler) {
+            @Qualifier("startVolunteerHandler") Handler startHandler,
+            @Qualifier("checkReportHandler") Handler checkReportHandler) {
         this.startHandler = startHandler;
+        this.checkReportHandler = checkReportHandler;
     }
 
     @Override
     public Handler getHandler() {
+        startHandler.setNext(checkReportHandler);
         return startHandler;
     }
 

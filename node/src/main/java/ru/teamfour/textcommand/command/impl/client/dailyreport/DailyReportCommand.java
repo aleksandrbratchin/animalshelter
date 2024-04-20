@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.command.impl.client;
+package ru.teamfour.textcommand.command.impl.client.dailyreport;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
