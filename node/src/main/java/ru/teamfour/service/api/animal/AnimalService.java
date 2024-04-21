@@ -1,9 +1,14 @@
 package ru.teamfour.service.api.animal;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import ru.teamfour.dao.entity.animal.Animal;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
+import ru.teamfour.dto.animal.AnimalDto;
+import ru.teamfour.dto.animal.AnimalUpdateDto;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -11,20 +16,17 @@ public interface AnimalService {
 
     Animal findById(@NotNull UUID id);
 
-/*    Animal create(Animal animal);
+    AnimalDto delete(@NotNull UUID id);
 
-    Animal put(Animal animal);
+    List<AnimalDto> findAllAnimal();
 
-    void delete(@NotNull UUID id);
+    List<AnimalDto> findByAdopted();
 
-    List<Animal> findAll();
+    List<AnimalDto> findAllByType(TypeAnimal type);
 
-    List<Animal> findByAdopted(AdoptionAnimalState adoptionAnimalState);
+    AnimalDto create(@Valid AnimalUpdateDto animalUpdateDto);
 
-    List<Animal> findAllByType(TypeAnimal type);
-
-    Animal create(@Valid AnimalDto animalAddDto);
-    Animal update(@Valid AnimalDto animalAddDto);*/
+    AnimalDto update(@NotNull UUID id, @Valid AnimalUpdateDto animalUpdateDto);
 
 
 }

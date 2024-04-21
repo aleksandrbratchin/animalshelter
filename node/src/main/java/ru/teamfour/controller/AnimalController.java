@@ -1,9 +1,24 @@
 package ru.teamfour.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
+import ru.teamfour.dao.entity.animal.Animal;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
+import ru.teamfour.dto.animal.AnimalDto;
+import ru.teamfour.dto.animal.AnimalUpdateDto;
+import ru.teamfour.dto.shelter.ShelterInfoDto;
 import ru.teamfour.service.api.animal.AnimalService;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/animal")
@@ -14,7 +29,7 @@ public class AnimalController {
         this.animalService = animalService;
     }
 
-   /* @Operation(
+    @Operation(
             summary = "Создание животного",
             responses = {@ApiResponse(
                     responseCode = "200",
@@ -27,11 +42,11 @@ public class AnimalController {
     )
 
     @PostMapping
-    public ResponseEntity<?> add(
-            @RequestBody AnimalDto animalDto
-    ){
+    public ResponseEntity<AnimalDto> add(
+            @RequestBody AnimalUpdateDto animalUpdateDto
+            ){
         return ResponseEntity.ok(
-                service.create(animalDto)
+                animalService.create(animalUpdateDto)
         );
     }
 
@@ -44,12 +59,10 @@ public class AnimalController {
             tags = "Животное"
     )
     @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(
+    public ResponseEntity<AnimalDto> delete(
             @PathVariable("id") UUID id
     ) {
-        return ResponseEntity.ok(
-                "Животное удалено!"
-        );
+        return ResponseEntity.ok(animalService.delete(id));
     }
 
     @Operation(
@@ -64,16 +77,16 @@ public class AnimalController {
             tags = "Животное"
     )
     @PutMapping("{id}")
-    public ResponseEntity<?> update(
+    public ResponseEntity<AnimalDto> update(
             @PathVariable("id") UUID id,
-            @RequestBody AnimalDto animalDto
+            @RequestBody AnimalUpdateDto animalUpdateDto
     ) {
         return ResponseEntity.ok(
-                service.update(id, animalDto)
+                animalService.update(id, animalUpdateDto)
         );
     }
 
-    @Operation(
+      @Operation(
             summary = "Список животных",
             responses = {@ApiResponse(
                     responseCode = "200",
@@ -89,11 +102,11 @@ public class AnimalController {
     )
     @GetMapping("/All")
     public ResponseEntity<List<AnimalDto>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+        return ResponseEntity.ok(animalService.findAllAnimal());
     }
 
     @Operation(
-            summary = "Поиск животного по усыновителю",
+            summary = "Поиск животных по статусу усыновлены они или нет",
             responses = {@ApiResponse(
                     responseCode = "200",
                     description = "Найденное животное по усыновителю",
@@ -104,8 +117,8 @@ public class AnimalController {
             tags = "Животное")
 
     @GetMapping("/nameAdoption")
-    public ResponseEntity<AnimalDto> findByName(@PathVariable("name") String name) {
-        return ResponseEntity.ok(service.findByAdopted(name));
+    public ResponseEntity<List<AnimalDto>> findByAdopted() {
+        return ResponseEntity.ok(animalService.findByAdopted());
     }
 
     @Operation(
@@ -123,9 +136,9 @@ public class AnimalController {
             tags = "Животное"
     )
     @GetMapping("/AllType")
-    public ResponseEntity<List<AnimalDto>> findAll(@PathVariable("type") String type) {
-        return ResponseEntity.ok(service.findAllByType(type));
-    }*/
-
+    public ResponseEntity<List<AnimalDto>> findAllByType(
+            @PathVariable("type") TypeAnimal typeAnimal) {
+        return ResponseEntity.ok(animalService.findAllByType(typeAnimal));
+    }
 
 }
