@@ -77,7 +77,7 @@ public class AnimalController {
             tags = "Животное"
     )
     @PutMapping("{id}")
-    public ResponseEntity<?> update(
+    public ResponseEntity<AnimalDto> update(
             @PathVariable("id") UUID id,
             @RequestBody AnimalUpdateDto animalUpdateDto
     ) {

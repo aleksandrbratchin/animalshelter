@@ -42,8 +42,6 @@ public class AnimalServiceImpl implements AnimalService {
         return repository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
-
-
     /**
      * метод создает сущность  {@link Animal}  и сохраняет ее в БД
      *
@@ -53,18 +51,8 @@ public class AnimalServiceImpl implements AnimalService {
     public AnimalDto create(@Valid AnimalUpdateDto animalUpdateDto) {
         Animal animal = animalUpdateDtoMapper.toAnimal(animalUpdateDto);
         Animal animalNew = repository.save(animal);
-        AnimalDto animalDto = animalMapper.toAnimalDto(animalNew);
-        return animalDto;
+        return animalMapper.toAnimalDto(animalNew);
     }
-    /*
-
-     */
-
-    /**
-     * метод заменяет сущность  {@link Animal},
-     * которая уже есть в БД с таким же UUID
-     *//*
-     */
 
     /**
      * метод удаляет сущность {@link Animal} по UUID
@@ -79,11 +67,9 @@ public class AnimalServiceImpl implements AnimalService {
 
     }
 
-
     /**
      * @return возвращает список всех животных
      */
-
     @Override
     public List<AnimalDto> findAllAnimal() {
         return repository.findAll().stream()
@@ -112,22 +98,19 @@ public class AnimalServiceImpl implements AnimalService {
                 .toList();
     }
 
-    @Override// метод реализуешь или переопредеяешь. Нужна пока программируешь. Она будет ругаться, если такого метода нет в родительском классе, в котором наследуешься
+    @Override
     public AnimalDto update(@NotNull UUID id, @Valid AnimalUpdateDto animalUpdateDto) {
         Animal animal = repository.findById(id).orElseThrow(IllegalArgumentException::new);
         Animal animalNew = animalUpdateDtoMapper.toAnimal(animalUpdateDto);
         animal.setTypeAnimal(animalNew.getTypeAnimal());
-        animal.setName(animalNew.getName());// доделать, чтобы были поля, что в AnimalUpdate
+        animal.setName(animalNew.getName());
         animal.setAge(animalNew.getAge());
         animal.setBreed(animalNew.getBreed());
         animal.setHabits(animalNew.getHabits());
         animal.setAdopted(animalNew.getAdopted());
 
         Animal saveAnimal = repository.save(animal);
-        AnimalDto animalDto = animalMapper.toAnimalDto(saveAnimal);
-        return animalDto;
-
-
+        return animalMapper.toAnimalDto(saveAnimal);
     }
 
 
