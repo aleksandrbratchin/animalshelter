@@ -6,6 +6,7 @@ import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface AdoptionProcessAnimalServiceApi {
@@ -14,7 +15,12 @@ public interface AdoptionProcessAnimalServiceApi {
     AdoptionProcessAnimalInfoDto createAdoption(@Valid AdoptionProcessAnimalCreateDto adoptionProcessAnimalCreateDto);
 
     AdoptionProcessAnimalInfoDto addfourteendays(@NotNull UUID id);
+
     AdoptionProcessAnimalInfoDto addthirtydays(@NotNull UUID id);
 
-    //AdoptionProcessAnimal findById(@NotNull UUID id);
+    AdoptionProcessAnimalInfoDto approved(@NotNull UUID id);
+
+    AdoptionProcessAnimalInfoDto rejected(@NotNull UUID id);
+
+    List<AdoptionProcessAnimalInfoDto> receiveAdoptionsOnWhichADecisionNeedsToBeMade();
 }
