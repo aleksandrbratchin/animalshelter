@@ -2,6 +2,7 @@ package ru.teamfour.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import ru.teamfour.dao.entity.user.RoleUser;
 import ru.teamfour.dao.entity.user.User;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("SELECT u FROM User u where u.role='VOLUNTEER' AND u.userInfo.phoneNumber IS NOT NULL ORDER BY u.volunteerParam.workload ASC")
     List<User> getVolunteersByPhoneNumberIsNotNull();
+
+    List<User> findUsersByRole(RoleUser role);
 }
