@@ -37,6 +37,11 @@ public class NotificationCron {
 
     }
 
+    /**
+     * метод проверяет наличие отчета о усыновлении
+     * за текущий день. Если отчета нет, метод отсылает напоминание усыновителю
+     */
+
     @Scheduled(cron = "0 0 21 * * *")
     public void doReminderReport() {
 
@@ -51,6 +56,11 @@ public class NotificationCron {
 
     }
 
+    /**
+     * метод отсылает напоминание всем волонтерам
+     * о проверке отчетов об усыновлении
+     **/
+
     @Scheduled(cron = "0 0 21 * * *")
     public void doReminderCheckReport() {
         userService.getUsersByRole(RoleUser.VOLUNTEER)
@@ -62,6 +72,10 @@ public class NotificationCron {
 
     }
 
+    /**
+     * метод проверяет наличие отчетов об усыновлении за два дня,
+     * если таковых нет, идет уведомление наиболее свободному волонтеру
+     */
     @Scheduled(cron = "0 0 22 * * *")
     public void doReminderBadReport() {
         User volunteer = userService.getAvailableVolunteer();
