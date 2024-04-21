@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalActiveDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
 import ru.teamfour.service.impl.adoptionanimal.AdoptionProcessAnimalService;
@@ -140,25 +141,25 @@ public class AdoptionAnimalsController {
 
 
 
-    @Operation(
-            summary = "АКТИВНОЕ УСЫНОВЛЕНИЕ",
-            responses = {@ApiResponse(
-                    responseCode = "200",
-                    description = "Информация о усыновлении",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE
-                    )
-            )},
-            tags = "Процесс усыновления"
-    )
-    @GetMapping("/activeadoption/{adoptionAnimalId}")
-    public ResponseEntity<AdoptionProcessAnimalInfoDto> activeadoption(
-            @PathVariable(value = "adoptionAnimalId") UUID id
-    ) {
-        return ResponseEntity.ok(
-                adoptionAnimalService.activeadoption(id)
-        );
-    }
+//    @Operation(
+//            summary = "АКТИВНОЕ УСЫНОВЛЕНИЕ",
+//            responses = {@ApiResponse(
+//                    responseCode = "200",
+//                    description = "Информация о усыновлении",
+//                    content = @Content(
+//                            mediaType = MediaType.APPLICATION_JSON_VALUE
+//                    )
+//            )},
+//            tags = "Процесс усыновления"
+//    )
+//    @GetMapping("/activeadoption/{adoptionAnimalId}")
+//    public ResponseEntity<AdoptionProcessAnimalActiveDto> activeadoption(
+//            @PathVariable(value = "adoptionAnimalId") UUID id
+//    ) {
+//        return ResponseEntity.ok(
+//                adoptionAnimalService.activeadoption(id)
+//        );
+//    }
 
 
 
