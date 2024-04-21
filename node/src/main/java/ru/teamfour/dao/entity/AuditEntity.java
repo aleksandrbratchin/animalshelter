@@ -3,6 +3,7 @@ package ru.teamfour.dao.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,6 +17,7 @@ import java.util.UUID;
  */
 @MappedSuperclass
 @NoArgsConstructor
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditEntity extends ParentUUIDEntity {
 

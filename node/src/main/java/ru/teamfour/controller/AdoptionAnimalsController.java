@@ -10,9 +10,11 @@ import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
+import ru.teamfour.mappers.adoptionanimal.AdoptionProcessAnimalInfoMapper;
 import ru.teamfour.service.impl.adoptionanimal.AdoptionProcessAnimalService;
 import ru.teamfour.service.impl.user.UserService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -134,37 +136,26 @@ public class AdoptionAnimalsController {
             @PathVariable(value = "adoptionAnimalId") UUID id
     ) {
         return ResponseEntity.ok(
-                adoptionAnimalService.addthirtydays(id)
+                adoptionAnimalService.rejected(id)
         );
     }
 
-
-
     @Operation(
-            summary = "АКТИВНОЕ УСЫНОВЛЕНИЕ",
+            summary = "УСЫНОВЛЕНИЯ ПО КОТОРЫМ НЕОБХОДИМО ПРИНЯТЬ РЕШЕНИЕ",
             responses = {@ApiResponse(
                     responseCode = "200",
-                    description = "Информация о усыновлении",
+                    description = "Информация о процессе усыновления",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE
                     )
             )},
             tags = "Процесс усыновления"
     )
-    @GetMapping("/activeadoption/{adoptionAnimalId}")
-    public ResponseEntity<AdoptionProcessAnimalInfoDto> activeadoption(
-            @PathVariable(value = "adoptionAnimalId") UUID id
-    ) {
+    @GetMapping("/findAllActiveAdoptions")
+    public ResponseEntity<List<AdoptionProcessAnimalInfoDto>> findAllActiveAdoptions() {
         return ResponseEntity.ok(
-                adoptionAnimalService.activeadoption(id)
+                adoptionAnimalService.receiveAdoptionsOnWhichADecisionNeedsToBeMade()
         );
     }
-
-
-
-
-
-
-
 
 }
