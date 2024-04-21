@@ -73,7 +73,14 @@ public class AdoptionProcessAnimalService implements AdoptionProcessAnimalServic
     @Override
     public AdoptionProcessAnimalInfoDto rejected(@NotNull UUID id) {
         AdoptionProcessAnimal processAnimal = findById(id);
+        processAnimal.setAdoptionProcessStatus(ADOPTED);
         return adoptionProcessAnimalInfoMapper.toDto(adoptionProcessAnimalRepository.save(processAnimal));
+    }
+
+
+    @Override
+    public AdoptionProcessAnimalInfoDto activeadoption(@NotNull UUID id) {
+        return null;
     }
 
 }

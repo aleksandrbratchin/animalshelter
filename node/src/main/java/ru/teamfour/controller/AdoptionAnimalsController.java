@@ -138,4 +138,33 @@ public class AdoptionAnimalsController {
         );
     }
 
+
+
+    @Operation(
+            summary = "АКТИВНОЕ УСЫНОВЛЕНИЕ",
+            responses = {@ApiResponse(
+                    responseCode = "200",
+                    description = "Информация о усыновлении",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
+            )},
+            tags = "Процесс усыновления"
+    )
+    @GetMapping("/activeadoption/{adoptionAnimalId}")
+    public ResponseEntity<AdoptionProcessAnimalInfoDto> activeadoption(
+            @PathVariable(value = "adoptionAnimalId") UUID id
+    ) {
+        return ResponseEntity.ok(
+                adoptionAnimalService.activeadoption(id)
+        );
+    }
+
+
+
+
+
+
+
+
 }

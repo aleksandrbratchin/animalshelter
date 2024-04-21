@@ -21,5 +21,7 @@ public interface AdoptionProcessAnimalServiceApi {
 
     AdoptionProcessAnimalInfoDto rejected(@NotNull UUID id);
 
+    AdoptionProcessAnimalInfoDto activeadoption(@NotNull UUID id);
+
     //AdoptionProcessAnimal findById(@NotNull UUID id);
 }
