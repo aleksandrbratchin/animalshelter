@@ -28,7 +28,6 @@ public class PetReportCommand extends AbstractCommand {
             String answerMessage = "У вас нет усыновленного питомца";
             SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
             sendMessages.add(sendMessage);
-
         } else {
             State state = State.PET_REPORT;
             user.setState(state);

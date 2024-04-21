@@ -2,6 +2,7 @@ package ru.teamfour.textcommand.command.impl.volunteer.checkreport;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -28,16 +29,15 @@ public class CheckReportCommand extends AbstractCommand {
     @Value("${buttonName.checkReport}")
     private String checkReport;
 
-    private final AdoptionProcessAnimalServiceApi adoptionProcessAnimalService;
     private final DailyReportServiceApi dailyReportService;
+    private final CacheManager cacheManager;
 
     public CheckReportCommand(
-            @Qualifier("adoptionProcessAnimalService") AdoptionProcessAnimalServiceApi adoptionProcessAnimalService,
-            @Qualifier("dailyReportService") DailyReportServiceApi dailyReportService) {
-        this.adoptionProcessAnimalService = adoptionProcessAnimalService;
+            @Qualifier("dailyReportService") DailyReportServiceApi dailyReportService,
+            CacheManager cacheManager) {
         this.dailyReportService = dailyReportService;
+        this.cacheManager = cacheManager;
     }
-
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
@@ -57,6 +57,8 @@ public class CheckReportCommand extends AbstractCommand {
             int randomIndex = random.nextInt(byReportStatus.size());
             DailyReport dailyReport = byReportStatus.get(randomIndex);
 
+            cacheManager.getCache("checkadoption").put(user.getId(), dailyReport.getId());
+
             answerMessage = Optional.ofNullable(dailyReport.getReportText()).orElse("Клиент еще не прислал отчет");
 
             PhotoReport photoReport = dailyReport.getPhotoReport();
@@ -71,9 +73,8 @@ public class CheckReportCommand extends AbstractCommand {
         }
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(chatId, answerMessage);
-
-
         sendMessages.add(addMenu(sendMessage, state));
+
         return MessageToTelegram.builder()
                 .transferByteObjects(transferByteObjects)
                 .sendMessages(sendMessages)
