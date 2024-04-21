@@ -3,6 +3,10 @@ package ru.teamfour.cron;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
+import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
+import ru.teamfour.dao.entity.dailyreport.DailyReport;
+import ru.teamfour.dao.entity.user.RoleUser;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.repositories.AdoptionProcessAnimalRepository;
@@ -14,67 +18,62 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.concurrent.TimeUnit.DAYS;
+import static ru.teamfour.dao.entity.animal.AdoptionAnimalState.PROCESS_OF_ADOPTION;
+import static ru.teamfour.dao.entity.user.RoleUser.VOLUNTEER;
+
 @Component
 public class NotificationCron {
     private final ProducerService producerService;
     private final AdoptionProcessAnimalRepository repository;
     private final UserService userService;
-    private final UserRepository userRepository;
-    private final AdoptionProcessAnimalCreateDto process;
 
-    public NotificationCron(ProducerService producerService, AdoptionProcessAnimalRepository repository, UserService userService, UserRepository userRepository, AdoptionProcessAnimalCreateDto process) {
+
+    public NotificationCron(ProducerService producerService, AdoptionProcessAnimalRepository repository, UserService userService) {
         this.producerService = producerService;
         this.repository = repository;
         this.userService = userService;
-        this.userRepository = userRepository;
-        this.process = process;
+
+
     }
 
     @Scheduled(cron = "0 0 21 * * *")
     public void doReminderReport() {
 
-
-
-        /* repository.findAll().stream()
-                .filter(parent ->( parent.getDailyReports()
-                        .getLast().getDate_report().getDayOfMonth()
-                        != LocalDate.now().getDayOfMonth())||parent.getDailyReports().isEmpty())
+        repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
+                .filter(parent -> !parent.getDailyReports()
+                        .getLast().getDate_report().isEqual(
+                                LocalDate.now()))
                 .map(parent -> parent.getUser().getChat().toString())
                 .forEach(chat -> producerService
                         .producerAnswer(new SendMessage
                                 (chat, "Отправьте, пожалуйста, отчет о усыновлении.")));
 
-*/
     }
 
-    @Scheduled(cron = "0 29 * * * *")
-    public void doReminderMe() {
-        LocalDate date = LocalDate.now();
-        User user = userRepository.findAll().getLast();
-        if (date.equals(LocalDate.now())) {
-            producerService.producerAnswer(new SendMessage(user.getChatId().toString(), date.toString()));
-        }
+    @Scheduled(cron = "0 0 21 * * *")
+    public void doReminderCheckReport() {
+        userService.getUsersByRole(RoleUser.VOLUNTEER)
+                .forEach(user ->
+                        producerService
+                                .producerAnswer(new SendMessage
+                                        (user.getChatId().toString(),
+                                                "Уважаемый волонтер, настало время проверять отчеты от усыновителей.")));
+
     }
 
     @Scheduled(cron = "0 0 22 * * *")
-    public void doReminderCheckReport() {
-        User user = userService.getAvailableVolunteer();
-        producerService
-                .producerAnswer(new SendMessage
-                        (user.getChatId().toString(),
-                                "Уважаемый волонтер, настало время проверять отчеты от усыновителей."));
-
-
-    }
-
-    @Scheduled(cron = "0 0 23 * * *")
     public void doReminderBadReport() {
         User volunteer = userService.getAvailableVolunteer();
         List<User> list = new ArrayList<>();
-        repository.findAll().stream()
-                .filter(parent -> parent.getDailyReports()
-                        .getLast().getDate_report().getDayOfMonth()
-                        < (LocalDate.now().getDayOfMonth() - 1))
+        repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
+                .filter(parent ->
+                        !parent.getDailyReports().stream()
+                                .map(DailyReport::getDate_report)
+                                .toList()
+                                .containsAll(List.of(LocalDate.now()
+                                        .minusDays(1), LocalDate.now())))
+
                 .map(parent -> parent.getUser())
                 .forEach(parent -> producerService
                         .producerAnswer(new SendMessage
@@ -83,7 +82,6 @@ public class NotificationCron {
                                                 " что усыновитель " + parent.getUserInfo().getFirstName() +
                                                 " " + parent.getUserInfo().getLastName() +
                                                 " уже два дня не сдавал отчет!")));
-
 
     }
 }

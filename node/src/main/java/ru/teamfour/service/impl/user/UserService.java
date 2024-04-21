@@ -122,4 +122,9 @@ public class UserService implements UserServiceApi {
         return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Отсутствует пользователь с id = " + id));
     }
 
+    @Override
+    public List<User> getUsersByRole(RoleUser role) {
+        return repository.findUsersByRole(role);
+    }
+
 }
