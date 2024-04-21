@@ -1,5 +1,6 @@
 package ru.teamfour.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
@@ -59,22 +60,30 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     /**
      * Обрабатывает сообщения из очереди фото сообщений
-     * @param transferByteObject {@link TransferByteObject}
+     *
+     * @param json представление объекта {@link TransferByteObject}
      */
-    //todo не лучшая реализация. просто чтобы быстро работало. будет время переделать
     @Override
     @RabbitListener(queues = "${rabbitQueue.messages.update.PHOTO}")
-    public void consumerPhotoMessageUpdates(TransferByteObject transferByteObject) {
-        User user = userService.findByChatId(Long.valueOf(transferByteObject.getChatId()));
-        MessageToTelegram messageToTelegram = null;
-        if (user.getState().equals(State.WAITING_FOR_PHOTOS_FOR_DAILY_REPORT)) {
-            messageToTelegram = savePhotoDailyReportCommand.execute(new CommandPhotoContext(
-                    transferByteObject,
-                    user
-            ));
+    public void consumerPhotoMessageUpdates(String json) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            TransferByteObject transferByteObject = objectMapper.readValue(json, TransferByteObject.class);
+
+            User user = userService.findByChatId(Long.valueOf(transferByteObject.getChatId()));
+            MessageToTelegram messageToTelegram = null;
+            if (user.getState().equals(State.WAITING_FOR_PHOTOS_FOR_DAILY_REPORT)) {
+                messageToTelegram = savePhotoDailyReportCommand.execute(new CommandPhotoContext(
+                        transferByteObject,
+                        user
+                ));
+            }
+            sendMessage(messageToTelegram);
+        } catch (Exception e) {
+            log.error("Не удалось десериализовать");
         }
-        sendMessage(messageToTelegram);
     }
+
 
     private void sendMessage(MessageToTelegram messageToTelegram) {
         if (messageToTelegram != null) {

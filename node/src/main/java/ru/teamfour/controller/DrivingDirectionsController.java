@@ -1,7 +1,6 @@
 package ru.teamfour.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,8 +13,6 @@ import ru.teamfour.service.impl.drivingdirections.DrivingDirectionsServiceImpl;
 
 import java.io.IOException;
 import java.util.UUID;
-
-import static org.springframework.http.MediaType.*;
 
 @RestController
 @RequestMapping("/drivingDirections")
@@ -54,7 +51,6 @@ public class DrivingDirectionsController {
     public ResponseEntity<?> downloadDrivingDirections(@PathVariable("idShelter") UUID id) {
         DrivingDirections directions = service.findByShelterId(id);
         HttpHeaders headers = new HttpHeaders();
-        // headers.setContentType(MediaType.parseMediaType(directions.getMediaType()));
         headers.setContentLength(directions.getData().length);
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(directions.getData());
 
@@ -64,7 +60,6 @@ public class DrivingDirectionsController {
             summary = "УДАЛЕНИЕ  СХЕМЫ ПРОЕЗДА ПО ID ПРИЮТА",
             responses = {@ApiResponse(
                     responseCode = "200"
-
             )},
             tags = "Схема проезда"
     )

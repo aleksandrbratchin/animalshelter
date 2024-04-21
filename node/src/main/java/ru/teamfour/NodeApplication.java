@@ -4,11 +4,11 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import lombok.Generated;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @OpenAPIDefinition
-@EnableScheduling
+@EnableCaching
 public class NodeApplication {
     @Generated
     public static void main(String[] args) {

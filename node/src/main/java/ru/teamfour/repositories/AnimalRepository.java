@@ -13,6 +13,4 @@ public interface AnimalRepository extends JpaRepository<Animal, UUID> {
 
     List<Animal> findAnimalByTypeAnimal(TypeAnimal type);
 
-    void deleteAnimalById(UUID id); //todo удалить если не понадобится
-
 }

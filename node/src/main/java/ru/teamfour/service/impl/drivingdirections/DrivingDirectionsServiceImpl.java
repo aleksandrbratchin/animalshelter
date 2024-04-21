@@ -10,10 +10,7 @@ import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.drivingdirections.DrivingDirectionsService;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.UUID;
-
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional

@@ -1,6 +1,5 @@
 package ru.teamfour.mappers.adoptionanimal;
 
-import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,10 +9,7 @@ import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
-import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
-import ru.teamfour.dto.animal.AnimalDto;
-import ru.teamfour.mappers.shelter.ShelterDtoMapper;
 import ru.teamfour.service.api.animal.AnimalService;
 import ru.teamfour.service.api.shelter.ShelterService;
 import ru.teamfour.service.impl.user.UserService;

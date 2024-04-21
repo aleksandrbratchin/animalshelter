@@ -4,11 +4,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dto.animal.AnimalDto;
+import ru.teamfour.dto.animal.AnimalUpdateDto;
 
 @Mapper(componentModel = "spring")
-public interface AnimalDtoMapper {
+public interface AnimalUpdateDtoMapper {
 
-    @Mapping(target = "typeAnimal", source = "typeAnimal")
-    AnimalDto toAnimalDto(Animal animal);
+
+    Animal toAnimal(AnimalUpdateDto animalUpdateDto);
 
 }

@@ -5,12 +5,11 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.dailyreport.DailyReport;
-import ru.teamfour.dao.entity.dailyreport.DailyReportStatus;
 import ru.teamfour.dao.entity.photoreport.PhotoReport;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.photocommand.CommandPhotoContext;
 import ru.teamfour.photocommand.api.AbstractPhotoCommand;
-import ru.teamfour.service.api.dailyreport.DailyReportService;
+import ru.teamfour.service.api.dailyreport.DailyReportServiceApi;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
 
@@ -25,10 +24,10 @@ import java.util.Optional;
 @Component
 public class SavePhotoDailyReportCommand extends AbstractPhotoCommand {
 
-    private final DailyReportService dailyReportService;
+    private final DailyReportServiceApi dailyReportServiceApi;
 
-    public SavePhotoDailyReportCommand(DailyReportService dailyReportService) {
-        this.dailyReportService = dailyReportService;
+    public SavePhotoDailyReportCommand(DailyReportServiceApi dailyReportServiceApi) {
+        this.dailyReportServiceApi = dailyReportServiceApi;
     }
 
     @Override
@@ -45,12 +44,10 @@ public class SavePhotoDailyReportCommand extends AbstractPhotoCommand {
                 .orElseGet(() -> DailyReport.builder()
                         .adoptionProcessAnimal(activeAdoptionProcess)
                         .build());
-        PhotoReport photoReport = new PhotoReport(commandContext.getTransferByteObject().getData());
+        PhotoReport photoReport = Optional.ofNullable(dailyReport.getPhotoReport()).orElse(new PhotoReport(commandContext.getTransferByteObject().getData()));
         dailyReport.setPhotoReport(photoReport);
         userService.save(user);
-        dailyReportService.save(dailyReport);
-
-        //todo обработать и сохранить фото
+        dailyReportServiceApi.save(dailyReport);
 
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(
                 Long.valueOf(commandContext.getTransferByteObject().getChatId()),
