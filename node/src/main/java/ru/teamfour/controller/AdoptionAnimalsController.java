@@ -37,6 +37,7 @@ public class AdoptionAnimalsController {
         return userService.getUser(id);
     }
 
+
     @Operation(
             summary = "СОЗДАТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
             responses = {@ApiResponse(
@@ -88,7 +89,6 @@ public class AdoptionAnimalsController {
             )},
             tags = "Процесс усыновления"
     )
-
     @GetMapping("/addthirtydays/{adoptionAnimalId}")
     public ResponseEntity<AdoptionProcessAnimalInfoDto> addthirtydays(
             @PathVariable(value = "adoptionAnimalId") UUID id

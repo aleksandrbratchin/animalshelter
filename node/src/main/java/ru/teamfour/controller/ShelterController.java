@@ -120,6 +120,4 @@ public class ShelterController {
         return ResponseEntity.ok(service.findByNameDto(name));
     }
 
-
 }
-

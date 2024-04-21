@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
+import ru.teamfour.dao.entity.dailyreport.DailyReport;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
 import ru.teamfour.mappers.adoptionanimal.AdoptionProcessAnimalInfoMapper;
@@ -16,9 +17,8 @@ import ru.teamfour.repositories.AdoptionProcessAnimalRepository;
 import ru.teamfour.service.api.adoptionanimal.AdoptionProcessAnimalServiceApi;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
-
-import static ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus.*;
 
 @Service
 @Transactional

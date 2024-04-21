@@ -22,16 +22,24 @@ public class PetReportCommand extends AbstractCommand {
     public MessageToTelegram execute(CommandContext commandContext) {
         User user = commandContext.getUser();
         Update update = commandContext.getUpdate();
-        State state = State.PET_REPORT;
-        user.setState(state);
-        userService.save(user);
-        String answerMessage = "Answer: " + buttonName;
-        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
         List<SendMessage> sendMessages = new ArrayList<>();
-        sendMessages.add(addMenu(sendMessage, state));
+
+        if (user.getActiveAdoptionProcess() == null) {
+            String answerMessage = "У вас нет усыновленного питомца";
+            SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+            sendMessages.add(sendMessage);
+        } else {
+            State state = State.PET_REPORT;
+            user.setState(state);
+            userService.save(user);
+            String answerMessage = "Здесь вы можете прислать отчет о содержании питомца";
+            SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
+            sendMessages.add(addMenu(sendMessage, state));
+        }
         return MessageToTelegram.builder()
                 .sendMessages(sendMessages)
                 .build();
+
     }
 
     @Override

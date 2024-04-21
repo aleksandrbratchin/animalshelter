@@ -6,9 +6,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.dailyreport.DailyReport;
-import ru.teamfour.dao.entity.dailyreport.DailyReportStatus;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.service.api.dailyreport.DailyReportService;
+import ru.teamfour.service.api.dailyreport.DailyReportServiceApi;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
@@ -25,10 +24,10 @@ import java.util.Optional;
 @Component
 public class SaveTextDailyReportCommand extends AbstractCommand {
 
-    private final DailyReportService dailyReportService;
+    private final DailyReportServiceApi dailyReportServiceApi;
 
-    public SaveTextDailyReportCommand(DailyReportService dailyReportService) {
-        this.dailyReportService = dailyReportService;
+    public SaveTextDailyReportCommand(DailyReportServiceApi dailyReportServiceApi) {
+        this.dailyReportServiceApi = dailyReportServiceApi;
     }
 
     @Override
@@ -47,9 +46,8 @@ public class SaveTextDailyReportCommand extends AbstractCommand {
                         .adoptionProcessAnimal(activeAdoptionProcess)
                         .build());
         dailyReport.setReportText(update.getMessage().getText());
-        dailyReportService.save(dailyReport);
+        dailyReportServiceApi.save(dailyReport);
         userService.save(user);
-        //todo сохранить текст отчета
 
         String answerMessage = "Отчет отправлен!";
         SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);

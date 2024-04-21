@@ -1,14 +1,21 @@
 package ru.teamfour.service.impl.animal;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
+import ru.teamfour.dao.entity.animal.TypeAnimal;
+import ru.teamfour.dto.animal.AnimalDto;
+import ru.teamfour.dto.animal.AnimalUpdateDto;
 import ru.teamfour.mappers.animal.AnimalMapper;
+import ru.teamfour.mappers.animal.AnimalUpdateDtoMapper;
 import ru.teamfour.repositories.AnimalRepository;
 import ru.teamfour.service.api.animal.AnimalService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,11 +23,13 @@ import java.util.UUID;
 @Validated
 public class AnimalServiceImpl implements AnimalService {
     private final AnimalRepository repository;
-    protected final AnimalMapper animalMapper;
+    private final AnimalMapper animalMapper;
+    private final AnimalUpdateDtoMapper animalUpdateDtoMapper;
 
-    public AnimalServiceImpl(AnimalRepository repository, AnimalMapper animalMapper) {
+    public AnimalServiceImpl(AnimalRepository repository, AnimalMapper animalMapper, AnimalUpdateDtoMapper animalUpdateDtoMapper) {
         this.repository = repository;
         this.animalMapper = animalMapper;
+        this.animalUpdateDtoMapper = animalUpdateDtoMapper;
     }
 
     /**
@@ -33,83 +42,76 @@ public class AnimalServiceImpl implements AnimalService {
         return repository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
-
-
-    /*    *//**
+    /**
      * метод создает сущность  {@link Animal}  и сохраняет ее в БД
      *
      * @return возвращает созданную сущность
-     *//*
+     */
     @Override
-    public Animal create(Animal animal) {
-        return repository.save(animal);
+    public AnimalDto create(@Valid AnimalUpdateDto animalUpdateDto) {
+        Animal animal = animalUpdateDtoMapper.toAnimal(animalUpdateDto);
+        Animal animalNew = repository.save(animal);
+        return animalMapper.toAnimalDto(animalNew);
     }
 
-
-    *//**
-     * метод заменяет сущность  {@link Animal},
-     * которая уже есть в БД с таким же UUID
-     *//*
-    @Override
-    public Animal put(Animal animal) {
-        return repository.save(animal);
-    }
-
-    *//**
+    /**
      * метод удаляет сущность {@link Animal} по UUID
      *
      * @param id тип UUID
-     *//*
+     */
     @Override
-    public void delete(@NotNull UUID id) {
-        repository.deleteById(id);
+    public AnimalDto delete(@NotNull UUID id) {
+        Animal animal = repository.findById(id).orElseThrow(IllegalArgumentException::new);
+        repository.delete(animal);
+        return animalMapper.toAnimalDto(animal);
 
     }
-
-    */
 
     /**
      * @return возвращает список всех животных
-     *//*
+     */
     @Override
-    public List<Animal> findAll() {
-        return repository.findAll();
+    public List<AnimalDto> findAllAnimal() {
+        return repository.findAll().stream()
+                .map(animalMapper::toAnimalDto)
+                .toList();
     }
 
-    *//**
+    /**
      * метод для поиска животных по статусу
-     *//*
+     */
     @Override
-    public List<Animal> findByAdopted(AdoptionAnimalState adoptionAnimalState) {
-        return repository.findByAdopted(adoptionAnimalState);
+    public List<AnimalDto> findByAdopted() {
+        return repository.findByAdopted(AdoptionAnimalState.ADOPTED).stream()
+                .map(animalMapper::toAnimalDto)
+                .toList();
     }
 
-    *//**
+    /**
      * @param type тип животного, например: DOG
      * @return возвращает список животных по указанному типу
-     *//*
+     */
     @Override
-    public List<Animal> findAllByType(TypeAnimal type) {
-        return repository.findAnimalByTypeAnimal(type);
+    public List<AnimalDto> findAllByType(TypeAnimal type) {
+        return repository.findAnimalByTypeAnimal(type).stream()
+                .map(animalMapper::toAnimalDto)
+                .toList();
     }
 
     @Override
-    public Animal create(@Valid AnimalDto animalAddDto) {
-        return repository.save(animalMapper.toAnimal(animalAddDto));
+    public AnimalDto update(@NotNull UUID id, @Valid AnimalUpdateDto animalUpdateDto) {
+        Animal animal = repository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Animal animalNew = animalUpdateDtoMapper.toAnimal(animalUpdateDto);
+        animal.setTypeAnimal(animalNew.getTypeAnimal());
+        animal.setName(animalNew.getName());
+        animal.setAge(animalNew.getAge());
+        animal.setBreed(animalNew.getBreed());
+        animal.setHabits(animalNew.getHabits());
+        animal.setAdopted(animalNew.getAdopted());
+
+        Animal saveAnimal = repository.save(animal);
+        return animalMapper.toAnimalDto(saveAnimal);
     }
-
-    @Override
-    public Animal update(@Valid AnimalDto animalAddDto) {
-        return repository.save(animalMapper.toAnimal(animalAddDto));
-    }*/
-
-/*    @Override
-    public Animal update(UUID id,@Valid AnimalDto animalAddDto) {
-        Animal animal = repository.findById(id).get();
-        UUID id = animal.getId();
-        return repository.save(animalMapper.toAnimal(animalAddDto));
-
-    }*/
 
 
 }
