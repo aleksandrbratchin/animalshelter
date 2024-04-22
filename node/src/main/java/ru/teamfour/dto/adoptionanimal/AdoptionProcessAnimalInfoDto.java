@@ -39,7 +39,24 @@ public class AdoptionProcessAnimalInfoDto {
     @NotBlank
     private String date;
 
-    @NotBlank
-    private String adoptionProcessStatus;
+    /**
+     * Всего дней проверки
+     */
+    private int daysOfVerification;
+
+    /**
+     * дней провалено
+     */
+    private int daysRejected;
+
+    /**
+     * дней одобрено
+     */
+    private int daysApproved;
+
+    /**
+     * дней пропущено
+     */
+    private int daysMissed;
 
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
-import ru.teamfour.dao.entity.dailyreport.DailyReport;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
 import ru.teamfour.mappers.adoptionanimal.AdoptionProcessAnimalInfoMapper;
@@ -18,6 +17,8 @@ import ru.teamfour.service.api.adoptionanimal.AdoptionProcessAnimalServiceApi;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
+import static ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus.*;
 
 @Service
 @Transactional
@@ -59,6 +60,36 @@ public class AdoptionProcessAnimalService implements AdoptionProcessAnimalServic
         AdoptionProcessAnimal processAnimal = findById(id);
         processAnimal.setDate(processAnimal.getDate().plusDays(30));
         return adoptionProcessAnimalInfoMapper.toDto(adoptionProcessAnimalRepository.save(processAnimal));
+    }
+
+    @Override
+    public AdoptionProcessAnimalInfoDto approved(@NotNull UUID id) {
+        AdoptionProcessAnimal processAnimal = findById(id);
+        processAnimal.setAdoptionProcessStatus(ADOPTED);
+        return adoptionProcessAnimalInfoMapper.toDto(adoptionProcessAnimalRepository.save(processAnimal));
+
+    }
+
+    @Override
+    public AdoptionProcessAnimalInfoDto rejected(@NotNull UUID id) {
+        AdoptionProcessAnimal processAnimal = findById(id);
+        processAnimal.setAdoptionProcessStatus(ADOPTION_DENIED);
+        return adoptionProcessAnimalInfoMapper.toDto(adoptionProcessAnimalRepository.save(processAnimal));
+    }
+
+    /**
+     * получить усыновления по которым необходимо принять решение
+     *
+     * @return {@link List<AdoptionProcessAnimalInfoDto>}
+     */
+    @Override
+    public List<AdoptionProcessAnimalInfoDto> receiveAdoptionsOnWhichADecisionNeedsToBeMade() {
+        return adoptionProcessAnimalRepository.findByAdoptionProcessStatus(PROCESS_ADOPTION)
+                .stream().filter(
+                        adoptionProcessAnimal -> adoptionProcessAnimal.getDate().isEqual(LocalDate.now()) || adoptionProcessAnimal.getDate().isAfter(LocalDate.now())
+                )
+                .map(adoptionProcessAnimalInfoMapper::toDto)
+                .toList();
     }
 
 
