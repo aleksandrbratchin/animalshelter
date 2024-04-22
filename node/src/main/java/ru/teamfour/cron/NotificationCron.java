@@ -41,31 +41,23 @@ public class NotificationCron {
     }
 
     /**
-     * метод проверяет наличие отчета о усыновлении
-     * за текущий день. Если отчета нет, метод отсылает напоминание усыновителю
+     * метод отсылает напоминание усыновителям, у которых нет отчета
      */
 
     @Scheduled(cron = "0 0 21 * * *")
     public void doReminderReport() {
 
-        repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
-                .filter(parent -> !(parent.getDailyReports()
-                        .stream()
-                        .map(DailyReport::getDate_report)
-                        .toList()
-                        .contains(LocalDate.now())))
-                //   .map(parent->parent.getUser().getChatId().toString())
-                .forEach(parent -> producerService
-                        .producerAnswer(new SendMessage
-                                (parent.getUser().getChatId().toString(), "Отправьте, пожалуйста, отчет о усыновлении.")));
-
+        doReminderReportList().forEach(chat -> producerService
+                .producerAnswer(new SendMessage
+                        (chat, "Отправьте, пожалуйста, отчет о усыновлении.")));
 
     }
 
     /**
-     * для теста
+     * метод проверяет наличие отчета о усыновлении
+     * за текущий день.
      */
-    public List<String> doReminderReport1() {
+    public List<String> doReminderReportList() {
 
         return repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
                 .filter(parent -> !(parent.getDailyReports()
@@ -85,19 +77,19 @@ public class NotificationCron {
 
     @Scheduled(cron = "0 0 21 * * *")
     public void doReminderCheckReport() {
-        userService.getUsersByRole(RoleUser.VOLUNTEER)
-                .forEach(user ->
+        doReminderCheckReportList()
+                .forEach(chat ->
                         producerService
                                 .producerAnswer(new SendMessage
-                                        (user.getChatId().toString(),
+                                        (chat,
                                                 "Уважаемый волонтер, настало время проверять отчеты от усыновителей.")));
 
     }
 
     /**
-     * для теста
+     * метод составляет список всех волонтеров
      */
-    public List<String> doReminderCheckReport1() {
+    public List<String> doReminderCheckReportList() {
         List<String> list = new ArrayList<>();
         userService.getUsersByRole(VOLUNTEER)
                 .forEach(user -> list.add(user.getChatId().toString()));
@@ -106,37 +98,28 @@ public class NotificationCron {
     }
 
     /**
-     * метод проверяет наличие отчетов об усыновлении за два дня,
-     * если таковых нет, идет уведомление наиболее свободному волонтеру
+     * идет уведомление наиболее свободному волонтеру
+     * об усыновителях, у которых нет отчета два дня
      */
     @Scheduled(cron = "0 0 22 * * *")
     public void doReminderBadReport() {
         User volunteer = userService.getAvailableVolunteer();
-        // List<User> list = new ArrayList<>();
-        repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
-                .filter(parent ->
-                        !(parent.getDailyReports().stream()
-                                .map(DailyReport::getDate_report)
-                                .toList()
-                                .containsAll(List.of(LocalDate.now()
-                                        .minusDays(1), LocalDate.now()))))
-
-                .map(parent -> parent.getUser())
+        doReminderBadReportList()
                 .forEach(parent ->
                         producerService
                                 .producerAnswer(new SendMessage
                                         (volunteer.getChatId().toString(),
                                                 "Уважаемый волонтер, обратите внимание," +
-                                                        " что усыновитель " + parent.getUserInfo().getFirstName() +
-                                                        " " + parent.getUserInfo().getLastName() +
+                                                        " что усыновитель c чата" + parent +
                                                         " уже два дня не сдавал отчет!")));
 
     }
 
     /**
-     * для теста
+     * метод составляет список усыновителей,
+     * у которых нет отчета два дня
      */
-    public List<String> doReminderBadReport1() {
+    public List<String> doReminderBadReportList() {
         // User volunteer = userService.getAvailableVolunteer();
         List<String> list =
                 repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
