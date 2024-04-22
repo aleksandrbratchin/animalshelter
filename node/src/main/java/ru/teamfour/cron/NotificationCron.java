@@ -151,13 +151,5 @@ public class NotificationCron {
                         .collect(Collectors.toList());
         return list;
 
-                      /*  producerService
-                        .producerAnswer(new SendMessage
-                                (volunteer.getChatId().toString(),
-                                        "Уважаемый волонтер, обратите внимание," +
-                                                " что усыновитель " + parent.getUserInfo().getFirstName() +
-                                                " " + parent.getUserInfo().getLastName() +
-                                                " уже два дня не сдавал отчет!")));*/
-
     }
 }
