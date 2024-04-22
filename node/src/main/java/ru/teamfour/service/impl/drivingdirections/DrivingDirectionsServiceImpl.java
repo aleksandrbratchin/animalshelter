@@ -25,7 +25,7 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
     }
 
     /**
-     * нахождение объекта {@Link DrivingDirections} по id Shelter
+     * нахождение объекта {@link DrivingDirections} по id Shelter
      *
      * @param shelterId
      * @return возвращает найденный объект
@@ -46,7 +46,7 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
 
     public void createDrivingDirections(UUID shelterId, MultipartFile data) throws IOException {
 
-        Shelter shelter = shelterRepository.findById(shelterId).get();
+        Shelter shelter = shelterRepository.findById(shelterId).orElseThrow(IllegalArgumentException::new);
         DrivingDirections directions = findByShelterId(shelterId);
         directions.setShelter(shelter);
         directions.setData(data.getBytes());

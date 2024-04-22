@@ -1,6 +1,7 @@
 package ru.teamfour.textcommand.menu;
 
 import org.springframework.stereotype.Component;
+import ru.teamfour.exception.NotFoundButtonMenuException;
 import ru.teamfour.textcommand.command.api.State;
 import ru.teamfour.textcommand.menu.api.ButtonMenu;
 
@@ -21,6 +22,6 @@ public class MenuButtonFactory {
                 return menu;
             }
         }
-        return null; //todo или меню заглушка
+        throw new NotFoundButtonMenuException("Не найдено меню для state = " + state.name());
     }
 }

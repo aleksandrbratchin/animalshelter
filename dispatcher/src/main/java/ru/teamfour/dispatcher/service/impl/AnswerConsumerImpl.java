@@ -1,6 +1,5 @@
 package ru.teamfour.dispatcher.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -33,12 +32,12 @@ public class AnswerConsumerImpl implements AnswerConsumer {
     @Override
     @RabbitListener(queues = "${rabbitQueue.messages.answer.PHOTO}")
     public void consumer(String json) {
-        try{
+        try {
             ObjectMapper objectMapper = new ObjectMapper();
             TransferByteObject transferByteObject = objectMapper.readValue(json, TransferByteObject.class);
             InputFile photo = new InputFile(new ByteArrayInputStream(transferByteObject.getData()), "file.png");
             updateController.sendToTelegramPhoto(new SendPhoto(transferByteObject.getChatId(), photo));
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Не удалось десериализовать");
         }
     }

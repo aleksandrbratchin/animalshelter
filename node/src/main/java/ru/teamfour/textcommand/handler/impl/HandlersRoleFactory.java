@@ -2,6 +2,7 @@ package ru.teamfour.textcommand.handler.impl;
 
 import org.springframework.stereotype.Component;
 import ru.teamfour.dao.entity.user.RoleUser;
+import ru.teamfour.exception.NotFoundHandlersRoleException;
 import ru.teamfour.textcommand.handler.api.HandlersStateFactory;
 
 import java.util.List;
@@ -24,6 +25,6 @@ public class HandlersRoleFactory {
                 return stateFactory;
             }
         }
-        return null; //todo поведение пока непонятно
+        throw new NotFoundHandlersRoleException("Не найдены обработчики для роли " + roleUser.name());
     }
 }

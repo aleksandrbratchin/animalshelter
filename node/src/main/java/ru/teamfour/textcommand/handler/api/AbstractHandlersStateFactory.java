@@ -1,6 +1,8 @@
 package ru.teamfour.textcommand.handler.api;
 
 import org.springframework.stereotype.Component;
+import ru.teamfour.exception.NotFoundHandlersRoleException;
+import ru.teamfour.exception.NotFoundHandlersStateException;
 import ru.teamfour.textcommand.command.api.State;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public abstract class AbstractHandlersStateFactory implements HandlersStateFacto
                 return handlers;
             }
         }
-        return null; //todo поведение пока непонятно
+        throw new NotFoundHandlersStateException("Не найдены обработчики меню для state = " + state.name());
     }
 
 }

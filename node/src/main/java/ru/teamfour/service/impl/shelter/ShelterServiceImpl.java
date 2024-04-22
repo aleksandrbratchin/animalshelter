@@ -52,7 +52,7 @@ public class ShelterServiceImpl implements ShelterService {
      */
     @Override
     public Shelter findByName(String name) {
-        return shelterRepository.findByName(name).orElseThrow(RuntimeException::new); //todo свое исключение кидать
+        return shelterRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException("Не найдено приюта с именем = " + name));
     }
 
     /**
@@ -72,7 +72,7 @@ public class ShelterServiceImpl implements ShelterService {
      * @return список в формате строки
      */
     @Override
-    public List<Animal> findAllAnimalsNotAdoption(@NotNull UUID id) { //todo переписать на SQL
+    public List<Animal> findAllAnimalsNotAdoption(@NotNull UUID id) {
         Shelter shelter = findById(id);
         return shelter.getAnimals().stream().filter(animal -> animal.getAdopted().equals(AdoptionAnimalState.NOT_ADOPTED)).toList();
     }
@@ -108,7 +108,7 @@ public class ShelterServiceImpl implements ShelterService {
 
     @Override
     public Shelter update(@NotNull UUID id, @Valid ShelterAddDto shelterDto) {
-        Shelter shelter = shelterRepository.findById(id).orElseThrow(); //todo обработать исключение
+        Shelter shelter = shelterRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Не найдено приютов с id = " + id));
         Shelter newData = shelterAddDtoMapper.toShelter(shelterDto);
         shelter.setAboutShelter(newData.getAboutShelter());
         shelter.setSecurityData(newData.getSecurityData());
