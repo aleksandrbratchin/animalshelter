@@ -1,6 +1,9 @@
 package ru.teamfour.service.impl.drivingdirections;
 
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.teamfour.dao.entity.drivingdirections.DrivingDirections;
@@ -30,6 +33,7 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
      * @param shelterId
      * @return возвращает найденный объект
      */
+    @Cacheable("drivingDirections")
     @Override
     public DrivingDirections findByShelterId(UUID shelterId) {
         return drivingDirectionsRepository.findByShelterId(shelterId)
@@ -43,7 +47,7 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
      * @param data      схема
      * @throws IOException
      */
-
+    @Override
     public void createDrivingDirections(UUID shelterId, MultipartFile data) throws IOException {
 
         Shelter shelter = shelterRepository.findById(shelterId).get();
@@ -59,6 +63,8 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
      *
      * @param shelterId
      */
+    @CacheEvict("drivingDirections")
+    @Override
     public void deleteDrivingDirections(UUID shelterId) {
 
         drivingDirectionsRepository.deleteByShelterId(shelterId);
@@ -71,6 +77,8 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
      * @param data
      * @throws IOException
      */
+    @CachePut(value = "drivingDirections", key = "#drivingDirections.id")
+    @Override
     public void put(UUID idShelter, MultipartFile data) throws IOException {
         DrivingDirections directions = drivingDirectionsRepository.findByShelterId(idShelter).get();
         directions.setData(data.getBytes());
