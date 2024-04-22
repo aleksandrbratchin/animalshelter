@@ -19,12 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.DAYS;
+import static org.apache.commons.lang3.BooleanUtils.forEach;
 import static ru.teamfour.dao.entity.animal.AdoptionAnimalState.PROCESS_OF_ADOPTION;
 import static ru.teamfour.dao.entity.user.RoleUser.VOLUNTEER;
 
 @Component
 public class NotificationCron {
-    private final ProducerService producerService;
+   /* private final ProducerService producerService;
     private final AdoptionProcessAnimalRepository repository;
     private final UserService userService;
 
@@ -37,29 +38,46 @@ public class NotificationCron {
 
     }
 
-    /**
+    *//**
      * метод проверяет наличие отчета о усыновлении
      * за текущий день. Если отчета нет, метод отсылает напоминание усыновителю
-     */
+     *//*
 
     @Scheduled(cron = "0 0 21 * * *")
     public void doReminderReport() {
 
         repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
-                .filter(parent -> !parent.getDailyReports()
-                        .getLast().getDate_report().isEqual(
-                                LocalDate.now()))
-                .map(parent -> parent.getUser().getChat().toString())
-                .forEach(chat -> producerService
+                .filter(parent -> !(parent.getDailyReports()
+                        .stream()
+                        .map(DailyReport::getDate_report)
+                        .toList()
+                        .contains(LocalDate.now())))
+                //   .map(parent->parent.getUser().getChatId().toString())
+                .forEach(parent -> producerService
                         .producerAnswer(new SendMessage
-                                (chat, "Отправьте, пожалуйста, отчет о усыновлении.")));
+                                (parent.getUser().getChatId().toString(), "Отправьте, пожалуйста, отчет о усыновлении.")));
+
 
     }
+   *//* public void doReminderReport1() {
 
-    /**
+        repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
+                .filter(parent -> !(parent.getDailyReports()
+                        .stream()
+                        .map(DailyReport::getDate_report)
+                        .toList()
+                        .contains(LocalDate.now())))
+                  .map(parent->parent.getUser().getChatId().toString())
+                .forEach(parent ->
+                        System.out.println(parent));
+
+
+    }*//*
+
+     *//**
      * метод отсылает напоминание всем волонтерам
      * о проверке отчетов об усыновлении
-     **/
+     **//*
 
     @Scheduled(cron = "0 0 21 * * *")
     public void doReminderCheckReport() {
@@ -72,30 +90,37 @@ public class NotificationCron {
 
     }
 
-    /**
+    *//*public void doReminderCheckReport1() {
+        List<String> list = new ArrayList<>();
+        userService.getUsersByRole(VOLUNTEER)
+                .forEach(user ->
+                        System.out.println( user.getChatId().toString()));
+
+    }*//*
+     *//**
      * метод проверяет наличие отчетов об усыновлении за два дня,
      * если таковых нет, идет уведомление наиболее свободному волонтеру
-     */
-    @Scheduled(cron = "0 0 22 * * *")
-    public void doReminderBadReport() {
-        User volunteer = userService.getAvailableVolunteer();
-        List<User> list = new ArrayList<>();
-        repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
-                .filter(parent ->
-                        !parent.getDailyReports().stream()
-                                .map(DailyReport::getDate_report)
-                                .toList()
-                                .containsAll(List.of(LocalDate.now()
-                                        .minusDays(1), LocalDate.now())))
+     *//*
+        @Scheduled(cron = "0 0 22 * * *")
+        public void doReminderBadReport () {
+            User volunteer = userService.getAvailableVolunteer();
+            // List<User> list = new ArrayList<>();
+            repository.findByAdoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION).stream()
+                    .filter(parent ->
+                            !(parent.getDailyReports().stream()
+                                    .map(DailyReport::getDate_report)
+                                    .toList()
+                                    .containsAll(List.of(LocalDate.now()
+                                            .minusDays(1), LocalDate.now()))))
 
-                .map(parent -> parent.getUser())
-                .forEach(parent -> producerService
-                        .producerAnswer(new SendMessage
-                                (volunteer.getChatId().toString(),
-                                        "Уважаемый волонтер, обратите внимание," +
-                                                " что усыновитель " + parent.getUserInfo().getFirstName() +
-                                                " " + parent.getUserInfo().getLastName() +
-                                                " уже два дня не сдавал отчет!")));
+                    .map(parent -> parent.getUser())
+                    .forEach(parent -> producerService
+                            .producerAnswer(new SendMessage
+                                    (volunteer.getChatId().toString(),
+                                            "Уважаемый волонтер, обратите внимание," +
+                                                    " что усыновитель " + parent.getUserInfo().getFirstName() +
+                                                    " " + parent.getUserInfo().getLastName() +
+                                                    " уже два дня не сдавал отчет!")));
 
-    }
+        }*/
 }
