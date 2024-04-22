@@ -1,7 +1,6 @@
 package ru.teamfour.textcommand.handler.api;
 
 import org.springframework.stereotype.Component;
-import ru.teamfour.exception.NotFoundHandlersRoleException;
 import ru.teamfour.exception.NotFoundHandlersStateException;
 import ru.teamfour.textcommand.command.api.State;
 

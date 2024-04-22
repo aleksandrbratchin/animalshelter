@@ -42,5 +42,4 @@ public class AnswerConsumerImpl implements AnswerConsumer {
         }
     }
 
-
 }

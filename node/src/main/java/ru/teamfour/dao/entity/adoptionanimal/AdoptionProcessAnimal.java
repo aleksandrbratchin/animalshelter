@@ -82,7 +82,7 @@ public class AdoptionProcessAnimal extends AuditEntity {
         this.animal = animal;
         this.date = Optional.ofNullable(date).orElse(LocalDate.now().plusDays(AdoptionProcessAnimal.AUDIT_DAYS));
         this.adoptionProcessStatus = adoptionProcessStatus == null ? AdoptionProcessStatus.PROCESS_ADOPTION : adoptionProcessStatus;
-        this.dailyReports = dailyReports;//new ArrayList<>();
+        this.dailyReports = Optional.ofNullable(dailyReports).orElse(new ArrayList<>());
     }
 
     /**
