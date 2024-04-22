@@ -32,7 +32,6 @@ public abstract class AdoptionProcessAnimalMapper {
     protected AdoptionProcessStatus adoptionProcessStatus = AdoptionProcessStatus.PROCESS_ADOPTION;
 
     @Mappings({
-
             @Mapping(target = "animal", expression = "java(animalService.findById(dto.getIdAnimal()))"),
             @Mapping(target = "user", expression = "java(userService.getUser(dto.getIdUser()))"),
             @Mapping(target = "shelter", expression = "java(shelterService.findById(dto.getIdShelter()))"),

@@ -8,12 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalActiveDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
+import ru.teamfour.mappers.adoptionanimal.AdoptionProcessAnimalInfoMapper;
 import ru.teamfour.service.impl.adoptionanimal.AdoptionProcessAnimalService;
 import ru.teamfour.service.impl.user.UserService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,7 +38,6 @@ public class AdoptionAnimalsController {
     public User getUser(@PathVariable(value = "userId") UUID id) {
         return userService.getUser(id);
     }
-
 
     @Operation(
             summary = "СОЗДАТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
@@ -90,6 +90,7 @@ public class AdoptionAnimalsController {
             )},
             tags = "Процесс усыновления"
     )
+
     @GetMapping("/addthirtydays/{adoptionAnimalId}")
     public ResponseEntity<AdoptionProcessAnimalInfoDto> addthirtydays(
             @PathVariable(value = "adoptionAnimalId") UUID id
@@ -135,37 +136,26 @@ public class AdoptionAnimalsController {
             @PathVariable(value = "adoptionAnimalId") UUID id
     ) {
         return ResponseEntity.ok(
-                adoptionAnimalService.addthirtydays(id)
+                adoptionAnimalService.rejected(id)
         );
     }
 
-
-
-//    @Operation(
-//            summary = "АКТИВНОЕ УСЫНОВЛЕНИЕ",
-//            responses = {@ApiResponse(
-//                    responseCode = "200",
-//                    description = "Информация о усыновлении",
-//                    content = @Content(
-//                            mediaType = MediaType.APPLICATION_JSON_VALUE
-//                    )
-//            )},
-//            tags = "Процесс усыновления"
-//    )
-//    @GetMapping("/activeadoption/{adoptionAnimalId}")
-//    public ResponseEntity<AdoptionProcessAnimalActiveDto> activeadoption(
-//            @PathVariable(value = "adoptionAnimalId") UUID id
-//    ) {
-//        return ResponseEntity.ok(
-//                adoptionAnimalService.activeadoption(id)
-//        );
-//    }
-
-
-
-
-
-
-
+    @Operation(
+            summary = "УСЫНОВЛЕНИЯ ПО КОТОРЫМ НЕОБХОДИМО ПРИНЯТЬ РЕШЕНИЕ",
+            responses = {@ApiResponse(
+                    responseCode = "200",
+                    description = "Информация о процессе усыновления",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
+            )},
+            tags = "Процесс усыновления"
+    )
+    @GetMapping("/findAllActiveAdoptions")
+    public ResponseEntity<List<AdoptionProcessAnimalInfoDto>> findAllActiveAdoptions() {
+        return ResponseEntity.ok(
+                adoptionAnimalService.receiveAdoptionsOnWhichADecisionNeedsToBeMade()
+        );
+    }
 
 }

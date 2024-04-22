@@ -9,7 +9,6 @@ spring:
     username: ${rabbitmq.username}
     password: ${rabbitmq.password}
   liquibase:
-    enabled: false
     change-log: classpath:liquibase/changelog-master.yml
   jpa:
     show-sql: true

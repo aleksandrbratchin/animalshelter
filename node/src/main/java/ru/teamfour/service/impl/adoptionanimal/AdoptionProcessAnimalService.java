@@ -6,10 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
-import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
 import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
-import ru.teamfour.dao.entity.dailyreport.DailyReport;
-import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalActiveDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
 import ru.teamfour.mappers.adoptionanimal.AdoptionProcessAnimalInfoMapper;
@@ -76,14 +73,24 @@ public class AdoptionProcessAnimalService implements AdoptionProcessAnimalServic
     @Override
     public AdoptionProcessAnimalInfoDto rejected(@NotNull UUID id) {
         AdoptionProcessAnimal processAnimal = findById(id);
-        processAnimal.setAdoptionProcessStatus(ADOPTED);
+        processAnimal.setAdoptionProcessStatus(ADOPTION_DENIED);
         return adoptionProcessAnimalInfoMapper.toDto(adoptionProcessAnimalRepository.save(processAnimal));
     }
 
+    /**
+     * получить усыновления по которым необходимо принять решение
+     *
+     * @return {@link List<AdoptionProcessAnimalInfoDto>}
+     */
+    @Override
+    public List<AdoptionProcessAnimalInfoDto> receiveAdoptionsOnWhichADecisionNeedsToBeMade() {
+        return adoptionProcessAnimalRepository.findByAdoptionProcessStatus(PROCESS_ADOPTION)
+                .stream().filter(
+                        adoptionProcessAnimal -> adoptionProcessAnimal.getDate().isEqual(LocalDate.now()) || adoptionProcessAnimal.getDate().isAfter(LocalDate.now())
+                )
+                .map(adoptionProcessAnimalInfoMapper::toDto)
+                .toList();
+    }
 
-//    @Override
-//    public AdoptionProcessAnimalInfoDto activeadoption(@NotNull UUID id) {
-//        return null;
-//    }
 
 }

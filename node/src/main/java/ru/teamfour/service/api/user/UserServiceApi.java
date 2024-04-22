@@ -3,6 +3,7 @@ package ru.teamfour.service.api.user;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.teamfour.dao.entity.user.RoleUser;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.api.State;
 
@@ -72,4 +73,12 @@ public interface UserServiceApi {
      * @return список пользователей
      */
     User getUser (@NotNull UUID id);
+
+    /**
+     * Получение списка пользователей по их роли
+     *
+     * @param role
+     * @return лист пользователей
+     */
+    List<User> getUsersByRole(RoleUser role);
 }

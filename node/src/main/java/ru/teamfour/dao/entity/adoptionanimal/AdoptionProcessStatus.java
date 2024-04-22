@@ -19,5 +19,5 @@ public enum AdoptionProcessStatus {
     /**
      * Усыновление отклонено
      */
-    DOPTION_DENIED
+    ADOPTION_DENIED
 }
