@@ -90,11 +90,9 @@ public class NotificationCron {
      * метод составляет список всех волонтеров
      */
     public List<String> doReminderCheckReportList() {
-        List<String> list = new ArrayList<>();
-        userService.getUsersByRole(VOLUNTEER)
-                .forEach(user -> list.add(user.getChatId().toString()));
-        return list;
-
+        return userService.getUsersByRole(VOLUNTEER).stream()
+                .map(user -> user.getChatId().toString())
+                .toList();
     }
 
     /**
