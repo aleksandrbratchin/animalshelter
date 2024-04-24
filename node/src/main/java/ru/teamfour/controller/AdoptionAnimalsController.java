@@ -10,7 +10,6 @@ import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
-import ru.teamfour.mappers.adoptionanimal.AdoptionProcessAnimalInfoMapper;
 import ru.teamfour.service.impl.adoptionanimal.AdoptionProcessAnimalService;
 import ru.teamfour.service.impl.user.UserService;
 

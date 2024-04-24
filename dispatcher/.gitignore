@@ -33,4 +33,3 @@ build/
 .vscode/
 /src/main/resources/telegram.yml
 /src/main/resources/myconfig.yml
-/src/main/resources/myconfig.yml

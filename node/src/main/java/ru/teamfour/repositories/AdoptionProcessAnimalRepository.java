@@ -3,7 +3,6 @@ package ru.teamfour.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
-import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 
 import java.util.List;
 import java.util.UUID;

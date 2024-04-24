@@ -10,6 +10,7 @@ import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.dailyreport.DailyReport;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.exception.OneDayDailyReportException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ import java.util.UUID;
 @Table(name = "adoption_process_animal")
 public class AdoptionProcessAnimal extends AuditEntity {
 
-    //todo можно потом переделать и брать из application.yml
     public static final int AUDIT_DAYS = 30;
 
     /**
@@ -82,9 +82,14 @@ public class AdoptionProcessAnimal extends AuditEntity {
         this.animal = animal;
         this.date = Optional.ofNullable(date).orElse(LocalDate.now().plusDays(AdoptionProcessAnimal.AUDIT_DAYS));
         this.adoptionProcessStatus = adoptionProcessStatus == null ? AdoptionProcessStatus.PROCESS_ADOPTION : adoptionProcessStatus;
-        this.dailyReports = new ArrayList<>();
+        this.dailyReports = Optional.ofNullable(dailyReports).orElse(new ArrayList<>());
     }
 
+    /**
+     *
+     * @param now текущая дата
+     * @return {@link DailyReport} отчет за текущую дату, null - если отчета нет
+     */
     public DailyReport getLastDailyReport(LocalDate now) {
         List<DailyReport> list = dailyReports.stream()
                 .filter(dailyReport ->
@@ -94,7 +99,7 @@ public class AdoptionProcessAnimal extends AuditEntity {
             return list.get(0);
         }
         if (list.size() > 1) {
-            throw new RuntimeException(); //todo мое исключение
+            throw new OneDayDailyReportException("За " + now + " содержится " + list.size() + " отчетов, а ожидается не более одного.");
         }
         return null;
     }
