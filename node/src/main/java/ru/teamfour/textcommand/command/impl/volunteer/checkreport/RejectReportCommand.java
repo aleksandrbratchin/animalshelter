@@ -23,8 +23,6 @@ public class RejectReportCommand extends AbstractCommand {
     @Value("${buttonName.rejectReport}")
     private String rejectReport;
 
-    String clientErrorMessage = "Дорогой усыновитель, мы заметили, что ты заполняешь отчет не так подробно, как необходимо. Пожалуйста, подойди ответственнее к этому занятию. В противном случае волонтеры приюта будут обязаны самолично проверять условия содержания животного";
-
     private final DailyReportServiceApi dailyReportService;
     private final CacheManager cacheManager;
     private final Command backToVolunteerMainMenuCommand;
@@ -52,7 +50,7 @@ public class RejectReportCommand extends AbstractCommand {
             }
         }
 
-        MessageToTelegram messageToTelegram = null;
+        MessageToTelegram messageToTelegram;
         //нет отчета в кеше сообщить о проблеме
         if (dailyReport == null) {
             String msg = "Не удалось принять решение.";
@@ -64,6 +62,7 @@ public class RejectReportCommand extends AbstractCommand {
             String msg = "Отчёт не одобрен!";
             messageToTelegram = backToVolunteerMainMenuCommand.execute(commandContext);
             messageToTelegram.getSendMessages().get(0).setText(msg);
+            String clientErrorMessage = "Дорогой усыновитель, мы заметили, что ты заполняешь отчет не так подробно, как необходимо. Пожалуйста, подойди ответственнее к этому занятию. В противном случае волонтеры приюта будут обязаны самолично проверять условия содержания животного";
             SendMessage clientMessage = new SendMessage(
                     dailyReportService.getClientChat(dailyReport.getId()),
                     clientErrorMessage);

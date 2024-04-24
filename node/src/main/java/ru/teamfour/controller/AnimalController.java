@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dto.animal.AnimalDto;
 import ru.teamfour.dto.animal.AnimalUpdateDto;
-import ru.teamfour.dto.shelter.ShelterInfoDto;
 import ru.teamfour.service.api.animal.AnimalService;
 
 import java.util.List;
