@@ -77,7 +77,7 @@ public interface UserServiceApi {
     /**
      * Получение списка пользователей по их роли
      *
-     * @param role
+     * @param role роль пользователя
      * @return лист пользователей
      */
     List<User> getUsersByRole(RoleUser role);
