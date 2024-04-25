@@ -48,7 +48,7 @@ public class ShelterControllerTestWithMock {
     private ShelterRepository shelterRepository;
 
     @SpyBean
-    private ShelterServiceImpl shelterService;//=spy(ShelterServiceImpl.class);
+    private ShelterServiceImpl shelterService;
 
     @SpyBean
     ShelterAddDtoMapper shelterAddDtoMapper;
@@ -58,7 +58,7 @@ public class ShelterControllerTestWithMock {
     private ShelterController shelterController;
 
     String name = "Новый приют";
-    String name1 = "Шерстянные";
+    String name1 = "Шерстяные";
     TypeAnimal typeAnimal = DOG;
     String aboutShelter = "Рассказ о приюте";
     String address = "Город, улица, дом";
@@ -130,7 +130,7 @@ public class ShelterControllerTestWithMock {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
+    @Test  // этот тест проходит
     public void saveShelterTest() throws Exception {
         JSONObject shelterObject = new JSONObject();
         shelterObject.put("name", this.name);
@@ -144,7 +144,7 @@ public class ShelterControllerTestWithMock {
                 .save(ArgumentMatchers.any(Shelter.class))).thenReturn(this.shelter);
         Mockito.when(this.shelterRepository.findById(ArgumentMatchers.any(UUID.class))).thenReturn(Optional.of(this.shelter));
         this.mockMvc.perform(MockMvcRequestBuilders.post(
-                                "/shelter", shelterAddDto, new Object[0])
+                                "/shelter", new Object[0])
                         .content(shelterObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
@@ -158,7 +158,7 @@ public class ShelterControllerTestWithMock {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.safetyMeasures", new Object[0]).value(this.safetyMeasures));
     }
 
-    @Test
+    @Test  // этот тест проходит
     public void getShelterByNameTest() throws Exception {
         Mockito.when(this.shelterDtoMapper.toShelterDto(ArgumentMatchers.any(Shelter.class))).thenReturn(shelterInfoDto);
         Mockito.when(this.shelterRepository.findByName((String) ArgumentMatchers.any(String.class))).thenReturn(Optional.of(this.shelter));
@@ -190,7 +190,7 @@ public class ShelterControllerTestWithMock {
     }
 */
 
-    @Test
+    @Test  // этот тест НЕ проходит
     public void updateShelterTest() throws Exception {
         JSONObject shelterObject = new JSONObject();
         shelterObject.put("name", this.name1);
@@ -202,7 +202,7 @@ public class ShelterControllerTestWithMock {
         shelterObject.put("securityData", this.securityData);
         Mockito.when(this.shelterAddDtoMapper.toShelter(shelterAddDto1)).thenReturn(shelter1);
         Mockito.when(this.shelterRepository.findById(ArgumentMatchers.any(UUID.class))).thenReturn(Optional.of(this.shelter));
-        this.mockMvc.perform(MockMvcRequestBuilders.put("/shelter/", id, new Object[0])
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/shelter/" + id, new Object[0])
                         .content(shelterObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
@@ -214,6 +214,7 @@ public class ShelterControllerTestWithMock {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.address", new Object[0])
                         .value(this.address));
     }
+
 }
 
 
