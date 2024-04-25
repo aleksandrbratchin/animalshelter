@@ -54,13 +54,14 @@ public class HomeImprovementForAdultAnimalCommandTest {
 
     @MockBean
     private UserService userService;
-    @MockBean
-    private InfoForAdoptionRepository repository;
 
     @SpyBean
     private MessageUtils messageUtils;
+
     @SpyBean
     private InfoForAdoptionServiceImpl serviceInfo;
+
+    private InfoForAdoptionRepository repository;
 
     @SpyBean
     private MenuButtonFactory menuFactory;
@@ -69,6 +70,7 @@ public class HomeImprovementForAdultAnimalCommandTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         ReflectionTestUtils.setField(testingCommand, "buttonName", buttonName);
+        ReflectionTestUtils.setField(testingCommand, "service", serviceInfo);
     }
 
     @Test
