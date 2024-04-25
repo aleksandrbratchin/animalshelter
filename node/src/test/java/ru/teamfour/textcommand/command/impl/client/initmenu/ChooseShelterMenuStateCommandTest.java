@@ -48,10 +48,10 @@ class ChooseShelterMenuStateCommandTest {
     @InjectMocks
     private ChooseShelterMenuCommand testingCommand;
 
-    @MockBean
+    @SpyBean
     private UserService userService;
 
-    @MockBean
+    @SpyBean
     private ShelterServiceImpl shelterService;
 
     @SpyBean
@@ -63,6 +63,7 @@ class ChooseShelterMenuStateCommandTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+        ReflectionTestUtils.setField(testingCommand, "buttonName", buttonName);
         ReflectionTestUtils.setField(testingCommand, "buttonName", buttonName);
     }
 

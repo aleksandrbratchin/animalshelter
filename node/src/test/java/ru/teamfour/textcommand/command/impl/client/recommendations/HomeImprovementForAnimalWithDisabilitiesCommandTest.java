@@ -71,6 +71,7 @@ public class HomeImprovementForAnimalWithDisabilitiesCommandTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         ReflectionTestUtils.setField(testingCommand, "buttonName", buttonName);
+        ReflectionTestUtils.setField(testingCommand, "service", serviceInfo);
     }
 
     @Test
