@@ -47,17 +47,15 @@ public class AnimalControllerWithMock {
     private MockMvc mockMvc;
     @MockBean
     private AnimalRepository animalRepository;
-    private AnimalServiceImpl animalService;
-    AnimalDtoMapper animalDtoMapper;
+
+    @InjectMocks
+    private AnimalController animalController;
     private AnimalUpdateDto animalUpdateDto1;
     private AnimalUpdateDto animalUpdateDto2;
-    private AnimalMapper animalMapper;
-    private AnimalUpdateDtoMapper animalUpdateDtoMapper;
+
     private Animal animal1;
     private Animal animal2;
     private AnimalDto animalDto1;
-    @InjectMocks
-    private AnimalController animalController;
     String name1 = "NAME_1";
     String name2 = "NAME_2";
     String breed1 = "BREED_1";
@@ -123,7 +121,7 @@ public class AnimalControllerWithMock {
                 .save(any(Animal.class))).thenReturn(this.animal1);
         Mockito.when(this.animalRepository.findById(any(UUID.class))).thenReturn(Optional.of(this.animal1));
         this.mockMvc.perform(MockMvcRequestBuilders.post(
-                                "/animal", new Object[0])
+                                "/animal")
                         .content(animalObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
@@ -150,7 +148,7 @@ public class AnimalControllerWithMock {
         Mockito.when(this.animalRepository
                 .save(any(Animal.class))).thenReturn(this.animal1);
         this.mockMvc.perform(MockMvcRequestBuilders.put(
-                                "/animal/" + id1, new Object[0])
+                                "/animal/" + id1)
                         .content(animalObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
@@ -168,7 +166,7 @@ public class AnimalControllerWithMock {
         List<Animal> list = new ArrayList<>(List.of(animal1, animal2));
         Mockito.when(this.animalRepository.findAll()).thenReturn(list);
         this.mockMvc.perform(MockMvcRequestBuilders.get(
-                                "/animal/All", new Object[0])
+                                "/animal/All")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
                 .andExpect(MockMvcResultMatchers.status()
