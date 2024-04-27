@@ -69,12 +69,12 @@ public class ShelterControllerTestWithMock {
     String safetyMeasures = "Правила поведения";
     String securityData = "Телефон охраны";
     UUID id = UUID.randomUUID();
-    ShelterAddDto shelterAddDto;
-    ShelterAddDto shelterAddDto1;
+    private ShelterAddDto shelterAddDto;
+    private ShelterAddDto shelterAddDto1;
 
-    Shelter shelter;
-    Shelter shelter1;
-    ShelterInfoDto shelterInfoDto;
+    private Shelter shelter;
+    private Shelter shelter1;
+    private ShelterInfoDto shelterInfoDto;
 
 
     public ShelterControllerTestWithMock() {
@@ -191,28 +191,7 @@ public class ShelterControllerTestWithMock {
                         .jsonPath("$.length()").value(1));
 
     }
-    /*@Test
-    public void getShelterByNameOnThrowTest() throws Exception {
-      Mockito.when(this.shelterDtoMapper.toShelterDto(any(Shelter.class))).thenThrow(IllegalArgumentException.class);
-        Mockito.when(this.shelterRepository.findByName((String) any(String.class))).thenThrow(IllegalArgumentException.class);
-         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/shelter/name/приют", new Object[0])
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
-                        .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
-
-    }*/
-   /* @Test
-    public void updateShelterOnThrowTest () throws Exception {
-        Mockito.when(this.shelterRepository.findById(any(UUID.class))).thenThrow(IllegalArgumentException.class);
-        this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/shelter/name/приют", new Object[0])
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
-                .andExpect(MockMvcResultMatchers.status().is(500));
-    }
-*/
 
     @Test
     public void updateShelterTest() throws Exception {
