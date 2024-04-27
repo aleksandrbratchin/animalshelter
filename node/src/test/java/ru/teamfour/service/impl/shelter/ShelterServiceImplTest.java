@@ -8,11 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.OngoingStubbing;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
-import ru.teamfour.dto.shelter.ShelterAddDto;
 import ru.teamfour.mappers.shelter.ShelterAddDtoMapper;
 import ru.teamfour.mappers.shelter.ShelterDtoMapper;
 import ru.teamfour.repositories.ShelterRepository;
@@ -24,9 +22,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.util.AssertionErrors.assertNotNull;
 import static ru.teamfour.dao.entity.animal.AdoptionAnimalState.NOT_ADOPTED;
 
 @ExtendWith(MockitoExtension.class)
@@ -78,7 +74,7 @@ class ShelterServiceImplTest {
     }
 
     @Test
-    void getShelterFindByUuid()  {
+    void getShelterFindByUuid() {
         Mockito.when(shelterRepositoryMock.findById(any(UUID.class))).thenReturn(Optional.of(shelter));
         UUID actual = shelterService.findById(shelter.getId()).getId();
         assertEquals(EXPECTED_UUID, actual.toString());
@@ -92,14 +88,14 @@ class ShelterServiceImplTest {
     }
 
     @Test
-    void getShelterFindByName()  {
+    void getShelterFindByName() {
         Mockito.when(shelterRepositoryMock.findByName(any(String.class))).thenReturn(Optional.of(shelter));
         String actual = shelterService.findByName(shelter.getName()).getName();
         assertEquals(EXPECTED_NAME, actual);
     }
 
     @Test
-    void shouldRemoveObjectByUuid(){
+    void shouldRemoveObjectByUuid() {
         shelterService.remove(shelter.getId());
         verify(shelterRepositoryMock, times(1)).deleteById(any(UUID.class));
 
