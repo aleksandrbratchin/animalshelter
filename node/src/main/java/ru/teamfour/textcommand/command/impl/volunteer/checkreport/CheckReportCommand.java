@@ -10,7 +10,6 @@ import ru.teamfour.dao.entity.dailyreport.DailyReport;
 import ru.teamfour.dao.entity.dailyreport.DailyReportStatus;
 import ru.teamfour.dao.entity.photoreport.PhotoReport;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.service.api.adoptionanimal.AdoptionProcessAnimalServiceApi;
 import ru.teamfour.service.api.dailyreport.DailyReportServiceApi;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;

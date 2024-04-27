@@ -25,9 +25,9 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
     }
 
     /**
-     * нахождение объекта {@Link DrivingDirections} по id Shelter
+     * нахождение объекта {@link DrivingDirections} по id Shelter
      *
-     * @param shelterId
+     * @param shelterId идентификатор приюта
      * @return возвращает найденный объект
      */
     @Override
@@ -41,12 +41,11 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
      *
      * @param shelterId Id приюта
      * @param data      схема
-     * @throws IOException
      */
 
     public void createDrivingDirections(UUID shelterId, MultipartFile data) throws IOException {
 
-        Shelter shelter = shelterRepository.findById(shelterId).get();
+        Shelter shelter = shelterRepository.findById(shelterId).orElseThrow(IllegalArgumentException::new);
         DrivingDirections directions = findByShelterId(shelterId);
         directions.setShelter(shelter);
         directions.setData(data.getBytes());
@@ -57,7 +56,7 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
     /**
      * удаление схемы проезда
      *
-     * @param shelterId
+     * @param shelterId идентификатор приюта
      */
     public void deleteDrivingDirections(UUID shelterId) {
 
@@ -67,9 +66,8 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
     /**
      * Замена схемы проезда
      *
-     * @param idShelter
-     * @param data
-     * @throws IOException
+     * @param idShelter  идентификатор приюта
+     * @param data фото
      */
     public void put(UUID idShelter, MultipartFile data) throws IOException {
         DrivingDirections directions = drivingDirectionsRepository.findByShelterId(idShelter).get();

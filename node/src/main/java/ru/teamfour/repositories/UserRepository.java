@@ -1,5 +1,6 @@
 package ru.teamfour.repositories;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.teamfour.dao.entity.user.RoleUser;
@@ -14,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByChatId(Long chatId);
 
     @Override
-    Optional<User> findById(UUID uuid);
+    Optional<User> findById(@NotNull UUID uuid);
 
     /**
      * Получает наименее загруженного волонтера

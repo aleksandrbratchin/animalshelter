@@ -21,13 +21,13 @@ public class AdoptionProcessAnimalCreateDto {
     /**
      * id пользователя
      */
-    @NotNull //todo можно проверять что у пользователя нет усыновления в этом приюте
+    @NotNull
     private UUID idUser;
 
     /**
      * id животного которое усыновляют
      */
-    @NotNull //todo можно проверять что животное в доступном статусе
+    @NotNull
     private UUID idAnimal;
 
 }

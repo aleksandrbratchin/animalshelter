@@ -48,7 +48,7 @@ public class AcceptReportCommand extends AbstractCommand {
                 cache.evict(user.getId());
             }
         }
-        MessageToTelegram messageToTelegram = null;
+        MessageToTelegram messageToTelegram;
         //нет отчета в кеше сообщить о проблеме
         if (dailyReport == null) {
             String msg = "Не удалось принять решение.";
