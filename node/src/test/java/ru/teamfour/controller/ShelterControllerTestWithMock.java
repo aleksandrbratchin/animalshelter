@@ -30,10 +30,13 @@ import ru.teamfour.repositories.ShelterRepository;
 import ru.teamfour.service.api.shelter.ShelterService;
 import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
@@ -136,8 +139,8 @@ public class ShelterControllerTestWithMock {
         shelterObject.put("safetyMeasures", this.safetyMeasures);
         shelterObject.put("securityData", this.securityData);
         Mockito.when(this.shelterRepository
-                .save(ArgumentMatchers.any(Shelter.class))).thenReturn(this.shelter);
-        Mockito.when(this.shelterRepository.findById(ArgumentMatchers.any(UUID.class))).thenReturn(Optional.of(this.shelter));
+                .save(any(Shelter.class))).thenReturn(this.shelter);
+        Mockito.when(this.shelterRepository.findById(any(UUID.class))).thenReturn(Optional.of(this.shelter));
         this.mockMvc.perform(MockMvcRequestBuilders.post(
                                 "/shelter", new Object[0])
                         .content(shelterObject.toString())
@@ -155,8 +158,8 @@ public class ShelterControllerTestWithMock {
 
     @Test
     public void getShelterByNameTest() throws Exception {
-        Mockito.when(this.shelterDtoMapper.toShelterDto(ArgumentMatchers.any(Shelter.class))).thenReturn(shelterInfoDto);
-        Mockito.when(this.shelterRepository.findByName((String) ArgumentMatchers.any(String.class))).thenReturn(Optional.of(this.shelter));
+        Mockito.when(this.shelterDtoMapper.toShelterDto(any(Shelter.class))).thenReturn(shelterInfoDto);
+        Mockito.when(this.shelterRepository.findByName((String) any(String.class))).thenReturn(Optional.of(this.shelter));
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/shelter/name/Новый приют", new Object[0])
                         .contentType(MediaType.APPLICATION_JSON)
@@ -170,20 +173,46 @@ public class ShelterControllerTestWithMock {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.workSchedule", new Object[0]).value(this.workSchedule))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.safetyMeasures", new Object[0]).value(this.safetyMeasures));
     }
-   /* @Test
+
+    @Test
+    public void getAllShelter() throws Exception {
+        List<Shelter> list = new ArrayList<>(List.of(shelter));
+        List<ShelterInfoDto> list1 = new ArrayList<>(List.of(shelterInfoDto));
+
+        Mockito.when(this.shelterDtoMapper.toShelterDto(any(Shelter.class))).thenReturn(shelterInfoDto);
+        Mockito.when(this.shelterRepository.findAll()).thenReturn(list);
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/shelter/All", new Object[0])
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
+                .andExpect(MockMvcResultMatchers.status()
+                        .isOk())
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.length()").value(1));
+
+    }
+    /*@Test
     public void getShelterByNameOnThrowTest() throws Exception {
-      Mockito.when(this.shelterDtoMapper.toShelterDto(ArgumentMatchers.any())).thenThrow(IllegalArgumentException.class);
-        Mockito.when(this.shelterRepository.findByName((String)ArgumentMatchers.any(String.class))).thenThrow(IllegalArgumentException.class);
-        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders
+      Mockito.when(this.shelterDtoMapper.toShelterDto(any(Shelter.class))).thenThrow(IllegalArgumentException.class);
+        Mockito.when(this.shelterRepository.findByName((String) any(String.class))).thenThrow(IllegalArgumentException.class);
+         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/shelter/name/приют", new Object[0])
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
-                        .andExpect(MockMvcResultMatchers.status().is5xxServerError()).andReturn();
+                        .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
-        Assertions.assertTrue(result.getResponse().getContentAsString().toString().contains("Нет приютов с названием " + "приют"));
 
     }*/
-
+   /* @Test
+    public void updateShelterOnThrowTest () throws Exception {
+        Mockito.when(this.shelterRepository.findById(any(UUID.class))).thenThrow(IllegalArgumentException.class);
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/shelter/name/приют", new Object[0])
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
+                .andExpect(MockMvcResultMatchers.status().is(500));
+    }
+*/
 
     @Test
     public void updateShelterTest() throws Exception {
@@ -196,7 +225,7 @@ public class ShelterControllerTestWithMock {
         shelterObject.put("safetyMeasures", this.safetyMeasures);
         shelterObject.put("securityData", this.securityData);
         Mockito.when(this.shelterAddDtoMapper.toShelter(shelterAddDto1)).thenReturn(shelter1);
-        Mockito.when(this.shelterRepository.findById(ArgumentMatchers.any(UUID.class))).thenReturn(Optional.of(this.shelter));
+        Mockito.when(this.shelterRepository.findById(any(UUID.class))).thenReturn(Optional.of(this.shelter));
         this.mockMvc.perform(MockMvcRequestBuilders.put("/shelter/" + id, new Object[0])
                         .content(shelterObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -209,6 +238,7 @@ public class ShelterControllerTestWithMock {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.address", new Object[0])
                         .value(this.address));
     }
+
 
 }
 

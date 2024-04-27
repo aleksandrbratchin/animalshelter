@@ -133,7 +133,7 @@ public class AnimalController {
             )},
             tags = "Животное"
     )
-    @GetMapping("/AllType")
+    @GetMapping("/AllType/{type}")
     public ResponseEntity<List<AnimalDto>> findAllByType(
             @PathVariable("type") TypeAnimal typeAnimal) {
         return ResponseEntity.ok(animalService.findAllByType(typeAnimal));
