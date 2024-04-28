@@ -32,7 +32,7 @@ public class DrivingDirectionsController {
             )},
             tags = "Схема проезда"
     )
-    @PostMapping(value = "/{shelterId}/directions", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/addDirections/{shelterId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadDirections(@PathVariable UUID shelterId, @RequestParam MultipartFile data) throws IOException {
         service.createDrivingDirections(shelterId, data);
         return ResponseEntity.ok().build();

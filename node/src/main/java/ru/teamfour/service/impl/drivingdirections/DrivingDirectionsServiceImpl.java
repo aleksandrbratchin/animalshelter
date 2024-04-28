@@ -67,12 +67,12 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
     /**
      * Замена схемы проезда
      *
-     * @param idShelter  идентификатор приюта
-     * @param data фото
+     * @param idShelter идентификатор приюта
+     * @param data      фото
      */
     @Override
     public void put(UUID idShelter, MultipartFile data) throws IOException {
-        DrivingDirections directions = drivingDirectionsRepository.findByShelterId(idShelter).get();
+        DrivingDirections directions = drivingDirectionsRepository.findById(idShelter).orElseThrow(IllegalArgumentException::new);
         directions.setData(data.getBytes());
         drivingDirectionsRepository.save(directions);
 
