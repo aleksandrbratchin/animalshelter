@@ -15,4 +15,5 @@ public interface DrivingDirectionsService {
     void deleteDrivingDirections(UUID shelterId);
 
     void createDrivingDirections(UUID shelterId, MultipartFile data) throws IOException;
+
 }
