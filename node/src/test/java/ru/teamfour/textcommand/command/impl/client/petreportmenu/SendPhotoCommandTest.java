@@ -14,11 +14,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.dao.entity.user.UserInfo;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
-import ru.teamfour.textcommand.command.impl.client.leavecontactdetailsforcommunication.LeaveContactDetailsForCommunicationCommand;
 
 import java.util.Collection;
 import java.util.List;

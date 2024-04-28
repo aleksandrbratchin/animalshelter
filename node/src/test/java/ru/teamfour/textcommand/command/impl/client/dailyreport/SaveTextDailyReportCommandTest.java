@@ -17,13 +17,11 @@ import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.photocommand.CommandPhotoContext;
 import ru.teamfour.repositories.DailyReportRepository;
 import ru.teamfour.service.impl.dailyreport.DailyReportService;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
-import transfer.TransferByteObject;
 
 import java.util.Collection;
 import java.util.List;

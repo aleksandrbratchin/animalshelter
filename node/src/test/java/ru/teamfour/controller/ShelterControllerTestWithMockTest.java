@@ -1,23 +1,16 @@
 package ru.teamfour.controller;
 
 import net.minidev.json.JSONObject;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
@@ -27,7 +20,6 @@ import ru.teamfour.dto.shelter.ShelterInfoDto;
 import ru.teamfour.mappers.shelter.ShelterAddDtoMapper;
 import ru.teamfour.mappers.shelter.ShelterDtoMapper;
 import ru.teamfour.repositories.ShelterRepository;
-import ru.teamfour.service.api.shelter.ShelterService;
 import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 
 import java.util.ArrayList;
@@ -35,16 +27,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ShelterControllerTestWithMock {
+public class ShelterControllerTestWithMockTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
@@ -69,16 +58,15 @@ public class ShelterControllerTestWithMock {
     String safetyMeasures = "Правила поведения";
     String securityData = "Телефон охраны";
     UUID id = UUID.randomUUID();
-    private ShelterAddDto shelterAddDto;
-    private ShelterAddDto shelterAddDto1;
+    private final ShelterAddDto shelterAddDto1;
 
-    private Shelter shelter;
-    private Shelter shelter1;
-    private ShelterInfoDto shelterInfoDto;
+    private final Shelter shelter;
+    private final Shelter shelter1;
+    private final ShelterInfoDto shelterInfoDto;
 
 
-    public ShelterControllerTestWithMock() {
-        this.shelterAddDto = ShelterAddDto.builder()
+    public ShelterControllerTestWithMockTest() {
+        ShelterAddDto shelterAddDto = ShelterAddDto.builder()
                 .name(name)
                 .typeAnimal(typeAnimal)
                 .aboutShelter(aboutShelter)
@@ -159,7 +147,7 @@ public class ShelterControllerTestWithMock {
     @Test
     public void getShelterByNameTest() throws Exception {
         Mockito.when(this.shelterDtoMapper.toShelterDto(any(Shelter.class))).thenReturn(shelterInfoDto);
-        Mockito.when(this.shelterRepository.findByName((String) any(String.class))).thenReturn(Optional.of(this.shelter));
+        Mockito.when(this.shelterRepository.findByName(any(String.class))).thenReturn(Optional.of(this.shelter));
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/shelter/name/Новый приют", new Object[0])
                         .contentType(MediaType.APPLICATION_JSON)

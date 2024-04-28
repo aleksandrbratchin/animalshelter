@@ -7,11 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
-import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
 import ru.teamfour.service.impl.adoptionanimal.AdoptionProcessAnimalService;
-import ru.teamfour.service.impl.user.UserService;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,28 +22,30 @@ import java.util.UUID;
 public class AdoptionAnimalsController {
 
     private final AdoptionProcessAnimalService adoptionAnimalService;
-    private final UserService userService;
 
-    public AdoptionAnimalsController(AdoptionProcessAnimalService adoptionAnimalService, UserService userService) {
+    public AdoptionAnimalsController(AdoptionProcessAnimalService adoptionAnimalService) {
         this.adoptionAnimalService = adoptionAnimalService;
-        this.userService = userService;
     }
 
     /***
      * Метод для усыновления животныз по Id
      */
+    @Operation(
+            summary = "ПОЛУЧИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ ПО ID",
+            responses = {@ApiResponse(
+                    responseCode = "200",
+                    description = "Информация о усыновлении",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
+            )},
+            tags = "Процесс усыновления"
+    )
     @GetMapping("/{adoptionAnimalId}")
     public AdoptionProcessAnimal getAdoptionAnimal(@PathVariable(value = "adoptionAnimalId") UUID id) {
         return adoptionAnimalService.findById(id);
     }
 
-    /***
-     * Метод для получения пользователя по Id
-     */
-    @GetMapping("/{userId}")
-    public User getUser(@PathVariable(value = "userId") UUID id) {
-        return userService.getUser(id);
-    }
     /***
      * Метод создания процесса усыновления
      */
@@ -68,6 +68,7 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.createAdoption(adoptionProcessAnimalCreateDto)
         );
     }
+
     /***
      * Метод продления процесса усыновления на 14 дней
      */
@@ -112,6 +113,7 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.addthirtydays(id)
         );
     }
+
     /***
      * Метод одобрения процесса усыновления
      */
@@ -134,6 +136,7 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.approved(id)
         );
     }
+
     /***
      * Метод отклонения процесса усыновления
      */
@@ -156,6 +159,7 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.rejected(id)
         );
     }
+
     /***
      * Метод поиска всех активных усыновлений
      */

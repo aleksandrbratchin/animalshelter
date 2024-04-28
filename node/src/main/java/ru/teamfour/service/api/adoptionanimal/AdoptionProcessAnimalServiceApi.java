@@ -2,7 +2,6 @@ package ru.teamfour.service.api.adoptionanimal;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
