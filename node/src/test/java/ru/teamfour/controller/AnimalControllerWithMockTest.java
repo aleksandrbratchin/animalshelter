@@ -31,7 +31,7 @@ import static ru.teamfour.dao.entity.animal.TypeAnimal.DOG;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AnimalControllerWithMock {
+public class AnimalControllerWithMockTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
@@ -39,11 +39,9 @@ public class AnimalControllerWithMock {
 
     @InjectMocks
     private AnimalController animalController;
-    private AnimalUpdateDto animalUpdateDto1;
-    private AnimalUpdateDto animalUpdateDto2;
 
-    private Animal animal1;
-    private Animal animal2;
+    private final Animal animal1;
+    private final Animal animal2;
     private AnimalDto animalDto1;
     String name1 = "NAME_1";
     String name2 = "NAME_2";
@@ -54,8 +52,8 @@ public class AnimalControllerWithMock {
     UUID id2 = UUID.randomUUID();
     UUID idShelter = UUID.randomUUID();
 
-    public AnimalControllerWithMock() {
-        this.animalUpdateDto1 = AnimalUpdateDto.builder()
+    public AnimalControllerWithMockTest() {
+        AnimalUpdateDto animalUpdateDto1 = AnimalUpdateDto.builder()
                 .name(name1)
                 .typeAnimal(DOG)
                 .age(age1)
@@ -64,7 +62,7 @@ public class AnimalControllerWithMock {
                 .adopted(NOT_ADOPTED)
                 .idShelter(id1)
                 .build();
-        this.animalUpdateDto2 = AnimalUpdateDto.builder()
+        AnimalUpdateDto animalUpdateDto2 = AnimalUpdateDto.builder()
                 .name(name1)
                 .typeAnimal(DOG)
                 .age(age1)
@@ -113,7 +111,7 @@ public class AnimalControllerWithMock {
                                 "/animal")
                         .content(animalObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status()
                         .isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", new Object[0]).value(this.name1))
@@ -140,7 +138,7 @@ public class AnimalControllerWithMock {
                                 "/animal/" + id1)
                         .content(animalObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status()
                         .isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", new Object[0])
@@ -157,7 +155,7 @@ public class AnimalControllerWithMock {
         this.mockMvc.perform(MockMvcRequestBuilders.get(
                                 "/animal/All")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(new MediaType[]{MediaType.APPLICATION_JSON}))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status()
                         .isOk())
                 .andExpect(MockMvcResultMatchers
@@ -185,7 +183,7 @@ public class AnimalControllerWithMock {
         List<Animal> list = new ArrayList<>(List.of(animal1, animal2));
         Mockito.when(this.animalRepository.findAnimalByTypeAnimal(any(TypeAnimal.class))).thenReturn(list);
         this.mockMvc.perform(MockMvcRequestBuilders.get(
-                                "/animal/AllType/" + DOG, new Object[0])
+                                "/animal/AllType/" + DOG)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status()

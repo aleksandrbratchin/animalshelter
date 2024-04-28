@@ -8,25 +8,20 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
 import ru.teamfour.dao.entity.dailyreport.DailyReport;
 import ru.teamfour.dao.entity.user.RoleUser;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.repositories.AdoptionProcessAnimalRepository;
-import ru.teamfour.service.api.ProducerService;
 import ru.teamfour.service.impl.user.UserService;
 
-import javax.annotation.processing.Generated;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest

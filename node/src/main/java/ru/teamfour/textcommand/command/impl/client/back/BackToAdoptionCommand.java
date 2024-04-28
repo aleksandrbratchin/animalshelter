@@ -2,18 +2,10 @@ package ru.teamfour.textcommand.command.impl.client.back;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
-import ru.teamfour.textcommand.command.api.State;
 import ru.teamfour.textcommand.command.impl.client.mainmenu.AdoptionCommand;
-import ru.teamfour.textcommand.command.impl.client.mainmenu.PetReportCommand;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Возвращает пользователя в главное меню "кнопка назад"

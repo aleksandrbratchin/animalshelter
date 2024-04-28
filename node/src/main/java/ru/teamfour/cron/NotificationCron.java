@@ -11,10 +11,8 @@ import ru.teamfour.service.api.ProducerService;
 import ru.teamfour.service.impl.user.UserService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static ru.teamfour.dao.entity.user.RoleUser.VOLUNTEER;
