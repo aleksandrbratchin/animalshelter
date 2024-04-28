@@ -31,7 +31,7 @@ public class DrivingDirectionsControllerMvcTest {
         UUID shelterId = UUID.randomUUID();
         MockMultipartFile file = new MockMultipartFile("data", "filename.txt", "text/plain", "some xml".getBytes());
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/drivingDirections/{shelterId}/directions", shelterId)
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/drivingDirections/addDirections/{shelterId}", shelterId)
                         .file(file))
                 .andExpect(status().isOk());
 
@@ -48,7 +48,7 @@ public class DrivingDirectionsControllerMvcTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/drivingDirections/{idShelter}/getDirections", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM))
                 .andExpect(content().bytes(drivingDirections.getData()));
     }
 
@@ -68,7 +68,7 @@ public class DrivingDirectionsControllerMvcTest {
         UUID id = UUID.randomUUID();
         MockMultipartFile file = new MockMultipartFile("data", "filename.txt", "text/plain", "some xml".getBytes());
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/drivingDirections/{idShelter}", id)
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/drivingDirections/" + id)
                         .file(file))
                 .andExpect(status().isOk());
 
