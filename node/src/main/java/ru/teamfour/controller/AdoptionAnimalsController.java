@@ -91,7 +91,6 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.addfourteendays(id)
         );
     }
-
     /***
      * Метод продления процесса усыновления на 30 дней
      */
