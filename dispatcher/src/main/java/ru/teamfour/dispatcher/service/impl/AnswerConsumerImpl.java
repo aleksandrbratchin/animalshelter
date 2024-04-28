@@ -26,6 +26,7 @@ public class AnswerConsumerImpl implements AnswerConsumer {
     @Override
     @RabbitListener(queues = "${rabbitQueue.messages.answer.TEXT}")
     public void consumer(SendMessage sendMessage) {
+
         updateController.sendToTelegram(sendMessage);
     }
 
