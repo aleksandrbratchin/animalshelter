@@ -16,28 +16,41 @@ import ru.teamfour.service.impl.user.UserService;
 import java.util.List;
 import java.util.UUID;
 
+/***
+ * Контроллер для усыновления животных
+ */
 @RestController
 @RequestMapping("/adoptionanimal")
 public class AdoptionAnimalsController {
 
     private final AdoptionProcessAnimalService adoptionAnimalService;
-    private final UserService userService;
 
-    public AdoptionAnimalsController(AdoptionProcessAnimalService adoptionAnimalService, UserService userService) {
+    public AdoptionAnimalsController(AdoptionProcessAnimalService adoptionAnimalService) {
         this.adoptionAnimalService = adoptionAnimalService;
-        this.userService = userService;
     }
 
+    /***
+     * Метод для усыновления животныз по Id
+     */
+    @Operation(
+            summary = "ПОЛУЧИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ ПО ID",
+            responses = {@ApiResponse(
+                    responseCode = "200",
+                    description = "Информация о усыновлении",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
+            )},
+            tags = "Процесс усыновления"
+    )
     @GetMapping("/{adoptionAnimalId}")
     public AdoptionProcessAnimal getAdoptionAnimal(@PathVariable(value = "adoptionAnimalId") UUID id) {
         return adoptionAnimalService.findById(id);
     }
 
-    @GetMapping("/{userId}")
-    public User getUser(@PathVariable(value = "userId") UUID id) {
-        return userService.getUser(id);
-    }
-
+    /***
+     * Метод создания процесса усыновления
+     */
     @Operation(
             summary = "СОЗДАТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
             responses = {@ApiResponse(
@@ -58,6 +71,9 @@ public class AdoptionAnimalsController {
         );
     }
 
+    /***
+     * Метод продления процесса усыновления на 14 дней
+     */
     @Operation(
             summary = "ПРОДЛИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ НА 14 ДНЕЙ",
             responses = {@ApiResponse(
@@ -78,6 +94,9 @@ public class AdoptionAnimalsController {
         );
     }
 
+    /***
+     * Метод продления процесса усыновления на 30 дней
+     */
     @Operation(
             summary = "ПРОДЛИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ НА 30 ДНЕЙ",
             responses = {@ApiResponse(
@@ -89,7 +108,6 @@ public class AdoptionAnimalsController {
             )},
             tags = "Процесс усыновления"
     )
-
     @GetMapping("/addthirtydays/{adoptionAnimalId}")
     public ResponseEntity<AdoptionProcessAnimalInfoDto> addthirtydays(
             @PathVariable(value = "adoptionAnimalId") UUID id
@@ -99,6 +117,9 @@ public class AdoptionAnimalsController {
         );
     }
 
+    /***
+     * Метод одобрения процесса усыновления
+     */
     @Operation(
             summary = "ОДОБРИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
             responses = {@ApiResponse(
@@ -119,6 +140,9 @@ public class AdoptionAnimalsController {
         );
     }
 
+    /***
+     * Метод отклонения процесса усыновления
+     */
     @Operation(
             summary = "ОТКЛОНИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
             responses = {@ApiResponse(
@@ -139,6 +163,9 @@ public class AdoptionAnimalsController {
         );
     }
 
+    /***
+     * Метод поиска всех активных усыновлений
+     */
     @Operation(
             summary = "УСЫНОВЛЕНИЯ ПО КОТОРЫМ НЕОБХОДИМО ПРИНЯТЬ РЕШЕНИЕ",
             responses = {@ApiResponse(
