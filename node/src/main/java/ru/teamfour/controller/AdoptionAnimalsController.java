@@ -16,6 +16,9 @@ import ru.teamfour.service.impl.user.UserService;
 import java.util.List;
 import java.util.UUID;
 
+/***
+ * Контроллер для усыновления животных
+ */
 @RestController
 @RequestMapping("/adoptionanimal")
 public class AdoptionAnimalsController {
@@ -28,16 +31,24 @@ public class AdoptionAnimalsController {
         this.userService = userService;
     }
 
+    /***
+     * Метод для усыновления животныз по Id
+     */
     @GetMapping("/{adoptionAnimalId}")
     public AdoptionProcessAnimal getAdoptionAnimal(@PathVariable(value = "adoptionAnimalId") UUID id) {
         return adoptionAnimalService.findById(id);
     }
 
-    @GetMapping("/user/{userId}")
+    /***
+     * Метод для получения пользователя по Id
+     */
+    @GetMapping("/{userId}")
     public User getUser(@PathVariable(value = "userId") UUID id) {
         return userService.getUser(id);
     }
-
+    /***
+     * Метод создания процесса усыновления
+     */
     @Operation(
             summary = "СОЗДАТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
             responses = {@ApiResponse(
@@ -57,7 +68,9 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.createAdoption(adoptionProcessAnimalCreateDto)
         );
     }
-
+    /***
+     * Метод продления процесса усыновления на 14 дней
+     */
     @Operation(
             summary = "ПРОДЛИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ НА 14 ДНЕЙ",
             responses = {@ApiResponse(
@@ -77,7 +90,9 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.addfourteendays(id)
         );
     }
-
+    /***
+     * Метод продления процесса усыновления на 30 дней
+     */
     @Operation(
             summary = "ПРОДЛИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ НА 30 ДНЕЙ",
             responses = {@ApiResponse(
@@ -89,7 +104,6 @@ public class AdoptionAnimalsController {
             )},
             tags = "Процесс усыновления"
     )
-
     @GetMapping("/addthirtydays/{adoptionAnimalId}")
     public ResponseEntity<AdoptionProcessAnimalInfoDto> addthirtydays(
             @PathVariable(value = "adoptionAnimalId") UUID id
@@ -98,7 +112,9 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.addthirtydays(id)
         );
     }
-
+    /***
+     * Метод одобрения процесса усыновления
+     */
     @Operation(
             summary = "ОДОБРИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
             responses = {@ApiResponse(
@@ -118,7 +134,9 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.approved(id)
         );
     }
-
+    /***
+     * Метод отклонения процесса усыновления
+     */
     @Operation(
             summary = "ОТКЛОНИТЬ ПРОЦЕСС УСЫНОВЛЕНИЯ",
             responses = {@ApiResponse(
@@ -138,7 +156,9 @@ public class AdoptionAnimalsController {
                 adoptionAnimalService.rejected(id)
         );
     }
-
+    /***
+     * Метод поиска всех активных усыновлений
+     */
     @Operation(
             summary = "УСЫНОВЛЕНИЯ ПО КОТОРЫМ НЕОБХОДИМО ПРИНЯТЬ РЕШЕНИЕ",
             responses = {@ApiResponse(
