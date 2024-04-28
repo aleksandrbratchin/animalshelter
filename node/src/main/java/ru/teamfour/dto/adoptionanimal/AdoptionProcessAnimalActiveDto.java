@@ -3,6 +3,7 @@ package ru.teamfour.dto.adoptionanimal;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import ru.teamfour.dto.shelter.ShelterInfoDto;
+import ru.teamfour.dto.user.UserInfoDto;
 
 import java.util.UUID;
 
@@ -21,10 +22,10 @@ public class AdoptionProcessAnimalActiveDto {
     @NotNull
     private ShelterInfoDto shelter;
     /**
-     * id пользователя
+     * Пользователь
      */
     @NotNull
-    private UUID idUser;
+    private UserInfoDto userInfoDto;
     /**
      * id животного которое усыновляют
      */

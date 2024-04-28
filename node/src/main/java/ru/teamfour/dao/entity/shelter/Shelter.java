@@ -81,6 +81,7 @@ public class Shelter extends ParentUUIDEntity {
         this.animals = animals;
     }
 
+
     public String getAboutShelter() {
         return aboutShelter;
     }
