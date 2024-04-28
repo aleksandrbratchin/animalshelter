@@ -7,11 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
-import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalCreateDto;
 import ru.teamfour.dto.adoptionanimal.AdoptionProcessAnimalInfoDto;
 import ru.teamfour.service.impl.adoptionanimal.AdoptionProcessAnimalService;
-import ru.teamfour.service.impl.user.UserService;
 
 import java.util.List;
 import java.util.UUID;
