@@ -35,6 +35,12 @@ public class AdoptionProcessAnimalService implements AdoptionProcessAnimalServic
         this.adoptionProcessAnimalInfoMapper = adoptionProcessAnimalInfoMapper;
     }
 
+    /**
+     * Поиск процесса усыновления по ID
+     *
+     * @param id {@link UUID}
+     * @return {@link AdoptionProcessAnimal}
+     */
     @Override
     public AdoptionProcessAnimal findById(@NotNull UUID id) {
         return adoptionProcessAnimalRepository.findById(id).orElseThrow(IllegalArgumentException::new);
