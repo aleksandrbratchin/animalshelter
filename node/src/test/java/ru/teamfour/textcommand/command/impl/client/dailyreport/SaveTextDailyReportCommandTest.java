@@ -1,7 +1,7 @@
-package ru.teamfour.textcommand.command.impl.client.mainmenu;
+package ru.teamfour.textcommand.command.impl.client.dailyreport;
 
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,35 +13,43 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
+import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
+import ru.teamfour.photocommand.CommandPhotoContext;
+import ru.teamfour.repositories.DailyReportRepository;
+import ru.teamfour.service.impl.dailyreport.DailyReportService;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
+import transfer.TransferByteObject;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-
 @TestPropertySource(locations = "classpath:application.yml")
-class AdoptionCommandTest {
+class SaveTextDailyReportCommandTest {
 
-    @Value("${buttonName.adoption}")
-    private String buttonName;
-
-    @Value("${buttonName.listDocuments}")
+    @Value("${buttonName.sendText}")
     private String checkButton;
 
     @Autowired
-    private AdoptionCommand testingCommand;
+    private SaveTextDailyReportCommand testingCommand;
 
     @MockBean
     private UserService userService;
+    @InjectMocks
+    private DailyReportService dailyReportServiceApi;
+
+    @MockBean
+    private DailyReportRepository dailyReportRepository;
 
     @Test
     void execute() {
@@ -54,8 +62,23 @@ class AdoptionCommandTest {
         message.setChat(chat);
         Update update = new Update();
         update.setMessage(message);
+        UUID shelterId = UUID.randomUUID();
         User user = User.builder()
                 .chatId(chatId)
+                .adoptions(List.of(
+                        AdoptionProcessAnimal.builder()
+                                .id(UUID.randomUUID())
+                                .shelter(Shelter.builder()
+                                        .id(shelterId)
+                                        .build())
+                                .adoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION)
+                                .build()
+                ))
+                .shelter(
+                        Shelter.builder()
+                                .id(shelterId)
+                                .build()
+                )
                 .build();
         when(commandContext.getUser()).thenReturn(user);
         when(commandContext.getUpdate()).thenReturn(update);
@@ -67,50 +90,27 @@ class AdoptionCommandTest {
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("взять животное из приюта");
+        assertThat(first.getText()).contains("Отчет отправлен");
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
-        assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
+        assertThat(replyMarkup.getKeyboard().size()).isEqualTo(2);
         List<String> nameButtons = replyMarkup.getKeyboard()
                 .stream()
                 .flatMap(Collection::stream)
                 .map(KeyboardButton::getText)
                 .toList();
-        assertThat(nameButtons).hasSize(8);
+        assertThat(nameButtons).hasSize(4);
         assertThat(nameButtons).contains(checkButton);
         verify(userService).save(user);
     }
 
-    @Nested
-    class isCommand {
-        @Nested
-        class Correct {
-            @Test
-            void buttonName() {
-                // Arrange
-                String command = buttonName;
+    @Test
+    void isCommand() {
 
-                // Act
-                boolean result = testingCommand.isCommand(command);
+        // Act
+        boolean result = testingCommand.isCommand("");
 
-                // Assert
-                assertTrue(result);
-            }
-        }
-
-        @Nested
-        class Incorrect {
-            @Test
-            void incorrectCommand() {
-                // Arrange
-                String command = "test";
-
-                // Act
-                boolean result = testingCommand.isCommand(command);
-
-                // Assert
-                assertFalse(result);
-            }
-        }
+        // Assert
+        assertTrue(result);
     }
 
 }

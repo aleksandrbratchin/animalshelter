@@ -9,6 +9,7 @@ import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
+import ru.teamfour.textcommand.command.impl.client.mainmenu.MainMenuCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,20 +26,17 @@ public class BackToMainMenuCommand extends AbstractCommand {
     @Value("${buttonName.backToMainMenuButton}")
     private String backToMainMenuButton;
 
+    private final MainMenuCommand mainMenuCommand;
+
+    public BackToMainMenuCommand(MainMenuCommand mainMenuCommand) {
+        this.mainMenuCommand = mainMenuCommand;
+    }
+
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
-        User user = commandContext.getUser();
-        Update update = commandContext.getUpdate();
-        State state = State.MAIN_MENU;
-        user.setState(state);
-        userService.save(user);
-        String answerMessage = "Вы вернулись в главное меню";
-        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
-        List<SendMessage> sendMessages = new ArrayList<>();
-        sendMessages.add(addMenu(sendMessage, state));
-        return MessageToTelegram.builder()
-                .sendMessages(sendMessages)
-                .build();
+        MessageToTelegram newMessages = mainMenuCommand.execute(commandContext);
+        newMessages.getSendMessages().getFirst().setText("Вы вернулись в главное меню");
+        return newMessages;
     }
 
     @Override
