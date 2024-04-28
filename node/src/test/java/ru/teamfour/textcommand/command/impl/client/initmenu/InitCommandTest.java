@@ -14,8 +14,8 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.dao.entity.user.UserInfo;
@@ -41,7 +41,10 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")
-class ChooseShelterMenuStateCommandTest {
+class InitCommandTest {
+
+    @Value("${buttonName.initCommand}")
+    private String buttonName;
 
     @Value("${buttonName.dogShelter}")
     private String dogShelter;
@@ -49,17 +52,8 @@ class ChooseShelterMenuStateCommandTest {
     @Value("${buttonName.catShelter}")
     private String catShelter;
 
-    @Value("${buttonName.backButton}")
-    private String backButton;
-
     @Autowired
-    private ChooseShelterMenuCommand testingCommand;
-
-    @SpyBean
-    private MessageUtils messageUtils;
-
-    @SpyBean
-    private MenuButtonFactory menuFactory;
+    private InitCommand testingCommand;
 
     @MockBean
     private UserService userService;
@@ -71,6 +65,12 @@ class ChooseShelterMenuStateCommandTest {
     private ShelterRepository shelterRepository;
 
     @SpyBean
+    private MessageUtils messageUtils;
+
+    @SpyBean
+    private MenuButtonFactory menuFactory;
+
+    @SpyBean
     private ShelterAddDtoMapper shelterAddDtoMapper;
 
     @SpyBean
@@ -80,7 +80,7 @@ class ChooseShelterMenuStateCommandTest {
     class Execute {
 
         @Test
-        void SheltersIsNotPresent() {
+        void sheltersIsNotPresent() {
             // Arrange
             CommandContext commandContext = mock(CommandContext.class);
             long chatId = 1_000_000L;
@@ -88,7 +88,6 @@ class ChooseShelterMenuStateCommandTest {
             chat.setId(chatId);
             Message message = new Message();
             message.setChat(chat);
-            message.setText(dogShelter);
             Update update = new Update();
             update.setMessage(message);
             User user = User.builder()
@@ -96,7 +95,7 @@ class ChooseShelterMenuStateCommandTest {
                     .build();
             when(commandContext.getUser()).thenReturn(user);
             when(commandContext.getUpdate()).thenReturn(update);
-            when(shelterRepository.findByTypeOfAnimal(any())).thenReturn(new ArrayList<>());
+            when(shelterRepository.findAll()).thenReturn(new ArrayList<>());
 
             // Act
             MessageToTelegram result = testingCommand.execute(commandContext);
@@ -106,20 +105,12 @@ class ChooseShelterMenuStateCommandTest {
             SendMessage first = result.getSendMessages().getFirst();
             assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
             assertThat(first.getText()).contains("Нет приютов");
-            ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
-            assertThat(replyMarkup.getKeyboard().size()).isEqualTo(1);
-            List<String> nameButtons = replyMarkup.getKeyboard()
-                    .stream()
-                    .flatMap(Collection::stream)
-                    .map(KeyboardButton::getText)
-                    .toList();
-            assertThat(nameButtons).hasSize(1);
-            assertThat(nameButtons).contains(backButton);
-            verify(userService).save(user);
+            ReplyKeyboardRemove replyMarkup = (ReplyKeyboardRemove) first.getReplyMarkup();
+            assertTrue(replyMarkup.getRemoveKeyboard());
         }
 
         @Test
-        void SheltersIsPresent() {
+        void sheltersIsPresent() {
             // Arrange
             CommandContext commandContext = mock(CommandContext.class);
             long chatId = 1_000_000L;
@@ -127,7 +118,6 @@ class ChooseShelterMenuStateCommandTest {
             chat.setId(chatId);
             Message message = new Message();
             message.setChat(chat);
-            message.setText(dogShelter);
             Update update = new Update();
             update.setMessage(message);
             User user = User.builder()
@@ -137,12 +127,11 @@ class ChooseShelterMenuStateCommandTest {
             when(commandContext.getUser()).thenReturn(user);
             when(commandContext.getUpdate()).thenReturn(update);
             String nameShelter = "Название приюта";
-            when(shelterRepository.findByTypeOfAnimal(any())).thenReturn(new ArrayList<>() {{
+            when(shelterRepository.findAll()).thenReturn(new ArrayList<>() {{
                 this.add(
                         Shelter.builder()
                                 .id(UUID.randomUUID())
                                 .name(nameShelter)
-                                .typeOfAnimal(TypeAnimal.DOG)
                                 .build()
                 );
             }});
@@ -154,19 +143,20 @@ class ChooseShelterMenuStateCommandTest {
             assertThat(result.getSendMessages()).hasSize(1);
             SendMessage first = result.getSendMessages().getFirst();
             assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-            assertThat(first.getText()).contains("Выберите приют");
+            assertThat(first.getText()).contains("Приют для каких животных вас интересует");
             ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
-            assertThat(replyMarkup.getKeyboard().size()).isEqualTo(2);
+            assertThat(replyMarkup.getKeyboard().size()).isEqualTo(1);
             List<String> nameButtons = replyMarkup.getKeyboard()
                     .stream()
                     .flatMap(Collection::stream)
                     .map(KeyboardButton::getText)
                     .toList();
             assertThat(nameButtons).hasSize(2);
-            assertThat(nameButtons).contains(nameShelter);
-            assertThat(nameButtons).contains(backButton);
+            assertThat(nameButtons).contains(dogShelter);
+            assertThat(nameButtons).contains(catShelter);
             verify(userService).save(user);
         }
+
     }
 
     @Nested
@@ -174,20 +164,12 @@ class ChooseShelterMenuStateCommandTest {
         @Nested
         class Correct {
             @Test
-            void cat() {
+            void buttonName() {
+                // Arrange
+                String command = buttonName;
 
                 // Act
-                boolean result = testingCommand.isCommand(catShelter);
-
-                // Assert
-                assertTrue(result);
-            }
-
-            @Test
-            void dog() {
-
-                // Act
-                boolean result = testingCommand.isCommand(dogShelter);
+                boolean result = testingCommand.isCommand(command);
 
                 // Assert
                 assertTrue(result);

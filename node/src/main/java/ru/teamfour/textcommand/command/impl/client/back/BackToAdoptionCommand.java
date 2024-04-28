@@ -9,6 +9,8 @@ import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.AbstractCommand;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
 import ru.teamfour.textcommand.command.api.State;
+import ru.teamfour.textcommand.command.impl.client.mainmenu.AdoptionCommand;
+import ru.teamfour.textcommand.command.impl.client.mainmenu.PetReportCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +23,18 @@ public class BackToAdoptionCommand extends AbstractCommand {
 
     @Value("${buttonName.backButton}")
     private String buttonName;
-    @Value("${buttonName.backToAdoption}")
-    private String backToAdoption;
+
+    private final AdoptionCommand command;
+
+    public BackToAdoptionCommand(AdoptionCommand command) {
+        this.command = command;
+    }
 
     @Override
     public MessageToTelegram execute(CommandContext commandContext) {
-        User user = commandContext.getUser();
-        Update update = commandContext.getUpdate();
-        State state = State.ADOPTION;
-        user.setState(state);
-        userService.save(user);
-        String answerMessage = "Вы вернулись в  меню как усыновить животное";
-        SendMessage sendMessage = messageUtils.generateSendMessageWithText(update, answerMessage);
-        List<SendMessage> sendMessages = new ArrayList<>();
-        sendMessages.add(addMenu(sendMessage, state));
-        return MessageToTelegram.builder()
-                .sendMessages(sendMessages)
-                .build();
+        MessageToTelegram newMessages = command.execute(commandContext);
+        newMessages.getSendMessages().getFirst().setText("Вы вернулись в меню как усыновить животное");
+        return newMessages;
     }
 
     @Override

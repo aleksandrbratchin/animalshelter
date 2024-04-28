@@ -18,9 +18,16 @@ import java.util.UUID;
 @Entity
 @Table(name = "drivingDirections")
 public class DrivingDirections extends ParentUUIDEntity {
+
+    /***
+     * Фото как поехать к приюту
+     */
     @JsonIgnore
     private byte[] data;
 
+    /***
+     * Приют
+     */
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shelter_id", referencedColumnName = "id")
     private Shelter shelter;

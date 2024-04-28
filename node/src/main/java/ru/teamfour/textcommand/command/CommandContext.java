@@ -1,6 +1,7 @@
 package ru.teamfour.textcommand.command;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -13,6 +14,7 @@ import ru.teamfour.textcommand.command.api.Command;
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class CommandContext {
     private Update update;
 

@@ -38,7 +38,6 @@ public class SaveTextDailyReportCommand extends AbstractCommand {
         State state = State.PET_REPORT;
         user.setState(state);
 
-
         AdoptionProcessAnimal activeAdoptionProcess = user.getActiveAdoptionProcess();
         DailyReport lastDailyReport = activeAdoptionProcess.getLastDailyReport(LocalDate.now());
         DailyReport dailyReport = Optional.ofNullable(lastDailyReport)

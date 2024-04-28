@@ -1,13 +1,11 @@
-package ru.teamfour.textcommand.command.impl.client.initmenu;
+package ru.teamfour.textcommand.command.impl.client.mainmenu;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.TestPropertySource;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -15,21 +13,14 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import ru.teamfour.dao.entity.animal.TypeAnimal;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessAnimal;
+import ru.teamfour.dao.entity.adoptionanimal.AdoptionProcessStatus;
 import ru.teamfour.dao.entity.shelter.Shelter;
 import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.dao.entity.user.UserInfo;
-import ru.teamfour.mappers.shelter.ShelterAddDtoMapper;
-import ru.teamfour.mappers.shelter.ShelterDtoMapper;
-import ru.teamfour.myutils.MessageUtils;
-import ru.teamfour.repositories.ShelterRepository;
-import ru.teamfour.service.impl.shelter.ShelterServiceImpl;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
-import ru.teamfour.textcommand.menu.MenuButtonFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -41,46 +32,25 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.yml")
-class ChooseShelterMenuStateCommandTest {
+class PetReportCommandTest {
 
-    @Value("${buttonName.dogShelter}")
-    private String dogShelter;
+    @Value("${buttonName.petReport}")
+    private String buttonName;
 
-    @Value("${buttonName.catShelter}")
-    private String catShelter;
-
-    @Value("${buttonName.backButton}")
-    private String backButton;
+    @Value("${buttonName.sendText}")
+    private String checkButton;
 
     @Autowired
-    private ChooseShelterMenuCommand testingCommand;
-
-    @SpyBean
-    private MessageUtils messageUtils;
-
-    @SpyBean
-    private MenuButtonFactory menuFactory;
+    private PetReportCommand testingCommand;
 
     @MockBean
     private UserService userService;
-
-    @InjectMocks
-    private ShelterServiceImpl shelterService;
-
-    @MockBean
-    private ShelterRepository shelterRepository;
-
-    @SpyBean
-    private ShelterAddDtoMapper shelterAddDtoMapper;
-
-    @SpyBean
-    private ShelterDtoMapper shelterDtoMapper;
 
     @Nested
     class Execute {
 
         @Test
-        void SheltersIsNotPresent() {
+        void activeAdoptionIsNotPresent() {
             // Arrange
             CommandContext commandContext = mock(CommandContext.class);
             long chatId = 1_000_000L;
@@ -88,15 +58,28 @@ class ChooseShelterMenuStateCommandTest {
             chat.setId(chatId);
             Message message = new Message();
             message.setChat(chat);
-            message.setText(dogShelter);
             Update update = new Update();
             update.setMessage(message);
+            UUID shelterId = UUID.randomUUID();
             User user = User.builder()
                     .chatId(chatId)
+                    .adoptions(List.of(
+                            AdoptionProcessAnimal.builder()
+                                    .id(UUID.randomUUID())
+                                    .shelter(Shelter.builder()
+                                            .id(shelterId)
+                                            .build())
+                                    .adoptionProcessStatus(AdoptionProcessStatus.ADOPTED)
+                                    .build()
+                    ))
+                    .shelter(
+                            Shelter.builder()
+                                    .id(shelterId)
+                                    .build()
+                    )
                     .build();
             when(commandContext.getUser()).thenReturn(user);
             when(commandContext.getUpdate()).thenReturn(update);
-            when(shelterRepository.findByTypeOfAnimal(any())).thenReturn(new ArrayList<>());
 
             // Act
             MessageToTelegram result = testingCommand.execute(commandContext);
@@ -105,21 +88,11 @@ class ChooseShelterMenuStateCommandTest {
             assertThat(result.getSendMessages()).hasSize(1);
             SendMessage first = result.getSendMessages().getFirst();
             assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-            assertThat(first.getText()).contains("Нет приютов");
-            ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
-            assertThat(replyMarkup.getKeyboard().size()).isEqualTo(1);
-            List<String> nameButtons = replyMarkup.getKeyboard()
-                    .stream()
-                    .flatMap(Collection::stream)
-                    .map(KeyboardButton::getText)
-                    .toList();
-            assertThat(nameButtons).hasSize(1);
-            assertThat(nameButtons).contains(backButton);
-            verify(userService).save(user);
+            assertThat(first.getText()).contains("У вас нет усыновленного питомца");
         }
 
         @Test
-        void SheltersIsPresent() {
+        void activeAdoptionIsPresent() {
             // Arrange
             CommandContext commandContext = mock(CommandContext.class);
             long chatId = 1_000_000L;
@@ -127,25 +100,28 @@ class ChooseShelterMenuStateCommandTest {
             chat.setId(chatId);
             Message message = new Message();
             message.setChat(chat);
-            message.setText(dogShelter);
             Update update = new Update();
             update.setMessage(message);
+            UUID shelterId = UUID.randomUUID();
             User user = User.builder()
                     .chatId(chatId)
-                    .userInfo(UserInfo.builder().phoneNumber("").build())
+                    .adoptions(List.of(
+                            AdoptionProcessAnimal.builder()
+                                    .id(UUID.randomUUID())
+                                    .shelter(Shelter.builder()
+                                            .id(shelterId)
+                                            .build())
+                                    .adoptionProcessStatus(AdoptionProcessStatus.PROCESS_ADOPTION)
+                                    .build()
+                    ))
+                    .shelter(
+                            Shelter.builder()
+                                    .id(shelterId)
+                                    .build()
+                    )
                     .build();
             when(commandContext.getUser()).thenReturn(user);
             when(commandContext.getUpdate()).thenReturn(update);
-            String nameShelter = "Название приюта";
-            when(shelterRepository.findByTypeOfAnimal(any())).thenReturn(new ArrayList<>() {{
-                this.add(
-                        Shelter.builder()
-                                .id(UUID.randomUUID())
-                                .name(nameShelter)
-                                .typeOfAnimal(TypeAnimal.DOG)
-                                .build()
-                );
-            }});
 
             // Act
             MessageToTelegram result = testingCommand.execute(commandContext);
@@ -154,7 +130,7 @@ class ChooseShelterMenuStateCommandTest {
             assertThat(result.getSendMessages()).hasSize(1);
             SendMessage first = result.getSendMessages().getFirst();
             assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-            assertThat(first.getText()).contains("Выберите приют");
+            assertThat(first.getText()).contains("Здесь вы можете прислать отчет о содержании питомца");
             ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
             assertThat(replyMarkup.getKeyboard().size()).isEqualTo(2);
             List<String> nameButtons = replyMarkup.getKeyboard()
@@ -162,11 +138,11 @@ class ChooseShelterMenuStateCommandTest {
                     .flatMap(Collection::stream)
                     .map(KeyboardButton::getText)
                     .toList();
-            assertThat(nameButtons).hasSize(2);
-            assertThat(nameButtons).contains(nameShelter);
-            assertThat(nameButtons).contains(backButton);
+            assertThat(nameButtons).hasSize(4);
+            assertThat(nameButtons).contains(checkButton);
             verify(userService).save(user);
         }
+
     }
 
     @Nested
@@ -174,20 +150,12 @@ class ChooseShelterMenuStateCommandTest {
         @Nested
         class Correct {
             @Test
-            void cat() {
+            void buttonName() {
+                // Arrange
+                String command = buttonName;
 
                 // Act
-                boolean result = testingCommand.isCommand(catShelter);
-
-                // Assert
-                assertTrue(result);
-            }
-
-            @Test
-            void dog() {
-
-                // Act
-                boolean result = testingCommand.isCommand(dogShelter);
+                boolean result = testingCommand.isCommand(command);
 
                 // Assert
                 assertTrue(result);

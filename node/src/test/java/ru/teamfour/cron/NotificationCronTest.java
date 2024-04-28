@@ -38,7 +38,6 @@ public class NotificationCronTest {
     @MockBean
     private UserService userService;
 
-
     @InjectMocks
     private NotificationCron cron;
 
@@ -49,7 +48,6 @@ public class NotificationCronTest {
         ReflectionTestUtils.setField(cron, "userService", userService);
     }
 
-
     @Test
     public void doReminderCheckReportListTest() {
         User user1 = User.builder().role(RoleUser.VOLUNTEER).chatId(6164002556L).build();
@@ -59,7 +57,6 @@ public class NotificationCronTest {
         assertTrue(cron.doReminderCheckReportList().contains(user1.getChatId().toString()));
         assertTrue(cron.doReminderCheckReportList().contains(user2.getChatId().toString()));
         verify(userService, times(2)).getUsersByRole(any(RoleUser.class));
-
     }
 
     @Test
@@ -82,9 +79,7 @@ public class NotificationCronTest {
                 .dailyReports(new ArrayList<>(List.of(report3)))
                 .user(User.builder().chatId(6164002557L).build())
                 .build();
-        List<AdoptionProcessAnimal> listProcess1 = new ArrayList<>(List.of(processAnimal1));
         assertFalse(cron.doReminderReportList().contains(processAnimal1.getUser().getChatId().toString()));
-
     }
 
     @Test
@@ -117,4 +112,5 @@ public class NotificationCronTest {
         when(repository.findByAdoptionProcessStatus(any(AdoptionProcessStatus.class))).thenReturn(listProcess1);
         assertFalse(cron.doReminderBadReportList().contains((processAnimal1.getUser().getChatId().toString())));
     }
+
 }
