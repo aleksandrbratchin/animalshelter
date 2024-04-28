@@ -13,7 +13,9 @@ import ru.teamfour.textcommand.menu.api.ButtonMenu;
 
 @Component
 public abstract class AbstractPhotoCommand implements PhotoCommand {
+
     protected MessageUtils messageUtils;
+
     protected MenuButtonFactory menuFactory;
 
     protected UserServiceApi userService;
