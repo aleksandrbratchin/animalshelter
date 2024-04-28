@@ -33,7 +33,6 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
      * @param shelterId идентификатор приюта
      * @return возвращает найденный объект
      */
-    @Cacheable("drivingDirections")
     @Override
     public DrivingDirections findByShelterId(UUID shelterId) {
         return drivingDirectionsRepository.findByShelterId(shelterId)
@@ -62,7 +61,6 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
      *
      * @param shelterId идентификатор приюта
      */
-    @CacheEvict("drivingDirections")
     @Override
     public void deleteDrivingDirections(UUID shelterId) {
 
@@ -75,7 +73,6 @@ public class DrivingDirectionsServiceImpl implements DrivingDirectionsService {
      * @param idShelter  идентификатор приюта
      * @param data фото
      */
-    @CachePut(value = "drivingDirections", key = "#drivingDirections.id")
     @Override
     public void put(UUID idShelter, MultipartFile data) throws IOException {
         DrivingDirections directions = drivingDirectionsRepository.findByShelterId(idShelter).get();
