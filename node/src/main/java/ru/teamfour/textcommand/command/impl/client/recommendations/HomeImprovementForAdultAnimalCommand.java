@@ -43,7 +43,6 @@ public class HomeImprovementForAdultAnimalCommand extends AbstractCommand {
                 .build();
     }
 
-
     @Override
     public boolean isCommand(String message) {
         return message.equals(buttonName);

@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.command.impl.client.mainmenu;
+package ru.teamfour.textcommand.command.impl.client;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,28 +17,24 @@ import ru.teamfour.dao.entity.user.User;
 import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
+import ru.teamfour.textcommand.command.api.State;
 
 import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-
 @TestPropertySource(locations = "classpath:application.yml")
-class AdoptionCommandTest {
+class StartVolunteerCommandTest {
 
-    @Value("${buttonName.adoption}")
-    private String buttonName;
-
-    @Value("${buttonName.listDocuments}")
+    @Value("${buttonName.checkReport}")
     private String checkButton;
 
     @Autowired
-    private AdoptionCommand testingCommand;
+    private StartVolunteerCommand testingCommand;
 
     @MockBean
     private UserService userService;
@@ -67,17 +63,17 @@ class AdoptionCommandTest {
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
         assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("взять животное из приюта");
+        assertThat(first.getText()).contains("Главное меню");
         ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
-        assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
+        assertThat(replyMarkup.getKeyboard().size()).isEqualTo(1);
         List<String> nameButtons = replyMarkup.getKeyboard()
                 .stream()
                 .flatMap(Collection::stream)
                 .map(KeyboardButton::getText)
                 .toList();
-        assertThat(nameButtons).hasSize(8);
+        assertThat(nameButtons).hasSize(1);
         assertThat(nameButtons).contains(checkButton);
-        verify(userService).save(user);
+        verify(userService).updateInfoAndState(user, update, State.VOLUNTEER_START_MENU);
     }
 
     @Nested
@@ -85,9 +81,9 @@ class AdoptionCommandTest {
         @Nested
         class Correct {
             @Test
-            void buttonName() {
+            void isCommand() {
                 // Arrange
-                String command = buttonName;
+                String command = "/main_menu";
 
                 // Act
                 boolean result = testingCommand.isCommand(command);
@@ -112,5 +108,4 @@ class AdoptionCommandTest {
             }
         }
     }
-
 }

@@ -29,17 +29,27 @@ public class ProducerServiceImpl implements ProducerService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
+    /**
+     * Отправляет ответ с текстовым сообщение в очередь для текстовых ответов {@code answerMessageQueue}
+     *
+     * @param sendMessage {@link SendMessage}
+     */
     @Override
     public void producerAnswer(SendMessage sendMessage) {
         rabbitTemplate.convertAndSend(answerMessageQueue, sendMessage);
     }
 
+    /**
+     * Отправляет ответ с фото в очередь для фото ответов {@code answerPhotoMessageQueue}
+     *
+     * @param transferByteObject {@link TransferByteObject}
+     */
     @Override
     public void producerAnswer(TransferByteObject transferByteObject) {
         ObjectMapper objectMapper = new ObjectMapper();
-        try{
+        try {
             rabbitTemplate.convertAndSend(answerPhotoMessageQueue, objectMapper.writeValueAsString(transferByteObject));
-        } catch (JsonProcessingException e){
+        } catch (JsonProcessingException e) {
             log.error("Ошибка при сериализации");
         }
     }

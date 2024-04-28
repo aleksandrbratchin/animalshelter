@@ -61,6 +61,7 @@ public class HomeImprovementForYoungAnimalCommandTest {
 
     @SpyBean
     private MessageUtils messageUtils;
+
     @SpyBean
     private InfoForAdoptionServiceImpl serviceInfo;
 
@@ -71,6 +72,7 @@ public class HomeImprovementForYoungAnimalCommandTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         ReflectionTestUtils.setField(testingCommand, "buttonName", buttonName);
+        ReflectionTestUtils.setField(testingCommand, "service", serviceInfo);
     }
 
     @Test

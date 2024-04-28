@@ -96,7 +96,7 @@ public class User extends AuditEntity {
                         adoptionProcessAnimal.getShelter().getId().equals(shelter.getId()) &&
                                 adoptionProcessAnimal.getAdoptionProcessStatus().equals(AdoptionProcessStatus.PROCESS_ADOPTION)
         ).toList();
-        if (adoptionProcessAnimalStream.size() > 1) {
+        if (adoptionProcessAnimalStream.size() != 1) {
             return null;
         }
         return adoptionProcessAnimalStream.get(0);

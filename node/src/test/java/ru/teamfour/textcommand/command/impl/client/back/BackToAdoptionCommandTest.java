@@ -1,4 +1,4 @@
-package ru.teamfour.textcommand.command.impl.client.mainmenu;
+package ru.teamfour.textcommand.command.impl.client.back;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,57 +8,42 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Chat;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import ru.teamfour.dao.entity.user.User;
-import ru.teamfour.service.impl.user.UserService;
 import ru.teamfour.textcommand.command.CommandContext;
 import ru.teamfour.textcommand.command.api.MessageToTelegram;
+import ru.teamfour.textcommand.command.impl.client.mainmenu.AdoptionCommand;
 
-import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-
 @TestPropertySource(locations = "classpath:application.yml")
-class AdoptionCommandTest {
+class BackToAdoptionCommandTest {
 
-    @Value("${buttonName.adoption}")
+    @Value("${buttonName.backButton}")
     private String buttonName;
 
-    @Value("${buttonName.listDocuments}")
-    private String checkButton;
-
     @Autowired
-    private AdoptionCommand testingCommand;
+    private BackToAdoptionCommand testingCommand;
 
     @MockBean
-    private UserService userService;
+    private AdoptionCommand adoptionCommand;
 
     @Test
     void execute() {
         // Arrange
         CommandContext commandContext = mock(CommandContext.class);
-        long chatId = 1_000_000L;
-        Chat chat = new Chat();
-        chat.setId(chatId);
-        Message message = new Message();
-        message.setChat(chat);
-        Update update = new Update();
-        update.setMessage(message);
-        User user = User.builder()
-                .chatId(chatId)
-                .build();
-        when(commandContext.getUser()).thenReturn(user);
-        when(commandContext.getUpdate()).thenReturn(update);
+        SendMessage sendMessage = new SendMessage("1", "test");
+        when(adoptionCommand.execute(any(CommandContext.class))).thenReturn(
+                new MessageToTelegram(
+                        List.of(sendMessage),
+                        null
+                )
+        );
 
         // Act
         MessageToTelegram result = testingCommand.execute(commandContext);
@@ -66,18 +51,8 @@ class AdoptionCommandTest {
         // Assert
         assertThat(result.getSendMessages()).hasSize(1);
         SendMessage first = result.getSendMessages().getFirst();
-        assertThat(first.getChatId()).isEqualTo(String.valueOf(chatId));
-        assertThat(first.getText()).contains("взять животное из приюта");
-        ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) first.getReplyMarkup();
-        assertThat(replyMarkup.getKeyboard().size()).isEqualTo(4);
-        List<String> nameButtons = replyMarkup.getKeyboard()
-                .stream()
-                .flatMap(Collection::stream)
-                .map(KeyboardButton::getText)
-                .toList();
-        assertThat(nameButtons).hasSize(8);
-        assertThat(nameButtons).contains(checkButton);
-        verify(userService).save(user);
+        assertThat(first.getText()).contains("Вы вернулись в меню как усыновить животное");
+        verify(adoptionCommand).execute(commandContext);
     }
 
     @Nested
@@ -112,5 +87,4 @@ class AdoptionCommandTest {
             }
         }
     }
-
 }
