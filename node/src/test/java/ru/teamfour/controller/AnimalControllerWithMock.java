@@ -1,8 +1,5 @@
 package ru.teamfour.controller;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,24 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ru.teamfour.dao.entity.animal.AdoptionAnimalState;
 import ru.teamfour.dao.entity.animal.Animal;
 import ru.teamfour.dao.entity.animal.TypeAnimal;
 import ru.teamfour.dto.animal.AnimalDto;
 import ru.teamfour.dto.animal.AnimalUpdateDto;
-import ru.teamfour.mappers.animal.AnimalDtoMapper;
-import ru.teamfour.mappers.animal.AnimalMapper;
-import ru.teamfour.mappers.animal.AnimalUpdateDtoMapper;
+
 import ru.teamfour.repositories.AnimalRepository;
-import ru.teamfour.repositories.ShelterRepository;
-import ru.teamfour.service.impl.animal.AnimalServiceImpl;
-import ru.teamfour.validators.adoptionanimalstate.AdoptionAnimalStateValid;
-import ru.teamfour.validators.typeanimal.TypeAnimalValid;
 
 import java.util.ArrayList;
 import java.util.List;

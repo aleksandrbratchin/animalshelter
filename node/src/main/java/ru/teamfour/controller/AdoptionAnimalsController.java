@@ -33,7 +33,7 @@ public class AdoptionAnimalsController {
         return adoptionAnimalService.findById(id);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public User getUser(@PathVariable(value = "userId") UUID id) {
         return userService.getUser(id);
     }
