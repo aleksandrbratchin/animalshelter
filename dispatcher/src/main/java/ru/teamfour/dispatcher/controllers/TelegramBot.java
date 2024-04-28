@@ -27,16 +27,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         this.config = config;
 
-        // Создание меню
-        List<BotCommand> commandList = new ArrayList<>();
-        commandList.add(new BotCommand("/main_menu", "Главное меню"));
-
-        try {
-            this.execute(new SetMyCommands(commandList, new BotCommandScopeDefault(), null));
-        } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     @Override
