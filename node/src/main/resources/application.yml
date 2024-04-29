@@ -1,5 +1,5 @@
 server:
-  port: 8091
+  port: 8092
 spring:
   config:
     import: classpath:myconfig.yml
@@ -65,7 +65,7 @@ buttonName:
   homeImprovementForYoungAnimal: Обустройство дома для молодого животного
   tipsFromSpecialist: Советы специалиста
   homeImprovementForAnimalWithDisabilities: Обустройство дома для животного с ограниченными возможностями
-  listSpecialists: список специалистов
+  listSpecialists: Cписок специалистов
   backToMainMenuButton: Вернуться в главное меню
   backToAdoption: Вернуться в предыдущее меню
   backToPetMenuButton: Вернуться в меню с ежедневным отчётом
